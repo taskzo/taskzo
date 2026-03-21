@@ -724,6 +724,226 @@
     border-radius: 8px; padding: 0.4rem 0.85rem; font-size: 0.78rem; color: rgba(255,255,255,0.6);
   }
 
+  /* LANGUAGE SELECTOR */
+  .lang-selector {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .lang-btn {
+    background: var(--off-white);
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 0.35rem 0.75rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--slate);
+    display: flex; align-items: center; gap: 5px;
+    transition: all 0.2s;
+  }
+  .lang-btn:hover { border-color: var(--saffron); color: var(--saffron); }
+
+  .lang-dropdown {
+    display: none;
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    background: white;
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    overflow: hidden;
+    min-width: 140px;
+    z-index: 200;
+  }
+  .lang-dropdown.open { display: block; }
+  .lang-option {
+    padding: 0.65rem 1rem;
+    font-size: 0.85rem;
+    cursor: pointer;
+    color: var(--slate);
+    font-weight: 500;
+    transition: background 0.15s;
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .lang-option:hover { background: var(--off-white); color: var(--navy); }
+  .lang-option.active { background: var(--saffron-pale); color: var(--saffron-dark); font-weight: 700; }
+
+  /* LOGIN BUTTON IN NAV */
+  .nav-login-btn {
+    background: white;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 0.4rem 1rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--navy);
+    transition: all 0.2s;
+  }
+  .nav-login-btn:hover { border-color: var(--saffron); color: var(--saffron); }
+
+  /* LOGIN MODAL */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(15,23,42,0.6);
+    z-index: 500;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(4px);
+  }
+  .modal-overlay.open { display: flex; }
+
+  .modal-box {
+    background: white;
+    border-radius: 24px;
+    padding: 2.5rem;
+    width: 100%;
+    max-width: 420px;
+    margin: 1rem;
+    position: relative;
+    box-shadow: 0 24px 64px rgba(0,0,0,0.15);
+    animation: modalIn 0.3s ease;
+  }
+
+  @keyframes modalIn {
+    from { opacity: 0; transform: translateY(20px) scale(0.97); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 1.25rem; right: 1.25rem;
+    background: var(--off-white);
+    border: none;
+    border-radius: 50%;
+    width: 32px; height: 32px;
+    cursor: pointer;
+    font-size: 1rem;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--slate);
+    transition: background 0.2s;
+  }
+  .modal-close:hover { background: var(--border); }
+
+  .modal-logo {
+    font-family: 'Sora', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--navy);
+    margin-bottom: 0.25rem;
+  }
+  .modal-logo span { color: var(--saffron); }
+
+  .modal-tabs {
+    display: flex;
+    background: var(--off-white);
+    border-radius: 10px;
+    padding: 4px;
+    margin: 1.25rem 0;
+  }
+  .modal-tab {
+    flex: 1;
+    padding: 0.6rem;
+    border: none;
+    background: transparent;
+    border-radius: 8px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--slate);
+    transition: all 0.2s;
+  }
+  .modal-tab.active {
+    background: white;
+    color: var(--navy);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+
+  .modal-form { display: none; }
+  .modal-form.active { display: block; }
+
+  .modal-input-group { margin-bottom: 1rem; }
+  .modal-input-group label {
+    display: block;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--slate);
+    margin-bottom: 0.4rem;
+  }
+  .modal-input-group input {
+    width: 100%;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 0.8rem 1rem;
+    font-size: 0.92rem;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--navy);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .modal-input-group input:focus { border-color: var(--saffron); }
+
+  .modal-submit-btn {
+    width: 100%;
+    background: var(--saffron);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 0.9rem;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: 'Sora', sans-serif;
+    transition: all 0.2s;
+    margin-top: 0.5rem;
+  }
+  .modal-submit-btn:hover { background: var(--saffron-dark); transform: translateY(-1px); }
+
+  .modal-divider {
+    display: flex; align-items: center; gap: 0.75rem;
+    margin: 1.25rem 0;
+    color: var(--muted);
+    font-size: 0.8rem;
+  }
+  .modal-divider::before, .modal-divider::after {
+    content: ''; flex: 1; height: 1px; background: var(--border);
+  }
+
+  .modal-note {
+    font-size: 0.78rem;
+    color: var(--muted);
+    text-align: center;
+    margin-top: 1rem;
+    line-height: 1.5;
+  }
+  .modal-note a { color: var(--saffron); text-decoration: none; font-weight: 600; }
+
+  .user-greeting {
+    display: none;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--navy);
+  }
+  .user-avatar-small {
+    width: 30px; height: 30px;
+    background: var(--saffron);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+
   /* WHATSAPP BUTTON */
   .whatsapp-float {
     position: fixed;
@@ -787,11 +1007,31 @@
 <nav id="mainNav">
   <div class="logo">Serv<span>lo</span></div>
   <ul class="nav-links">
-    <li><a href="#categories">Services</a></li>
-    <li><a href="#providers">Providers</a></li>
-    <li><a href="#how">How It Works</a></li>
-    <li><a href="#join" class="nav-cta">Join as Provider</a></li>
+    <li><a href="#categories" data-i18n="nav_services">Services</a></li>
+    <li><a href="#providers" data-i18n="nav_providers">Providers</a></li>
+    <li><a href="#how" data-i18n="nav_how">How It Works</a></li>
+    <li><a href="#join" class="nav-cta" data-i18n="nav_join">Join as Provider</a></li>
   </ul>
+  <div style="display:flex; align-items:center; gap:0.75rem;">
+    <!-- Language Selector -->
+    <div class="lang-selector">
+      <button class="lang-btn" onclick="toggleLangDropdown()" id="langBtn">🌐 EN</button>
+      <div class="lang-dropdown" id="langDropdown">
+        <div class="lang-option active" onclick="setLang('en')">🇬🇧 English</div>
+        <div class="lang-option" onclick="setLang('hi')">🇮🇳 हिंदी</div>
+        <div class="lang-option" onclick="setLang('mr')">🇮🇳 मराठी</div>
+        <div class="lang-option" onclick="setLang('gu')">🇮🇳 ગુજરાતી</div>
+        <div class="lang-option" onclick="setLang('ta')">🇮🇳 தமிழ்</div>
+      </div>
+    </div>
+    <!-- Login Button -->
+    <button class="nav-login-btn" onclick="openModal()" id="loginNavBtn" data-i18n="nav_login">Login</button>
+    <div class="user-greeting" id="userGreeting">
+      <div class="user-avatar-small" id="userInitial">U</div>
+      <span id="userName">User</span>
+      <button onclick="logout()" style="background:none;border:none;cursor:pointer;color:var(--muted);font-size:0.75rem;">✕</button>
+    </div>
+  </div>
   <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
     <span></span><span></span><span></span>
   </button>
@@ -1170,6 +1410,58 @@
   </div>
 </footer>
 
+<!-- LOGIN MODAL -->
+<div class="modal-overlay" id="loginModal" onclick="closeModalOutside(event)">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+
+    <div class="modal-logo">Serv<span>lo</span></div>
+    <p style="font-size:0.88rem; color:var(--slate);" data-i18n="modal_welcome">Welcome! Login or create your account.</p>
+
+    <div class="modal-tabs">
+      <button class="modal-tab active" onclick="switchTab('login')" id="loginTab" data-i18n="tab_login">Login</button>
+      <button class="modal-tab" onclick="switchTab('signup')" id="signupTab" data-i18n="tab_signup">Sign Up</button>
+    </div>
+
+    <!-- LOGIN FORM -->
+    <div class="modal-form active" id="loginForm">
+      <div class="modal-input-group">
+        <label data-i18n="label_email">Email Address</label>
+        <input type="email" id="loginEmail" placeholder="you@email.com">
+      </div>
+      <div class="modal-input-group">
+        <label data-i18n="label_password">Password</label>
+        <input type="password" id="loginPassword" placeholder="••••••••">
+      </div>
+      <button class="modal-submit-btn" onclick="handleLogin()" data-i18n="btn_login">Login to Servlo</button>
+      <p class="modal-note" data-i18n="forgot_pass">Forgot password? <a href="#">Reset here</a></p>
+    </div>
+
+    <!-- SIGNUP FORM -->
+    <div class="modal-form" id="signupForm">
+      <div class="modal-input-group">
+        <label data-i18n="label_name">Full Name</label>
+        <input type="text" id="signupName" placeholder="Ramesh Kumar">
+      </div>
+      <div class="modal-input-group">
+        <label data-i18n="label_email">Email Address</label>
+        <input type="email" id="signupEmail" placeholder="you@email.com">
+      </div>
+      <div class="modal-input-group">
+        <label data-i18n="label_phone">Mobile Number</label>
+        <input type="tel" id="signupPhone" placeholder="+91 98765 43210">
+      </div>
+      <div class="modal-input-group">
+        <label data-i18n="label_password">Password</label>
+        <input type="password" id="signupPassword" placeholder="Min 6 characters">
+      </div>
+      <button class="modal-submit-btn" onclick="handleSignup()" data-i18n="btn_signup">Create Account</button>
+      <p class="modal-note" data-i18n="terms_note">By signing up you agree to our <a href="#">Terms</a> and <a href="#">Privacy Policy</a></p>
+    </div>
+
+  </div>
+</div>
+
 <!-- WHATSAPP FLOATING BUTTON -->
 <a href="https://wa.me/919999999999?text=Hello%20Servlo!%20I%20need%20help%20with%20a%20service." 
    class="whatsapp-float" target="_blank" id="waBtn">
@@ -1178,6 +1470,150 @@
 </a>
 
 <script>
+  // ── TRANSLATIONS ──
+  const translations = {
+    en: {
+      nav_services: 'Services', nav_providers: 'Providers', nav_how: 'How It Works',
+      nav_join: 'Join as Provider', nav_login: 'Login',
+      modal_welcome: 'Welcome! Login or create your account.',
+      tab_login: 'Login', tab_signup: 'Sign Up',
+      label_email: 'Email Address', label_password: 'Password',
+      label_name: 'Full Name', label_phone: 'Mobile Number',
+      btn_login: 'Login to Servlo', btn_signup: 'Create Account',
+      forgot_pass: 'Forgot password? <a href="#">Reset here</a>',
+      terms_note: 'By signing up you agree to our <a href="#">Terms</a> and <a href="#">Privacy Policy</a>'
+    },
+    hi: {
+      nav_services: 'सेवाएं', nav_providers: 'प्रोवाइडर', nav_how: 'कैसे काम करता है',
+      nav_join: 'प्रोवाइडर बनें', nav_login: 'लॉगिन',
+      modal_welcome: 'स्वागत है! लॉगिन करें या अकाउंट बनाएं।',
+      tab_login: 'लॉगिन', tab_signup: 'साइन अप',
+      label_email: 'ईमेल पता', label_password: 'पासवर्ड',
+      label_name: 'पूरा नाम', label_phone: 'मोबाइल नंबर',
+      btn_login: 'Servlo में लॉगिन करें', btn_signup: 'अकाउंट बनाएं',
+      forgot_pass: 'पासवर्ड भूल गए? <a href="#">यहां रीसेट करें</a>',
+      terms_note: 'साइन अप करके आप हमारी <a href="#">शर्तों</a> से सहमत हैं'
+    },
+    mr: {
+      nav_services: 'सेवा', nav_providers: 'प्रोव्हायडर', nav_how: 'कसे काम करते',
+      nav_join: 'प्रोव्हायडर व्हा', nav_login: 'लॉगिन',
+      modal_welcome: 'स्वागत आहे! लॉगिन करा किंवा खाते तयार करा।',
+      tab_login: 'लॉगिन', tab_signup: 'साइन अप',
+      label_email: 'ईमेल पत्ता', label_password: 'पासवर्ड',
+      label_name: 'पूर्ण नाव', label_phone: 'मोबाइल नंबर',
+      btn_login: 'Servlo मध्ये लॉगिन करा', btn_signup: 'खाते तयार करा',
+      forgot_pass: 'पासवर्ड विसरलात? <a href="#">येथे रीसेट करा</a>',
+      terms_note: 'साइन अप करून तुम्ही आमच्या <a href="#">अटींशी</a> सहमत आहात'
+    },
+    gu: {
+      nav_services: 'સેવાઓ', nav_providers: 'પ્રોવાઇડર', nav_how: 'કેવી રીતે કામ કરે છે',
+      nav_join: 'પ્રોવાઇડર બનો', nav_login: 'લૉગિન',
+      modal_welcome: 'સ્વાગત છે! લૉગિન કરો અથવા એકાઉન્ટ બનાવો।',
+      tab_login: 'લૉગિન', tab_signup: 'સાઇન અપ',
+      label_email: 'ઈમેઇલ સરનામું', label_password: 'પાસવર્ડ',
+      label_name: 'પૂરું નામ', label_phone: 'મોબાઇલ નંબર',
+      btn_login: 'Servlo માં લૉગિન કરો', btn_signup: 'એકાઉન્ટ બનાવો',
+      forgot_pass: 'પાસવર્ડ ભૂલ્યા? <a href="#">અહીં રીસેટ કરો</a>',
+      terms_note: 'સાઇન અપ કરીને તમે અમારી <a href="#">શરતો</a> સાથે સંમત છો'
+    },
+    ta: {
+      nav_services: 'சேவைகள்', nav_providers: 'வழங்குநர்கள்', nav_how: 'எப்படி செயல்படுகிறது',
+      nav_join: 'வழங்குநராக சேரவும்', nav_login: 'உள்நுழைய',
+      modal_welcome: 'வரவேற்கிறோம்! உள்நுழையவும் அல்லது கணக்கு உருவாக்கவும்।',
+      tab_login: 'உள்நுழைய', tab_signup: 'பதிவு செய்ய',
+      label_email: 'மின்னஞ்சல்', label_password: 'கடவுச்சொல்',
+      label_name: 'முழு பெயர்', label_phone: 'மொபைல் எண்',
+      btn_login: 'Servlo இல் உள்நுழைய', btn_signup: 'கணக்கு உருவாக்கவும்',
+      forgot_pass: 'கடவுச்சொல் மறந்தீர்களா? <a href="#">இங்கே மீட்டமைக்கவும்</a>',
+      terms_note: 'பதிவு செய்வதன் மூலம் நீங்கள் எங்கள் <a href="#">விதிமுறைகளை</a> ஒப்புக்கொள்கிறீர்கள்'
+    }
+  };
+
+  let currentLang = 'en';
+
+  function setLang(lang) {
+    currentLang = lang;
+    const t = translations[lang];
+    const langNames = { en: '🌐 EN', hi: '🇮🇳 HI', mr: '🇮🇳 MR', gu: '🇮🇳 GU', ta: '🇮🇳 TA' };
+    document.getElementById('langBtn').textContent = langNames[lang];
+    document.querySelectorAll('.lang-option').forEach(opt => {
+      opt.classList.toggle('active', opt.getAttribute('onclick').includes(`'${lang}'`));
+    });
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if (t[key]) el.innerHTML = t[key];
+    });
+    document.getElementById('langDropdown').classList.remove('open');
+  }
+
+  function toggleLangDropdown() {
+    document.getElementById('langDropdown').classList.toggle('open');
+  }
+
+  // Close lang dropdown on outside click
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('.lang-selector')) {
+      document.getElementById('langDropdown').classList.remove('open');
+    }
+  });
+
+  // ── LOGIN MODAL ──
+  function openModal() {
+    document.getElementById('loginModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    document.getElementById('loginModal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function closeModalOutside(e) {
+    if (e.target === document.getElementById('loginModal')) closeModal();
+  }
+
+  function switchTab(tab) {
+    document.getElementById('loginForm').classList.toggle('active', tab === 'login');
+    document.getElementById('signupForm').classList.toggle('active', tab === 'signup');
+    document.getElementById('loginTab').classList.toggle('active', tab === 'login');
+    document.getElementById('signupTab').classList.toggle('active', tab === 'signup');
+  }
+
+  function handleLogin() {
+    const email = document.getElementById('loginEmail').value;
+    const pass = document.getElementById('loginPassword').value;
+    if (!email || !pass) { alert('Please fill all fields.'); return; }
+    // Simulate login - replace with real backend later
+    const name = email.split('@')[0];
+    setLoggedIn(name);
+    closeModal();
+  }
+
+  function handleSignup() {
+    const name = document.getElementById('signupName').value;
+    const email = document.getElementById('signupEmail').value;
+    const phone = document.getElementById('signupPhone').value;
+    const pass = document.getElementById('signupPassword').value;
+    if (!name || !email || !phone || !pass) { alert('Please fill all fields.'); return; }
+    if (pass.length < 6) { alert('Password must be at least 6 characters.'); return; }
+    setLoggedIn(name);
+    closeModal();
+    alert('✅ Welcome to Servlo, ' + name + '!\n\nYour account has been created successfully.');
+  }
+
+  function setLoggedIn(name) {
+    document.getElementById('loginNavBtn').style.display = 'none';
+    const greeting = document.getElementById('userGreeting');
+    greeting.style.display = 'flex';
+    document.getElementById('userName').textContent = name.charAt(0).toUpperCase() + name.slice(1);
+    document.getElementById('userInitial').textContent = name.charAt(0).toUpperCase();
+  }
+
+  function logout() {
+    document.getElementById('loginNavBtn').style.display = 'block';
+    document.getElementById('userGreeting').style.display = 'none';
+  }
+
   function toggleMenu() {
     document.getElementById('mobileMenu').classList.toggle('open');
   }
@@ -1237,4 +1673,4 @@
   });
 </script>
 </body>
-</html>
+ </html>
