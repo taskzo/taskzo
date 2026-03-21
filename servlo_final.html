@@ -1,0 +1,1240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Servlo — Trusted Local Services Near You</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --saffron: #F97316;
+    --saffron-dark: #C2500A;
+    --saffron-pale: #FFF7ED;
+    --navy: #0F172A;
+    --navy-mid: #1E293B;
+    --slate: #475569;
+    --muted: #94A3B8;
+    --white: #FFFFFF;
+    --off-white: #F8FAFC;
+    --green: #16A34A;
+    --border: #E2E8F0;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--white);
+    color: var(--navy);
+    overflow-x: hidden;
+  }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5%;
+    height: 68px;
+    background: rgba(255,255,255,0.93);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    transition: box-shadow 0.3s;
+  }
+
+  .logo {
+    font-family: 'Sora', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--navy);
+    letter-spacing: -0.5px;
+  }
+  .logo span { color: var(--saffron); }
+
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    text-decoration: none;
+    color: var(--slate);
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--saffron); }
+
+  .nav-cta {
+    background: var(--saffron) !important;
+    color: white !important;
+    padding: 0.5rem 1.25rem !important;
+    border-radius: 8px;
+    font-weight: 600 !important;
+  }
+  .nav-cta:hover { background: var(--saffron-dark) !important; }
+
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; }
+  .hamburger span { width: 24px; height: 2px; background: var(--navy); border-radius: 2px; display: block; }
+
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    top: 68px; left: 0; right: 0;
+    background: white;
+    border-bottom: 1px solid var(--border);
+    padding: 1.5rem 5%;
+    flex-direction: column;
+    gap: 0;
+    z-index: 99;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a {
+    text-decoration: none;
+    color: var(--slate);
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 100px 5% 60px;
+    background: linear-gradient(135deg, #fff 0%, #FFF7ED 60%, #FEE4C7 100%);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -100px; right: -100px;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(249,115,22,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: var(--saffron-pale);
+    border: 1px solid rgba(249,115,22,0.3);
+    border-radius: 50px;
+    padding: 0.35rem 0.9rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--saffron-dark);
+    margin-bottom: 1.5rem;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  h1 {
+    font-family: 'Sora', sans-serif;
+    font-size: clamp(2.2rem, 4vw, 3.4rem);
+    font-weight: 800;
+    line-height: 1.15;
+    color: var(--navy);
+    margin-bottom: 1.25rem;
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+  h1 span { color: var(--saffron); }
+
+  .hero-sub {
+    font-size: 1.05rem;
+    color: var(--slate);
+    line-height: 1.7;
+    max-width: 480px;
+    margin-bottom: 2rem;
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+
+  .search-bar {
+    display: flex;
+    background: white;
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+    margin-bottom: 1.5rem;
+    animation: fadeUp 0.6s 0.3s ease both;
+    transition: border-color 0.2s;
+  }
+  .search-bar:focus-within { border-color: var(--saffron); }
+
+  .search-bar select, .search-bar input {
+    border: none; outline: none;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    background: transparent;
+    color: var(--navy);
+    padding: 1rem 1.2rem;
+  }
+  .search-bar select {
+    border-right: 1px solid var(--border);
+    color: var(--slate);
+    min-width: 140px;
+    cursor: pointer;
+  }
+  .search-bar input { flex: 1; }
+  .search-bar input::placeholder { color: var(--muted); }
+
+  .btn-search {
+    background: var(--saffron);
+    color: white;
+    border: none;
+    padding: 0 1.5rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    transition: background 0.2s;
+    white-space: nowrap;
+  }
+  .btn-search:hover { background: var(--saffron-dark); }
+
+  .hero-tags {
+    display: flex; flex-wrap: wrap; gap: 0.5rem;
+    animation: fadeUp 0.6s 0.4s ease both;
+  }
+  .hero-tags span {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 50px;
+    padding: 0.3rem 0.85rem;
+    font-size: 0.8rem;
+    color: var(--slate);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .hero-tags span:hover { border-color: var(--saffron); color: var(--saffron); }
+
+  .hero-visual {
+    animation: fadeUp 0.6s 0.2s ease both;
+    position: relative;
+  }
+
+  .provider-card-big {
+    background: white;
+    border-radius: 20px;
+    padding: 1.5rem;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+    border: 1px solid var(--border);
+  }
+
+  .provider-top {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .avatar {
+    width: 56px; height: 56px;
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+  }
+
+  .provider-top h3 {
+    font-family: 'Sora', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--navy);
+  }
+  .provider-top p { font-size: 0.82rem; color: var(--slate); margin-top: 2px; }
+
+  .stars { color: #FBBF24; font-size: 0.85rem; }
+  .stars span { color: var(--slate); font-size: 0.8rem; margin-left: 4px; }
+
+  .provider-stats {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem; margin-bottom: 1.2rem;
+  }
+  .stat-box {
+    background: var(--off-white);
+    border-radius: 10px;
+    padding: 0.7rem;
+    text-align: center;
+  }
+  .stat-box .val {
+    font-family: 'Sora', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--navy);
+  }
+  .stat-box .lbl { font-size: 0.72rem; color: var(--muted); margin-top: 2px; }
+
+  .verified-badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    background: #DCFCE7;
+    color: var(--green);
+    border-radius: 50px;
+    padding: 0.3rem 0.75rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+
+  .btn-hire {
+    width: 100%;
+    background: var(--saffron);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 0.85rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'Sora', sans-serif;
+    transition: all 0.2s;
+  }
+  .btn-hire:hover { background: var(--saffron-dark); transform: translateY(-1px); }
+
+  .float-card {
+    position: absolute;
+    background: white;
+    border-radius: 12px;
+    padding: 0.75rem 1rem;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    font-size: 0.82rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .float-card.top-left { top: -16px; left: -24px; color: var(--green); }
+  .float-card.bottom-right { bottom: -16px; right: -24px; color: var(--saffron); }
+
+  /* TRUST BAR */
+  .trust-bar {
+    background: var(--navy);
+    padding: 1.5rem 5%;
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    flex-wrap: wrap;
+  }
+  .trust-item {
+    display: flex; align-items: center; gap: 0.6rem;
+    color: rgba(255,255,255,0.8);
+    font-size: 0.88rem;
+    font-weight: 500;
+  }
+
+  /* SECTIONS */
+  section { padding: 80px 5%; }
+  .section-inner { max-width: 1200px; margin: 0 auto; }
+
+  .section-label {
+    display: inline-block;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--saffron);
+    margin-bottom: 0.75rem;
+  }
+
+  h2 {
+    font-family: 'Sora', sans-serif;
+    font-size: clamp(1.8rem, 3vw, 2.6rem);
+    font-weight: 800;
+    color: var(--navy);
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+  h2 span { color: var(--saffron); }
+
+  .section-sub {
+    font-size: 1rem;
+    color: var(--slate);
+    line-height: 1.7;
+    max-width: 560px;
+    margin-bottom: 3rem;
+  }
+
+  /* CATEGORIES */
+  .categories { background: var(--off-white); }
+
+  .cat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(155px, 1fr));
+    gap: 1rem;
+  }
+
+  .cat-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.5rem 1rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.25s;
+  }
+  .cat-card:hover {
+    border-color: var(--saffron);
+    box-shadow: 0 8px 24px rgba(249,115,22,0.12);
+    transform: translateY(-3px);
+  }
+  .cat-card .emoji { font-size: 2rem; margin-bottom: 0.75rem; display: block; }
+  .cat-card h4 {
+    font-family: 'Sora', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 0.25rem;
+  }
+  .cat-card p { font-size: 0.75rem; color: var(--muted); }
+
+  /* HOW IT WORKS */
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 2rem;
+  }
+
+  .step {
+    text-align: center;
+    padding: 2rem 1.5rem;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    transition: all 0.3s;
+  }
+  .step:hover { box-shadow: 0 12px 40px rgba(0,0,0,0.08); transform: translateY(-4px); }
+
+  .step-num {
+    width: 48px; height: 48px;
+    background: var(--saffron);
+    color: white;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Sora', sans-serif;
+    font-weight: 800;
+    font-size: 1.1rem;
+    margin: 0 auto 1.2rem;
+  }
+
+  .step h3 {
+    font-family: 'Sora', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--navy);
+  }
+  .step p { font-size: 0.88rem; color: var(--slate); line-height: 1.6; }
+
+  /* PROVIDERS */
+  .providers { background: var(--off-white); }
+
+  .providers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .pcard {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 1.5rem;
+    transition: all 0.3s;
+    cursor: pointer;
+  }
+  .pcard:hover {
+    box-shadow: 0 16px 48px rgba(0,0,0,0.1);
+    transform: translateY(-4px);
+    border-color: var(--saffron);
+  }
+
+  .pcard-top { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+
+  .pcard-avatar {
+    width: 52px; height: 52px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.3rem;
+    flex-shrink: 0;
+  }
+
+  .pcard-name {
+    font-family: 'Sora', sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--navy);
+  }
+  .pcard-role { font-size: 0.8rem; color: var(--slate); margin-top: 2px; }
+
+  .pcard-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1rem; }
+  .tag {
+    background: var(--saffron-pale);
+    color: var(--saffron-dark);
+    border-radius: 50px;
+    padding: 0.2rem 0.6rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+
+  .pcard-footer {
+    display: flex; justify-content: space-between; align-items: center;
+    border-top: 1px solid var(--border);
+    padding-top: 1rem;
+  }
+  .pcard-rate {
+    font-family: 'Sora', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--navy);
+  }
+  .pcard-rate span { font-size: 0.75rem; font-weight: 400; color: var(--muted); }
+
+  .btn-view {
+    background: var(--navy);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 0.45rem 1rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    transition: background 0.2s;
+  }
+  .btn-view:hover { background: var(--saffron); }
+
+  .pcard-verified { font-size: 0.76rem; color: var(--green); font-weight: 600; }
+
+  /* WHY SERVLO */
+  .why-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .why-card {
+    padding: 2rem;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: white;
+    transition: all 0.3s;
+  }
+  .why-card:hover { box-shadow: 0 12px 40px rgba(0,0,0,0.07); transform: translateY(-3px); }
+  .why-icon { font-size: 1.8rem; margin-bottom: 1rem; display: block; }
+  .why-card h3 {
+    font-family: 'Sora', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    color: var(--navy);
+  }
+  .why-card p { font-size: 0.88rem; color: var(--slate); line-height: 1.65; }
+
+  /* TESTIMONIALS */
+  .testimonials { background: var(--navy); }
+  .testimonials h2 { color: white; }
+  .testimonials .section-label { color: #FBBF24; }
+  .testimonials .section-sub { color: rgba(255,255,255,0.6); }
+
+  .testi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .testi-card {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 20px;
+    padding: 1.75rem;
+  }
+
+  .testi-stars { color: #FBBF24; margin-bottom: 1rem; font-size: 0.9rem; }
+  .testi-text {
+    font-size: 0.95rem;
+    color: rgba(255,255,255,0.85);
+    line-height: 1.7;
+    margin-bottom: 1.25rem;
+    font-style: italic;
+  }
+  .testi-author { display: flex; align-items: center; gap: 0.75rem; }
+  .testi-avatar {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+    background: rgba(249,115,22,0.2);
+  }
+  .testi-name {
+    font-family: 'Sora', sans-serif;
+    font-weight: 700;
+    font-size: 0.88rem;
+    color: white;
+  }
+  .testi-loc { font-size: 0.78rem; color: rgba(255,255,255,0.5); margin-top: 2px; }
+
+  /* JOIN AS PROVIDER */
+  .join-provider { background: linear-gradient(135deg, var(--saffron-pale) 0%, #FEE4C7 100%); }
+
+  .join-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .join-steps { list-style: none; }
+  .join-steps li { display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1.25rem; }
+  .join-dot {
+    width: 28px; height: 28px;
+    background: var(--saffron);
+    border-radius: 50%;
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 700;
+    font-family: 'Sora', sans-serif;
+    margin-top: 2px;
+  }
+  .join-steps li h4 {
+    font-family: 'Sora', sans-serif;
+    font-weight: 700;
+    font-size: 0.92rem;
+    color: var(--navy);
+    margin-bottom: 3px;
+  }
+  .join-steps li p { font-size: 0.83rem; color: var(--slate); }
+
+  .join-form-box {
+    background: white;
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+    border: 1px solid var(--border);
+  }
+  .join-form-box h3 {
+    font-family: 'Sora', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 1.25rem;
+    color: var(--navy);
+  }
+
+  .form-group { margin-bottom: 1rem; }
+  .form-group label {
+    display: block;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--slate);
+    margin-bottom: 0.4rem;
+  }
+  .form-group input, .form-group select {
+    width: 100%;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    font-size: 0.92rem;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--navy);
+    outline: none;
+    transition: border-color 0.2s;
+    background: white;
+  }
+  .form-group input:focus, .form-group select:focus { border-color: var(--saffron); }
+
+  .btn-join {
+    width: 100%;
+    background: var(--saffron);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 0.95rem;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: 'Sora', sans-serif;
+    transition: all 0.2s;
+    margin-top: 0.5rem;
+  }
+  .btn-join:hover { background: var(--saffron-dark); transform: translateY(-1px); }
+
+  /* CTA STRIP */
+  .cta-strip { background: var(--saffron); padding: 60px 5%; text-align: center; }
+  .cta-strip h2 { color: white; margin-bottom: 0.75rem; }
+  .cta-strip p { color: rgba(255,255,255,0.85); font-size: 1rem; margin-bottom: 2rem; }
+  .cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+  .btn-white {
+    background: white; color: var(--saffron);
+    border: none; border-radius: 12px; padding: 0.85rem 2rem;
+    font-size: 1rem; font-weight: 700; cursor: pointer;
+    font-family: 'Sora', sans-serif; transition: all 0.2s;
+  }
+  .btn-white:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.15); }
+
+  .btn-outline-white {
+    background: transparent; color: white;
+    border: 2px solid rgba(255,255,255,0.6); border-radius: 12px; padding: 0.85rem 2rem;
+    font-size: 1rem; font-weight: 700; cursor: pointer;
+    font-family: 'Sora', sans-serif; transition: all 0.2s;
+  }
+  .btn-outline-white:hover { border-color: white; background: rgba(255,255,255,0.1); }
+
+  /* FOOTER */
+  footer { background: var(--navy); color: rgba(255,255,255,0.7); padding: 60px 5% 32px; }
+
+  .footer-grid {
+    max-width: 1200px; margin: 0 auto;
+    display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem;
+  }
+  .footer-brand .logo { color: white; }
+  .footer-brand p { font-size: 0.88rem; line-height: 1.7; margin-top: 0.75rem; color: rgba(255,255,255,0.5); }
+
+  .footer-col h4 {
+    font-family: 'Sora', sans-serif; font-size: 0.85rem; font-weight: 700;
+    color: white; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 1px;
+  }
+  .footer-col ul { list-style: none; }
+  .footer-col ul li { margin-bottom: 0.6rem; }
+  .footer-col ul li a { text-decoration: none; color: rgba(255,255,255,0.5); font-size: 0.88rem; transition: color 0.2s; }
+  .footer-col ul li a:hover { color: var(--saffron); }
+
+  .footer-bottom {
+    max-width: 1200px; margin: 0 auto;
+    border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1.5rem;
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;
+  }
+  .footer-bottom p { font-size: 0.82rem; }
+  .footer-badges { display: flex; gap: 0.75rem; }
+  .footer-badge {
+    background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 8px; padding: 0.4rem 0.85rem; font-size: 0.78rem; color: rgba(255,255,255,0.6);
+  }
+
+  /* WHATSAPP BUTTON */
+  .whatsapp-float {
+    position: fixed;
+    bottom: 28px; right: 28px;
+    z-index: 999;
+    background: #25D366;
+    color: white;
+    border-radius: 50px;
+    padding: 0.85rem 1.4rem;
+    display: flex; align-items: center; gap: 0.6rem;
+    font-family: 'Sora', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 700;
+    text-decoration: none;
+    box-shadow: 0 8px 24px rgba(37,211,102,0.4);
+    transition: all 0.3s;
+    animation: pulse-green 2s infinite;
+  }
+  .whatsapp-float:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 12px 32px rgba(37,211,102,0.5);
+  }
+  .whatsapp-float .wa-icon { font-size: 1.3rem; }
+
+  @keyframes pulse-green {
+    0%, 100% { box-shadow: 0 8px 24px rgba(37,211,102,0.4); }
+    50% { box-shadow: 0 8px 32px rgba(37,211,102,0.7); }
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal { opacity: 0; transform: translateY(30px); transition: all 0.6s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .hero-inner { grid-template-columns: 1fr; }
+    .hero-visual { display: none; }
+    .join-inner { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+  }
+  @media (max-width: 600px) {
+    .trust-bar { gap: 1.5rem; }
+    .footer-grid { grid-template-columns: 1fr; }
+    .footer-bottom { flex-direction: column; text-align: center; }
+    .search-bar { flex-direction: column; }
+    .search-bar select { border-right: none; border-bottom: 1px solid var(--border); }
+    .btn-search { padding: 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <div class="logo">Serv<span>lo</span></div>
+  <ul class="nav-links">
+    <li><a href="#categories">Services</a></li>
+    <li><a href="#providers">Providers</a></li>
+    <li><a href="#how">How It Works</a></li>
+    <li><a href="#join" class="nav-cta">Join as Provider</a></li>
+  </ul>
+  <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#categories" onclick="toggleMenu()">Services</a>
+  <a href="#providers" onclick="toggleMenu()">Browse Providers</a>
+  <a href="#how" onclick="toggleMenu()">How It Works</a>
+  <a href="#join" onclick="toggleMenu()">Join as Provider</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="hero-badge">🇮🇳 Serving India's Best Local Talent</div>
+      <h1>Find <span>Verified</span> Service Experts Near You</h1>
+      <p class="hero-sub">
+        Servlo connects you with background-checked, customer-rated local professionals — electricians, plumbers, tutors, cleaners &amp; more. You choose who to hire.
+      </p>
+
+      <div class="search-bar">
+        <select id="serviceSelect">
+          <option value="">All Services</option>
+          <option>Electrician</option>
+          <option>Plumber</option>
+          <option>Carpenter</option>
+          <option>Tutor</option>
+          <option>Cleaning</option>
+          <option>Painter</option>
+          <option>AC Repair</option>
+          <option>Photographer</option>
+          <option>IT Support</option>
+        </select>
+        <input id="cityInput" type="text" placeholder="Enter your city or area...">
+        <button class="btn-search" onclick="handleSearch()">🔍 Search</button>
+      </div>
+
+      <div class="hero-tags">
+        <span onclick="quickSearch('Electrician')">⚡ Electrician</span>
+        <span onclick="quickSearch('Plumber')">🔧 Plumber</span>
+        <span onclick="quickSearch('Tutor')">📚 Tutor</span>
+        <span onclick="quickSearch('Cleaning')">🧹 Cleaning</span>
+        <span onclick="quickSearch('Painter')">🎨 Painter</span>
+        <span onclick="quickSearch('AC Repair')">❄️ AC Repair</span>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="float-card top-left">✅ Booking Confirmed!</div>
+      <div class="provider-card-big">
+        <div class="provider-top">
+          <div class="avatar" style="background:#FFF3E8;">🔧</div>
+          <div>
+            <h3>Ramesh Kumar</h3>
+            <p>Master Electrician · Pune</p>
+            <div class="stars">★★★★★ <span>4.9 (142 reviews)</span></div>
+          </div>
+        </div>
+        <div class="verified-badge">✔ Verified &amp; Background Checked</div>
+        <div class="provider-stats">
+          <div class="stat-box"><div class="val">8yr</div><div class="lbl">Experience</div></div>
+          <div class="stat-box"><div class="val">340+</div><div class="lbl">Jobs Done</div></div>
+          <div class="stat-box"><div class="val">₹300</div><div class="lbl">Per Hour</div></div>
+        </div>
+        <button class="btn-hire">Contact &amp; Hire →</button>
+      </div>
+      <div class="float-card bottom-right">🎉 2,400+ Happy Customers</div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST BAR -->
+<div class="trust-bar">
+  <div class="trust-item">✅ Verified Professionals</div>
+  <div class="trust-item">⭐ Rated by Real Customers</div>
+  <div class="trust-item">🔒 Secure Payments</div>
+  <div class="trust-item">🕐 24/7 Support</div>
+  <div class="trust-item">🛡️ Service Guarantee</div>
+</div>
+
+<!-- CATEGORIES -->
+<section class="categories" id="categories">
+  <div class="section-inner">
+    <span class="section-label">Browse by Category</span>
+    <h2>What do you <span>need help</span> with?</h2>
+    <p class="section-sub">From home repairs to personal tutoring — find the right expert for any job in your city.</p>
+    <div class="cat-grid reveal">
+      <div class="cat-card" onclick="quickSearch('Electrician')"><span class="emoji">⚡</span><h4>Electrician</h4><p>Wiring, fuse, fitting</p></div>
+      <div class="cat-card" onclick="quickSearch('Plumber')"><span class="emoji">🔧</span><h4>Plumber</h4><p>Pipes, taps, drains</p></div>
+      <div class="cat-card" onclick="quickSearch('Carpenter')"><span class="emoji">🪚</span><h4>Carpenter</h4><p>Furniture, doors, wood</p></div>
+      <div class="cat-card" onclick="quickSearch('Painter')"><span class="emoji">🎨</span><h4>Painter</h4><p>Interior &amp; exterior</p></div>
+      <div class="cat-card" onclick="quickSearch('AC Repair')"><span class="emoji">❄️</span><h4>AC Repair</h4><p>Service, gas, install</p></div>
+      <div class="cat-card" onclick="quickSearch('Cleaning')"><span class="emoji">🧹</span><h4>Cleaning</h4><p>Home &amp; deep clean</p></div>
+      <div class="cat-card" onclick="quickSearch('Tutor')"><span class="emoji">📚</span><h4>Tutor</h4><p>School, college, JEE</p></div>
+      <div class="cat-card" onclick="quickSearch('Photographer')"><span class="emoji">📷</span><h4>Photographer</h4><p>Events, portraits</p></div>
+      <div class="cat-card" onclick="quickSearch('IT Support')"><span class="emoji">💻</span><h4>IT Support</h4><p>Laptop, wifi, setup</p></div>
+      <div class="cat-card"><span class="emoji">🏠</span><h4>Interior</h4><p>Design, decor, plan</p></div>
+      <div class="cat-card"><span class="emoji">🔒</span><h4>Security</h4><p>CCTV, lock, gates</p></div>
+      <div class="cat-card"><span class="emoji">🚗</span><h4>Car Mechanic</h4><p>Repair, service, wash</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="section-inner">
+    <span class="section-label">Simple Process</span>
+    <h2>Book a service in <span>3 easy steps</span></h2>
+    <p class="section-sub">No middlemen, no confusion. You see the best providers and decide who to call.</p>
+    <div class="steps-grid reveal">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h3>Search Your Service</h3>
+        <p>Tell us what you need and your location. We show you the top-rated verified providers near you instantly.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h3>Compare &amp; Choose</h3>
+        <p>Check ratings, reviews, pricing and experience. You decide who to contact — no pressure, full freedom.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h3>Book &amp; Get it Done</h3>
+        <p>Contact the provider directly, confirm the job, pay securely, and leave a review to help others.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED PROVIDERS -->
+<section class="providers" id="providers">
+  <div class="section-inner">
+    <span class="section-label">Top Rated This Week</span>
+    <h2>Meet Our <span>Best Providers</span></h2>
+    <p class="section-sub">All providers are manually verified, background-checked, and rated by real customers like you.</p>
+    <div class="providers-grid reveal">
+
+      <div class="pcard">
+        <div class="pcard-top">
+          <div class="pcard-avatar" style="background:#FFF3E8;">⚡</div>
+          <div>
+            <div class="pcard-name">Ramesh Kumar</div>
+            <div class="pcard-role">⭐ 4.9 · 142 reviews · Pune</div>
+          </div>
+        </div>
+        <div class="pcard-tags"><span class="tag">Home Wiring</span><span class="tag">MCB Fixing</span><span class="tag">Fan Install</span></div>
+        <div class="pcard-footer">
+          <div><div class="pcard-rate">₹300<span>/hr</span></div><div class="pcard-verified">✔ Verified</div></div>
+          <button class="btn-view">View Profile</button>
+        </div>
+      </div>
+
+      <div class="pcard">
+        <div class="pcard-top">
+          <div class="pcard-avatar" style="background:#EFF6FF;">🔧</div>
+          <div>
+            <div class="pcard-name">Suresh Patil</div>
+            <div class="pcard-role">⭐ 4.8 · 98 reviews · Mumbai</div>
+          </div>
+        </div>
+        <div class="pcard-tags"><span class="tag">Pipe Repair</span><span class="tag">Tap Fixing</span><span class="tag">Drainage</span></div>
+        <div class="pcard-footer">
+          <div><div class="pcard-rate">₹250<span>/hr</span></div><div class="pcard-verified">✔ Verified</div></div>
+          <button class="btn-view">View Profile</button>
+        </div>
+      </div>
+
+      <div class="pcard">
+        <div class="pcard-top">
+          <div class="pcard-avatar" style="background:#F0FDF4;">📚</div>
+          <div>
+            <div class="pcard-name">Priya Sharma</div>
+            <div class="pcard-role">⭐ 5.0 · 67 reviews · Delhi</div>
+          </div>
+        </div>
+        <div class="pcard-tags"><span class="tag">Maths</span><span class="tag">Science</span><span class="tag">JEE Prep</span></div>
+        <div class="pcard-footer">
+          <div><div class="pcard-rate">₹400<span>/hr</span></div><div class="pcard-verified">✔ Verified</div></div>
+          <button class="btn-view">View Profile</button>
+        </div>
+      </div>
+
+      <div class="pcard">
+        <div class="pcard-top">
+          <div class="pcard-avatar" style="background:#FFF7ED;">🎨</div>
+          <div>
+            <div class="pcard-name">Anil Mehta</div>
+            <div class="pcard-role">⭐ 4.7 · 113 reviews · Ahmedabad</div>
+          </div>
+        </div>
+        <div class="pcard-tags"><span class="tag">Interior Paint</span><span class="tag">Texture</span><span class="tag">Waterproof</span></div>
+        <div class="pcard-footer">
+          <div><div class="pcard-rate">₹200<span>/hr</span></div><div class="pcard-verified">✔ Verified</div></div>
+          <button class="btn-view">View Profile</button>
+        </div>
+      </div>
+
+      <div class="pcard">
+        <div class="pcard-top">
+          <div class="pcard-avatar" style="background:#FDF2F8;">🧹</div>
+          <div>
+            <div class="pcard-name">Savita Joshi</div>
+            <div class="pcard-role">⭐ 4.9 · 201 reviews · Bangalore</div>
+          </div>
+        </div>
+        <div class="pcard-tags"><span class="tag">Deep Clean</span><span class="tag">Kitchen</span><span class="tag">Move-in</span></div>
+        <div class="pcard-footer">
+          <div><div class="pcard-rate">₹180<span>/hr</span></div><div class="pcard-verified">✔ Verified</div></div>
+          <button class="btn-view">View Profile</button>
+        </div>
+      </div>
+
+      <div class="pcard">
+        <div class="pcard-top">
+          <div class="pcard-avatar" style="background:#ECFDF5;">❄️</div>
+          <div>
+            <div class="pcard-name">Vikram Singh</div>
+            <div class="pcard-role">⭐ 4.8 · 89 reviews · Jaipur</div>
+          </div>
+        </div>
+        <div class="pcard-tags"><span class="tag">AC Service</span><span class="tag">Gas Refill</span><span class="tag">Install</span></div>
+        <div class="pcard-footer">
+          <div><div class="pcard-rate">₹350<span>/hr</span></div><div class="pcard-verified">✔ Verified</div></div>
+          <button class="btn-view">View Profile</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- WHY SERVLO -->
+<section>
+  <div class="section-inner">
+    <span class="section-label">Why Choose Us</span>
+    <h2>Different from <span>JustDial &amp; others</span></h2>
+    <p class="section-sub">We curate only the best — verified, rated, real. And you stay in control of who you hire.</p>
+    <div class="why-grid reveal">
+      <div class="why-card"><span class="why-icon">🔍</span><h3>Manually Verified Providers</h3><p>Every provider goes through ID check, skills test, and background verification before being listed on Servlo.</p></div>
+      <div class="why-card"><span class="why-icon">⭐</span><h3>Real Customer Reviews</h3><p>Only customers who actually booked can leave reviews. No fake ratings, no paid promotions — ever.</p></div>
+      <div class="why-card"><span class="why-icon">🎯</span><h3>You Choose, No Pressure</h3><p>Unlike platforms that assign workers, you see profiles and pick who you're comfortable with. Full control.</p></div>
+      <div class="why-card"><span class="why-icon">💰</span><h3>Fair Pricing, No Surprises</h3><p>Providers list their rates upfront. What you see is what you pay. No hidden fees from Servlo's side.</p></div>
+      <div class="why-card"><span class="why-icon">🤝</span><h3>Local Jobs, Local Income</h3><p>We support real people in your city — not big corporates. Every booking directly helps a local family.</p></div>
+      <div class="why-card"><span class="why-icon">🛡️</span><h3>Servlo Service Guarantee</h3><p>Not satisfied with the work? Raise a dispute within 24 hours and we'll resolve it — no questions asked.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <div class="section-inner">
+    <span class="section-label">Customer Stories</span>
+    <h2>Real people. <span style="color:#FBBF24;">Real results.</span></h2>
+    <p class="section-sub">Thousands of happy customers across India trust Servlo for everyday needs.</p>
+    <div class="testi-grid reveal">
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"Found an amazing electrician within 10 minutes. He came the same day, fixed everything properly. Price was exactly what was shown. No drama at all!"</p>
+        <div class="testi-author"><div class="testi-avatar">👩</div><div><div class="testi-name">Neha Gupta</div><div class="testi-loc">Pune · Hired Electrician</div></div></div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"JustDial never gave me reliable people. Servlo's provider was background checked and I could see his reviews. Felt completely safe having him at home."</p>
+        <div class="testi-author"><div class="testi-avatar">👨</div><div><div class="testi-name">Rahul Sharma</div><div class="testi-loc">Mumbai · Hired Plumber</div></div></div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"My daughter's JEE score improved after just 2 months with the tutor I found on Servlo. The rating system helped me pick exactly the right one."</p>
+        <div class="testi-author"><div class="testi-avatar">👩</div><div><div class="testi-name">Sunita Agarwal</div><div class="testi-loc">Delhi · Hired Tutor</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- JOIN AS PROVIDER -->
+<section class="join-provider" id="join">
+  <div class="section-inner">
+    <div class="join-inner">
+      <div>
+        <span class="section-label">For Service Providers</span>
+        <h2>Earn more by joining <span>Servlo</span></h2>
+        <p class="section-sub">Get genuine customers, build your reputation, and grow your income — all on your own schedule.</p>
+        <ul class="join-steps">
+          <li><div class="join-dot">1</div><div><h4>Register &amp; Submit Documents</h4><p>Basic ID and skill proof — takes less than 5 minutes online.</p></div></li>
+          <li><div class="join-dot">2</div><div><h4>Get Verified by Our Team</h4><p>We review your profile within 24–48 hours and activate your listing.</p></div></li>
+          <li><div class="join-dot">3</div><div><h4>Start Receiving Customers</h4><p>Customers find you, contact you, and you handle the job your way.</p></div></li>
+          <li><div class="join-dot">4</div><div><h4>Build Reviews &amp; Grow</h4><p>More good reviews = higher ranking = more customers. Simple.</p></div></li>
+        </ul>
+      </div>
+
+      <div class="join-form-box">
+        <h3>📝 Register as a Provider</h3>
+        <form id="providerForm" action="https://formspree.io/f/mqeyjrga" method="POST">
+          <div class="form-group"><label>Full Name</label><input type="text" name="Full Name" id="provName" placeholder="Ramesh Kumar" required></div>
+          <div class="form-group"><label>Mobile Number</label><input type="tel" name="Mobile Number" id="provPhone" placeholder="+91 98765 43210" required></div>
+          <div class="form-group"><label>Your City</label><input type="text" name="City" id="provCity" placeholder="Pune, Mumbai, Delhi..." required></div>
+          <div class="form-group">
+            <label>Service Category</label>
+            <select name="Service Category" id="provService" required>
+              <option value="">Select your skill</option>
+              <option>Electrician</option><option>Plumber</option><option>Carpenter</option>
+              <option>Painter</option><option>AC Repair</option><option>Home Cleaning</option>
+              <option>Tutor</option><option>Photographer</option><option>IT Support</option><option>Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Years of Experience</label>
+            <select name="Experience">
+              <option>Less than 1 year</option><option>1–3 years</option>
+              <option>3–5 years</option><option>5–10 years</option><option>10+ years</option>
+            </select>
+          </div>
+          <button type="submit" class="btn-join">Apply to Join Servlo →</button>
+        </form>
+        <div id="formSuccess" style="display:none; text-align:center; padding:1.5rem 0;">
+          <div style="font-size:2.5rem; margin-bottom:0.75rem;">🎉</div>
+          <h4 style="font-family:'Sora',sans-serif; color:var(--navy); margin-bottom:0.5rem;">Application Received!</h4>
+          <p style="color:var(--slate); font-size:0.9rem;">Our team will contact you within 24 hours.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA STRIP -->
+<div class="cta-strip">
+  <h2>Ready to find the right expert?</h2>
+  <p>Join thousands of Indians who trust Servlo for reliable, verified local services.</p>
+  <div class="cta-btns">
+    <button class="btn-white" onclick="window.scrollTo({top:0,behavior:'smooth'})">Find a Service Now</button>
+    <button class="btn-outline-white" onclick="document.getElementById('join').scrollIntoView({behavior:'smooth'})">List Your Services</button>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="logo">Serv<span>lo</span></div>
+      <p>India's trusted platform for verified local service professionals. Connecting real customers with real experts — fairly and transparently.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="#">Electrician</a></li><li><a href="#">Plumber</a></li>
+        <li><a href="#">Carpenter</a></li><li><a href="#">AC Repair</a></li>
+        <li><a href="#">Home Cleaning</a></li><li><a href="#">Tutors</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="#">About Us</a></li><li><a href="#">How It Works</a></li>
+        <li><a href="#">For Providers</a></li><li><a href="#">Blog</a></li>
+        <li><a href="#">Careers</a></li><li><a href="#">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Support</h4>
+      <ul>
+        <li><a href="#">Help Center</a></li><li><a href="#">Safety Policy</a></li>
+        <li><a href="#">Privacy Policy</a></li><li><a href="#">Terms of Service</a></li>
+        <li><a href="#">Refund Policy</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Servlo. Made with ❤️ in India. All rights reserved.</p>
+    <div class="footer-badges">
+      <div class="footer-badge">🔒 SSL Secured</div>
+      <div class="footer-badge">🇮🇳 Made in India</div>
+      <div class="footer-badge">⭐ Trusted Platform</div>
+    </div>
+  </div>
+</footer>
+
+<!-- WHATSAPP FLOATING BUTTON -->
+<a href="https://wa.me/919999999999?text=Hello%20Servlo!%20I%20need%20help%20with%20a%20service." 
+   class="whatsapp-float" target="_blank" id="waBtn">
+  <span class="wa-icon">💬</span>
+  <span>Chat on WhatsApp</span>
+</a>
+
+<script>
+  function toggleMenu() {
+    document.getElementById('mobileMenu').classList.toggle('open');
+  }
+
+  function quickSearch(service) {
+    document.getElementById('serviceSelect').value = service;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setTimeout(() => document.getElementById('cityInput').focus(), 600);
+  }
+
+  function handleSearch() {
+    const service = document.getElementById('serviceSelect').value || 'services';
+    const city = document.getElementById('cityInput').value;
+    if (!city) { document.getElementById('cityInput').focus(); return; }
+    alert('🔍 Searching for ' + service + ' in ' + city + '...\n\nThis will show results once your backend is connected!');
+  }
+
+  // Formspree AJAX form submit
+  const form = document.getElementById('providerForm');
+  if (form) {
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const btn = form.querySelector('.btn-join');
+      btn.textContent = 'Sending...';
+      btn.disabled = true;
+      try {
+        const response = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { 'Accept': 'application/json' }
+        });
+        if (response.ok) {
+          form.style.display = 'none';
+          document.getElementById('formSuccess').style.display = 'block';
+        } else {
+          btn.textContent = 'Try Again';
+          btn.disabled = false;
+          alert('Something went wrong. Please try again.');
+        }
+      } catch {
+        btn.textContent = 'Try Again';
+        btn.disabled = false;
+        alert('Network error. Please check your connection.');
+      }
+    });
+  }
+
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Nav shadow on scroll
+  window.addEventListener('scroll', () => {
+    document.getElementById('mainNav').style.boxShadow = window.scrollY > 20 ? '0 4px 20px rgba(0,0,0,0.08)' : 'none';
+  });
+</script>
+</body>
+</html>
