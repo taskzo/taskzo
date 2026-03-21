@@ -3,1002 +3,360 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Servlo — Trusted Local Services Near You</title>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<title>Servlo — आपका काम, हमारी ज़िम्मेदारी</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  :root {
-    --saffron: #F97316;
-    --saffron-dark: #C2500A;
-    --saffron-pale: #FFF7ED;
-    --navy: #0F172A;
-    --navy-mid: #1E293B;
-    --slate: #475569;
-    --muted: #94A3B8;
-    --white: #FFFFFF;
-    --off-white: #F8FAFC;
-    --green: #16A34A;
-    --border: #E2E8F0;
-  }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--white);
-    color: var(--navy);
-    overflow-x: hidden;
-  }
-
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 0 5%;
-    height: 68px;
-    background: rgba(255,255,255,0.93);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--border);
-    transition: box-shadow 0.3s;
-  }
-
-  .logo {
-    font-family: 'Sora', sans-serif;
-    font-size: 1.6rem;
-    font-weight: 800;
-    color: var(--navy);
-    letter-spacing: -0.5px;
-  }
-  .logo span { color: var(--saffron); }
-
-  .nav-links { display: flex; gap: 2rem; list-style: none; }
-  .nav-links a {
-    text-decoration: none;
-    color: var(--slate);
-    font-size: 0.9rem;
-    font-weight: 500;
-    transition: color 0.2s;
-  }
-  .nav-links a:hover { color: var(--blue); }
-
-  .nav-cta {
-    background: var(--saffron) !important;
-    color: white !important;
-    padding: 0.5rem 1.25rem !important;
-    border-radius: 8px;
-    font-weight: 600 !important;
-  }
-  .nav-cta:hover { background: var(--saffron-dark) !important; }
-
-  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; }
-  .hamburger span { width: 24px; height: 2px; background: var(--navy); border-radius: 2px; display: block; }
-
-  .mobile-menu {
-    display: none;
-    position: fixed;
-    top: 68px; left: 0; right: 0;
-    background: white;
-    border-bottom: 1px solid var(--border);
-    padding: 1.5rem 5%;
-    flex-direction: column;
-    gap: 0;
-    z-index: 99;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
-  }
-  .mobile-menu.open { display: flex; }
-  .mobile-menu a {
-    text-decoration: none;
-    color: var(--slate);
-    font-size: 1rem;
-    font-weight: 500;
-    padding: 0.75rem 0;
-    border-bottom: 1px solid var(--border);
-  }
-
-  /* HERO */
-  .hero {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    padding: 100px 5% 60px;
-    background: linear-gradient(135deg, #fff 0%, #FFF7ED 60%, #FEE4C7 100%);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .hero::before {
-    content: '';
-    position: absolute;
-    top: -100px; right: -100px;
-    width: 600px; height: 600px;
-    background: radial-gradient(circle, rgba(249,115,22,0.12) 0%, transparent 70%);
-    pointer-events: none;
-  }
-
-  .hero-inner {
-    max-width: 1200px;
-    margin: 0 auto;
-    width: 100%;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
-    align-items: center;
-  }
-
-  .hero-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    background: var(--saffron-pale);
-    border: 1px solid rgba(249,115,22,0.3);
-    border-radius: 50px;
-    padding: 0.35rem 0.9rem;
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: var(--saffron-dark);
-    margin-bottom: 1.5rem;
-    animation: fadeUp 0.6s ease both;
-  }
-
-  h1 {
-    font-family: 'Sora', sans-serif;
-    font-size: clamp(2.2rem, 4vw, 3.4rem);
-    font-weight: 800;
-    line-height: 1.15;
-    color: var(--navy);
-    margin-bottom: 1.25rem;
-    animation: fadeUp 0.6s 0.1s ease both;
-  }
-  h1 span { color: var(--saffron); }
-
-  .hero-sub {
-    font-size: 1.05rem;
-    color: var(--slate);
-    line-height: 1.7;
-    max-width: 480px;
-    margin-bottom: 2rem;
-    animation: fadeUp 0.6s 0.2s ease both;
-  }
-
-  .search-bar {
-    display: flex;
-    background: white;
-    border: 2px solid var(--border);
-    border-radius: 14px;
-    overflow: hidden;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.08);
-    margin-bottom: 1.5rem;
-    animation: fadeUp 0.6s 0.3s ease both;
-    transition: border-color 0.2s;
-  }
-  .search-bar:focus-within { border-color: var(--saffron); }
-
-  .search-bar select, .search-bar input {
-    border: none; outline: none;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.95rem;
-    background: transparent;
-    color: var(--navy);
-    padding: 1rem 1.2rem;
-  }
-  .search-bar select {
-    border-right: 1px solid var(--border);
-    color: var(--slate);
-    min-width: 140px;
-    cursor: pointer;
-  }
-  .search-bar input { flex: 1; }
-  .search-bar input::placeholder { color: var(--muted); }
-
-  .btn-search {
-    background: var(--saffron);
-    color: white;
-    border: none;
-    padding: 0 1.5rem;
-    font-size: 0.95rem;
-    font-weight: 600;
-    cursor: pointer;
-    font-family: 'DM Sans', sans-serif;
-    transition: background 0.2s;
-    white-space: nowrap;
-  }
-  .btn-search:hover { background: var(--saffron-dark); }
-
-  .hero-tags {
-    display: flex; flex-wrap: wrap; gap: 0.5rem;
-    animation: fadeUp 0.6s 0.4s ease both;
-  }
-  .hero-tags span {
-    background: white;
-    border: 1px solid var(--border);
-    border-radius: 50px;
-    padding: 0.3rem 0.85rem;
-    font-size: 0.8rem;
-    color: var(--slate);
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-  .hero-tags span:hover { border-color: var(--saffron); color: var(--saffron); }
-
-  .hero-visual {
-    animation: fadeUp 0.6s 0.2s ease both;
-    position: relative;
-  }
-
-  .provider-card-big {
-    background: white;
-    border-radius: 20px;
-    padding: 1.5rem;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.1);
-    border: 1px solid var(--border);
-  }
-
-  .provider-top {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 1.2rem;
-  }
-
-  .avatar {
-    width: 56px; height: 56px;
-    border-radius: 14px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1.5rem;
-    flex-shrink: 0;
-  }
-
-  .provider-top h3 {
-    font-family: 'Sora', sans-serif;
-    font-size: 1rem;
-    font-weight: 700;
-    color: var(--navy);
-  }
-  .provider-top p { font-size: 0.82rem; color: var(--slate); margin-top: 2px; }
-
-  .stars { color: #FBBF24; font-size: 0.85rem; }
-  .stars span { color: var(--slate); font-size: 0.8rem; margin-left: 4px; }
-
-  .provider-stats {
-    display: grid; grid-template-columns: repeat(3, 1fr);
-    gap: 0.75rem; margin-bottom: 1.2rem;
-  }
-  .stat-box {
-    background: var(--off-white);
-    border-radius: 10px;
-    padding: 0.7rem;
-    text-align: center;
-  }
-  .stat-box .val {
-    font-family: 'Sora', sans-serif;
-    font-weight: 700;
-    font-size: 1rem;
-    color: var(--navy);
-  }
-  .stat-box .lbl { font-size: 0.72rem; color: var(--muted); margin-top: 2px; }
-
-  .verified-badge {
-    display: inline-flex; align-items: center; gap: 5px;
-    background: #DCFCE7;
-    color: var(--green);
-    border-radius: 50px;
-    padding: 0.3rem 0.75rem;
-    font-size: 0.78rem;
-    font-weight: 600;
-    margin-bottom: 1rem;
-  }
-
-  .btn-hire {
-    width: 100%;
-    background: var(--saffron);
-    color: white;
-    border: none;
-    border-radius: 10px;
-    padding: 0.85rem;
-    font-size: 0.95rem;
-    font-weight: 600;
-    cursor: pointer;
-    font-family: 'Sora', sans-serif;
-    transition: all 0.2s;
-  }
-  .btn-hire:hover { background: var(--saffron-dark); transform: translateY(-1px); }
-
-  .float-card {
-    position: absolute;
-    background: white;
-    border-radius: 12px;
-    padding: 0.75rem 1rem;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
-    font-size: 0.82rem;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-  .float-card.top-left { top: -16px; left: -24px; color: var(--green); }
-  .float-card.bottom-right { bottom: -16px; right: -24px; color: var(--saffron); }
-
-  /* TRUST BAR */
-  .trust-bar {
-    background: var(--navy);
-    padding: 1.5rem 5%;
-    display: flex;
-    justify-content: center;
-    gap: 3rem;
-    flex-wrap: wrap;
-  }
-  .trust-item {
-    display: flex; align-items: center; gap: 0.6rem;
-    color: rgba(255,255,255,0.8);
-    font-size: 0.88rem;
-    font-weight: 500;
-  }
-
-  /* SECTIONS */
-  section { padding: 80px 5%; }
-  .section-inner { max-width: 1200px; margin: 0 auto; }
-
-  .section-label {
-    display: inline-block;
-    font-size: 0.78rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    color: var(--saffron);
-    margin-bottom: 0.75rem;
-  }
-
-  h2 {
-    font-family: 'Sora', sans-serif;
-    font-size: clamp(1.8rem, 3vw, 2.6rem);
-    font-weight: 800;
-    color: var(--navy);
-    line-height: 1.2;
-    margin-bottom: 1rem;
-  }
-  h2 span { color: var(--saffron); }
-
-  .section-sub {
-    font-size: 1rem;
-    color: var(--slate);
-    line-height: 1.7;
-    max-width: 560px;
-    margin-bottom: 3rem;
-  }
-
-  /* CATEGORIES */
-  .categories { background: var(--off-white); }
-
-  .cat-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(155px, 1fr));
-    gap: 1rem;
-  }
-
-  .cat-card {
-    background: white;
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 1.5rem 1rem;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.25s;
-  }
-  .cat-card:hover {
-    border-color: var(--saffron);
-    box-shadow: 0 8px 24px rgba(249,115,22,0.12);
-    transform: translateY(-3px);
-  }
-  .cat-card .emoji { font-size: 2rem; margin-bottom: 0.75rem; display: block; }
-  .cat-card h4 {
-    font-family: 'Sora', sans-serif;
-    font-size: 0.88rem;
-    font-weight: 700;
-    color: var(--navy);
-    margin-bottom: 0.25rem;
-  }
-  .cat-card p { font-size: 0.75rem; color: var(--muted); }
-
-  /* HOW IT WORKS */
-  .steps-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 2rem;
-  }
-
-  .step {
-    text-align: center;
-    padding: 2rem 1.5rem;
-    background: white;
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    transition: all 0.3s;
-  }
-  .step:hover { box-shadow: 0 12px 40px rgba(0,0,0,0.08); transform: translateY(-4px); }
-
-  .step-num {
-    width: 48px; height: 48px;
-    background: var(--saffron);
-    color: white;
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-family: 'Sora', sans-serif;
-    font-weight: 800;
-    font-size: 1.1rem;
-    margin: 0 auto 1.2rem;
-  }
-
-  .step h3 {
-    font-family: 'Sora', sans-serif;
-    font-size: 1rem;
-    font-weight: 700;
-    margin-bottom: 0.5rem;
-    color: var(--navy);
-  }
-  .step p { font-size: 0.88rem; color: var(--slate); line-height: 1.6; }
-
-  /* PROVIDERS */
-  .providers { background: var(--off-white); }
-
-  .providers-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 1.5rem;
-  }
-
-  .pcard {
-    background: white;
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 1.5rem;
-    transition: all 0.3s;
-    cursor: pointer;
-  }
-  .pcard:hover {
-    box-shadow: 0 16px 48px rgba(0,0,0,0.1);
-    transform: translateY(-4px);
-    border-color: var(--saffron);
-  }
-
-  .pcard-top { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
-
-  .pcard-avatar {
-    width: 52px; height: 52px;
-    border-radius: 12px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1.3rem;
-    flex-shrink: 0;
-  }
-
-  .pcard-name {
-    font-family: 'Sora', sans-serif;
-    font-weight: 700;
-    font-size: 0.95rem;
-    color: var(--navy);
-  }
-  .pcard-role { font-size: 0.8rem; color: var(--slate); margin-top: 2px; }
-
-  .pcard-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1rem; }
-  .tag {
-    background: var(--saffron-pale);
-    color: var(--saffron-dark);
-    border-radius: 50px;
-    padding: 0.2rem 0.6rem;
-    font-size: 0.75rem;
-    font-weight: 600;
-  }
-
-  .pcard-footer {
-    display: flex; justify-content: space-between; align-items: center;
-    border-top: 1px solid var(--border);
-    padding-top: 1rem;
-  }
-  .pcard-rate {
-    font-family: 'Sora', sans-serif;
-    font-weight: 700;
-    font-size: 1rem;
-    color: var(--navy);
-  }
-  .pcard-rate span { font-size: 0.75rem; font-weight: 400; color: var(--muted); }
-
-  .btn-view {
-    background: var(--navy);
-    color: white;
-    border: none;
-    border-radius: 8px;
-    padding: 0.45rem 1rem;
-    font-size: 0.82rem;
-    font-weight: 600;
-    cursor: pointer;
-    font-family: 'DM Sans', sans-serif;
-    transition: background 0.2s;
-  }
-  .btn-view:hover { background: var(--saffron); }
-
-  .pcard-verified { font-size: 0.76rem; color: var(--green); font-weight: 600; }
-
-  /* WHY SERVLO */
-  .why-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 1.5rem;
-  }
-
-  .why-card {
-    padding: 2rem;
-    border-radius: 20px;
-    border: 1px solid var(--border);
-    background: white;
-    transition: all 0.3s;
-  }
-  .why-card:hover { box-shadow: 0 12px 40px rgba(0,0,0,0.07); transform: translateY(-3px); }
-  .why-icon { font-size: 1.8rem; margin-bottom: 1rem; display: block; }
-  .why-card h3 {
-    font-family: 'Sora', sans-serif;
-    font-weight: 700;
-    font-size: 1rem;
-    margin-bottom: 0.5rem;
-    color: var(--navy);
-  }
-  .why-card p { font-size: 0.88rem; color: var(--slate); line-height: 1.65; }
-
-  /* TESTIMONIALS */
-  .testimonials { background: var(--navy); }
-  .testimonials h2 { color: white; }
-  .testimonials .section-label { color: #FBBF24; }
-  .testimonials .section-sub { color: rgba(255,255,255,0.6); }
-
-  .testi-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
-    gap: 1.5rem;
-  }
-
-  .testi-card {
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 20px;
-    padding: 1.75rem;
-  }
-
-  .testi-stars { color: #FBBF24; margin-bottom: 1rem; font-size: 0.9rem; }
-  .testi-text {
-    font-size: 0.95rem;
-    color: rgba(255,255,255,0.85);
-    line-height: 1.7;
-    margin-bottom: 1.25rem;
-    font-style: italic;
-  }
-  .testi-author { display: flex; align-items: center; gap: 0.75rem; }
-  .testi-avatar {
-    width: 40px; height: 40px;
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1rem;
-    background: rgba(249,115,22,0.2);
-  }
-  .testi-name {
-    font-family: 'Sora', sans-serif;
-    font-weight: 700;
-    font-size: 0.88rem;
-    color: white;
-  }
-  .testi-loc { font-size: 0.78rem; color: rgba(255,255,255,0.5); margin-top: 2px; }
-
-  /* JOIN AS PROVIDER */
-  .join-provider { background: linear-gradient(135deg, var(--saffron-pale) 0%, #FEE4C7 100%); }
-
-  .join-inner {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
-    align-items: center;
-  }
-
-  .join-steps { list-style: none; }
-  .join-steps li { display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1.25rem; }
-  .join-dot {
-    width: 28px; height: 28px;
-    background: var(--saffron);
-    border-radius: 50%;
-    flex-shrink: 0;
-    display: flex; align-items: center; justify-content: center;
-    color: white;
-    font-size: 0.75rem;
-    font-weight: 700;
-    font-family: 'Sora', sans-serif;
-    margin-top: 2px;
-  }
-  .join-steps li h4 {
-    font-family: 'Sora', sans-serif;
-    font-weight: 700;
-    font-size: 0.92rem;
-    color: var(--navy);
-    margin-bottom: 3px;
-  }
-  .join-steps li p { font-size: 0.83rem; color: var(--slate); }
-
-  .join-form-box {
-    background: white;
-    border-radius: 20px;
-    padding: 2rem;
-    box-shadow: 0 12px 40px rgba(0,0,0,0.08);
-    border: 1px solid var(--border);
-  }
-  .join-form-box h3 {
-    font-family: 'Sora', sans-serif;
-    font-size: 1.2rem;
-    font-weight: 700;
-    margin-bottom: 1.25rem;
-    color: var(--navy);
-  }
-
-  .form-group { margin-bottom: 1rem; }
-  .form-group label {
-    display: block;
-    font-size: 0.82rem;
-    font-weight: 600;
-    color: var(--slate);
-    margin-bottom: 0.4rem;
-  }
-  .form-group input, .form-group select {
-    width: 100%;
-    border: 1.5px solid var(--border);
-    border-radius: 10px;
-    padding: 0.75rem 1rem;
-    font-size: 0.92rem;
-    font-family: 'DM Sans', sans-serif;
-    color: var(--navy);
-    outline: none;
-    transition: border-color 0.2s;
-    background: white;
-  }
-  .form-group input:focus, .form-group select:focus { border-color: var(--saffron); }
-
-  .btn-join {
-    width: 100%;
-    background: var(--saffron);
-    color: white;
-    border: none;
-    border-radius: 12px;
-    padding: 0.95rem;
-    font-size: 1rem;
-    font-weight: 700;
-    cursor: pointer;
-    font-family: 'Sora', sans-serif;
-    transition: all 0.2s;
-    margin-top: 0.5rem;
-  }
-  .btn-join:hover { background: var(--saffron-dark); transform: translateY(-1px); }
-
-  /* CTA STRIP */
-  .cta-strip { background: var(--saffron); padding: 60px 5%; text-align: center; }
-  .cta-strip h2 { color: white; margin-bottom: 0.75rem; }
-  .cta-strip p { color: rgba(255,255,255,0.85); font-size: 1rem; margin-bottom: 2rem; }
-  .cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
-
-  .btn-white {
-    background: white; color: var(--saffron);
-    border: none; border-radius: 12px; padding: 0.85rem 2rem;
-    font-size: 1rem; font-weight: 700; cursor: pointer;
-    font-family: 'Sora', sans-serif; transition: all 0.2s;
-  }
-  .btn-white:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.15); }
-
-  .btn-outline-white {
-    background: transparent; color: white;
-    border: 2px solid rgba(255,255,255,0.6); border-radius: 12px; padding: 0.85rem 2rem;
-    font-size: 1rem; font-weight: 700; cursor: pointer;
-    font-family: 'Sora', sans-serif; transition: all 0.2s;
-  }
-  .btn-outline-white:hover { border-color: white; background: rgba(255,255,255,0.1); }
-
-  /* FOOTER */
-  footer { background: var(--navy); color: rgba(255,255,255,0.7); padding: 60px 5% 32px; }
-
-  .footer-grid {
-    max-width: 1200px; margin: 0 auto;
-    display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem;
-  }
-  .footer-brand .logo { color: white; }
-  .footer-brand p { font-size: 0.88rem; line-height: 1.7; margin-top: 0.75rem; color: rgba(255,255,255,0.5); }
-
-  .footer-col h4 {
-    font-family: 'Sora', sans-serif; font-size: 0.85rem; font-weight: 700;
-    color: white; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 1px;
-  }
-  .footer-col ul { list-style: none; }
-  .footer-col ul li { margin-bottom: 0.6rem; }
-  .footer-col ul li a { text-decoration: none; color: rgba(255,255,255,0.5); font-size: 0.88rem; transition: color 0.2s; }
-  .footer-col ul li a:hover { color: var(--saffron); }
-
-  .footer-bottom {
-    max-width: 1200px; margin: 0 auto;
-    border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1.5rem;
-    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;
-  }
-  .footer-bottom p { font-size: 0.82rem; }
-  .footer-badges { display: flex; gap: 0.75rem; }
-  .footer-badge {
-    background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12);
-    border-radius: 8px; padding: 0.4rem 0.85rem; font-size: 0.78rem; color: rgba(255,255,255,0.6);
-  }
-
-  /* LANGUAGE SELECTOR */
-  .lang-selector {
-    position: relative;
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-  }
-  .lang-btn {
-    background: var(--off-white);
-    border: 1.5px solid var(--border);
-    border-radius: 8px;
-    padding: 0.35rem 0.75rem;
-    font-size: 0.82rem;
-    font-weight: 600;
-    cursor: pointer;
-    font-family: 'DM Sans', sans-serif;
-    color: var(--slate);
-    display: flex; align-items: center; gap: 5px;
-    transition: all 0.2s;
-  }
-  .lang-btn:hover { border-color: var(--saffron); color: var(--saffron); }
-
-  .lang-dropdown {
-    display: none;
-    position: absolute;
-    top: calc(100% + 8px);
-    right: 0;
-    background: white;
-    border: 1.5px solid var(--border);
-    border-radius: 12px;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
-    overflow: hidden;
-    min-width: 140px;
-    z-index: 200;
-  }
-  .lang-dropdown.open { display: block; }
-  .lang-option {
-    padding: 0.65rem 1rem;
-    font-size: 0.85rem;
-    cursor: pointer;
-    color: var(--slate);
-    font-weight: 500;
-    transition: background 0.15s;
-    display: flex; align-items: center; gap: 0.5rem;
-  }
-  .lang-option:hover { background: var(--off-white); color: var(--navy); }
-  .lang-option.active { background: var(--saffron-pale); color: var(--saffron-dark); font-weight: 700; }
-
-  /* LOGIN BUTTON IN NAV */
-  .nav-login-btn {
-    background: white;
-    border: 1.5px solid var(--border);
-    border-radius: 8px;
-    padding: 0.4rem 1rem;
-    font-size: 0.85rem;
-    font-weight: 600;
-    cursor: pointer;
-    font-family: 'DM Sans', sans-serif;
-    color: var(--navy);
-    transition: all 0.2s;
-  }
-  .nav-login-btn:hover { border-color: var(--saffron); color: var(--saffron); }
-
-  /* LOGIN MODAL */
-  .modal-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(15,23,42,0.6);
-    z-index: 500;
-    align-items: center;
-    justify-content: center;
-    backdrop-filter: blur(4px);
-  }
-  .modal-overlay.open { display: flex; }
-
-  .modal-box {
-    background: white;
-    border-radius: 24px;
-    padding: 2.5rem;
-    width: 100%;
-    max-width: 420px;
-    margin: 1rem;
-    position: relative;
-    box-shadow: 0 24px 64px rgba(0,0,0,0.15);
-    animation: modalIn 0.3s ease;
-  }
-
-  @keyframes modalIn {
-    from { opacity: 0; transform: translateY(20px) scale(0.97); }
-    to { opacity: 1; transform: translateY(0) scale(1); }
-  }
-
-  .modal-close {
-    position: absolute;
-    top: 1.25rem; right: 1.25rem;
-    background: var(--off-white);
-    border: none;
-    border-radius: 50%;
-    width: 32px; height: 32px;
-    cursor: pointer;
-    font-size: 1rem;
-    display: flex; align-items: center; justify-content: center;
-    color: var(--slate);
-    transition: background 0.2s;
-  }
-  .modal-close:hover { background: var(--border); }
-
-  .modal-logo {
-    font-family: 'Sora', sans-serif;
-    font-size: 1.4rem;
-    font-weight: 800;
-    color: var(--navy);
-    margin-bottom: 0.25rem;
-  }
-  .modal-logo span { color: var(--saffron); }
-
-  .modal-tabs {
-    display: flex;
-    background: var(--off-white);
-    border-radius: 10px;
-    padding: 4px;
-    margin: 1.25rem 0;
-  }
-  .modal-tab {
-    flex: 1;
-    padding: 0.6rem;
-    border: none;
-    background: transparent;
-    border-radius: 8px;
-    font-size: 0.88rem;
-    font-weight: 600;
-    cursor: pointer;
-    font-family: 'DM Sans', sans-serif;
-    color: var(--slate);
-    transition: all 0.2s;
-  }
-  .modal-tab.active {
-    background: white;
-    color: var(--navy);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-  }
-
-  .modal-form { display: none; }
-  .modal-form.active { display: block; }
-
-  .modal-input-group { margin-bottom: 1rem; }
-  .modal-input-group label {
-    display: block;
-    font-size: 0.82rem;
-    font-weight: 600;
-    color: var(--slate);
-    margin-bottom: 0.4rem;
-  }
-  .modal-input-group input {
-    width: 100%;
-    border: 1.5px solid var(--border);
-    border-radius: 10px;
-    padding: 0.8rem 1rem;
-    font-size: 0.92rem;
-    font-family: 'DM Sans', sans-serif;
-    color: var(--navy);
-    outline: none;
-    transition: border-color 0.2s;
-  }
-  .modal-input-group input:focus { border-color: var(--saffron); }
-
-  .modal-submit-btn {
-    width: 100%;
-    background: var(--saffron);
-    color: white;
-    border: none;
-    border-radius: 12px;
-    padding: 0.9rem;
-    font-size: 0.95rem;
-    font-weight: 700;
-    cursor: pointer;
-    font-family: 'Sora', sans-serif;
-    transition: all 0.2s;
-    margin-top: 0.5rem;
-  }
-  .modal-submit-btn:hover { background: var(--saffron-dark); transform: translateY(-1px); }
-
-  .modal-divider {
-    display: flex; align-items: center; gap: 0.75rem;
-    margin: 1.25rem 0;
-    color: var(--muted);
-    font-size: 0.8rem;
-  }
-  .modal-divider::before, .modal-divider::after {
-    content: ''; flex: 1; height: 1px; background: var(--border);
-  }
-
-  .modal-note {
-    font-size: 0.78rem;
-    color: var(--muted);
-    text-align: center;
-    margin-top: 1rem;
-    line-height: 1.5;
-  }
-  .modal-note a { color: var(--saffron); text-decoration: none; font-weight: 600; }
-
-  .user-greeting {
-    display: none;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--navy);
-  }
-  .user-avatar-small {
-    width: 30px; height: 30px;
-    background: var(--saffron);
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    color: white;
-    font-size: 0.75rem;
-    font-weight: 700;
-  }
-
-  /* WHATSAPP BUTTON */
-  .whatsapp-float {
-    position: fixed;
-    bottom: 28px; right: 28px;
-    z-index: 999;
-    background: #25D366;
-    color: white;
-    border-radius: 50px;
-    padding: 0.85rem 1.4rem;
-    display: flex; align-items: center; gap: 0.6rem;
-    font-family: 'Sora', sans-serif;
-    font-size: 0.88rem;
-    font-weight: 700;
-    text-decoration: none;
-    box-shadow: 0 8px 24px rgba(37,211,102,0.4);
-    transition: all 0.3s;
-    animation: pulse-green 2s infinite;
-  }
-  .whatsapp-float:hover {
-    transform: translateY(-3px) scale(1.05);
-    box-shadow: 0 12px 32px rgba(37,211,102,0.5);
-  }
-  .whatsapp-float .wa-icon { font-size: 1.3rem; }
-
-  @keyframes pulse-green {
-    0%, 100% { box-shadow: 0 8px 24px rgba(37,211,102,0.4); }
-    50% { box-shadow: 0 8px 32px rgba(37,211,102,0.7); }
-  }
-
-  /* ANIMATIONS */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(24px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .reveal { opacity: 0; transform: translateY(30px); transition: all 0.6s ease; }
-  .reveal.visible { opacity: 1; transform: translateY(0); }
-
-  /* RESPONSIVE */
-  @media (max-width: 900px) {
-    .hero-inner { grid-template-columns: 1fr; }
-    .hero-visual { display: none; }
-    .join-inner { grid-template-columns: 1fr; }
-    .footer-grid { grid-template-columns: 1fr 1fr; }
-    .nav-links { display: none; }
-    .hamburger { display: flex; }
-  }
-  @media (max-width: 600px) {
-    .trust-bar { gap: 1.5rem; }
-    .footer-grid { grid-template-columns: 1fr; }
-    .footer-bottom { flex-direction: column; text-align: center; }
-    .search-bar { flex-direction: column; }
-    .search-bar select { border-right: none; border-bottom: 1px solid var(--border); }
-    .btn-search { padding: 1rem; }
-  }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --primary:#1A1A2E;
+  --primary-mid:#16213E;
+  --accent:#E63946;
+  --accent-light:#FF6B6B;
+  --accent-pale:#FFF0F0;
+  --gold:#D4A853;
+  --gold-pale:#FDF8ED;
+  --white:#FFFFFF;
+  --off:#F9FAFB;
+  --border:#EAECF0;
+  --slate:#6B7280;
+  --muted:#9CA3AF;
+  --green:#059669;
+  --green-pale:#ECFDF5;
+  --text:#111827;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--white);color:var(--text);overflow-x:hidden}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  height:72px;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 5%;
+  background:rgba(255,255,255,0.97);
+  border-bottom:1px solid var(--border);
+  transition:box-shadow 0.3s;
+}
+.logo{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.5rem;font-weight:800;color:var(--primary);letter-spacing:-0.5px}
+.logo span{color:var(--accent)}
+.nav-links{display:flex;gap:2.5rem;list-style:none}
+.nav-links a{text-decoration:none;color:var(--slate);font-size:0.88rem;font-weight:600;letter-spacing:0.2px;transition:color 0.2s}
+.nav-links a:hover{color:var(--primary)}
+.nav-right{display:flex;align-items:center;gap:0.75rem}
+
+/* Lang selector */
+.lang-selector{position:relative}
+.lang-btn{background:var(--off);border:1.5px solid var(--border);border-radius:8px;padding:0.38rem 0.85rem;font-size:0.8rem;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;color:var(--slate);transition:all 0.2s;letter-spacing:0.5px}
+.lang-btn:hover{border-color:var(--accent);color:var(--accent)}
+.lang-dropdown{display:none;position:absolute;top:calc(100% + 8px);right:0;background:white;border:1.5px solid var(--border);border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,0.08);overflow:hidden;min-width:150px;z-index:300}
+.lang-dropdown.open{display:block}
+.lang-option{padding:0.65rem 1rem;font-size:0.84rem;cursor:pointer;color:var(--slate);font-weight:500;transition:background 0.15s;display:flex;align-items:center;gap:0.5rem}
+.lang-option:hover{background:var(--off);color:var(--primary)}
+.lang-option.active{background:var(--accent-pale);color:var(--accent);font-weight:700}
+
+/* Login */
+.nav-login-btn{background:var(--primary);color:white;border:none;border-radius:8px;padding:0.5rem 1.25rem;font-size:0.84rem;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:all 0.2s;letter-spacing:0.2px}
+.nav-login-btn:hover{background:var(--primary-mid);transform:translateY(-1px)}
+.user-greeting{display:none;align-items:center;gap:0.5rem;font-size:0.84rem;font-weight:700;color:var(--primary)}
+.user-avatar-small{width:32px;height:32px;background:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:0.78rem;font-weight:800}
+
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none}
+.hamburger span{width:24px;height:2px;background:var(--primary);border-radius:2px;display:block}
+
+.mobile-menu{display:none;position:fixed;top:72px;left:0;right:0;background:white;border-bottom:1px solid var(--border);padding:1.5rem 5%;flex-direction:column;gap:0;z-index:199;box-shadow:0 8px 24px rgba(0,0,0,0.06)}
+.mobile-menu.open{display:flex}
+.mobile-menu a{text-decoration:none;color:var(--slate);font-size:0.95rem;font-weight:600;padding:0.75rem 0;border-bottom:1px solid var(--border)}
+
+/* ── ANNOUNCEMENT BAR ── */
+.announce-bar{background:var(--primary);color:rgba(255,255,255,0.9);text-align:center;padding:0.55rem 5%;font-size:0.8rem;font-weight:600;letter-spacing:0.3px;margin-top:72px}
+.announce-bar span{color:var(--gold)}
+
+/* ── HERO ── */
+.hero{
+  padding:70px 5% 80px;
+  background:var(--white);
+  position:relative;
+  overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;
+  top:0;right:0;width:55%;height:100%;
+  background:linear-gradient(135deg,#F9FAFB 0%,#F3F4F6 100%);
+  clip-path:polygon(8% 0,100% 0,100% 100%,0% 100%);
+  pointer-events:none;
+}
+.hero-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;position:relative}
+
+.hero-eyebrow{display:inline-flex;align-items:center;gap:0.5rem;background:var(--green-pale);border:1px solid rgba(5,150,105,0.2);border-radius:50px;padding:0.35rem 1rem;font-size:0.78rem;font-weight:700;color:var(--green);letter-spacing:0.5px;margin-bottom:1.25rem;animation:fadeUp 0.5s ease both}
+
+.hero h1{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(2.2rem,3.8vw,3.2rem);font-weight:800;line-height:1.15;color:var(--primary);margin-bottom:0.75rem;animation:fadeUp 0.5s 0.1s ease both;letter-spacing:-0.5px}
+.hero h1 span{color:var(--accent)}
+
+.hero-tagline{font-family:'Instrument Serif',serif;font-size:clamp(1.1rem,2vw,1.4rem);font-style:italic;color:var(--slate);margin-bottom:1.25rem;animation:fadeUp 0.5s 0.15s ease both}
+
+.hero-sub{font-size:0.97rem;color:var(--slate);line-height:1.75;max-width:480px;margin-bottom:2rem;animation:fadeUp 0.5s 0.2s ease both}
+
+/* Response badge */
+.response-badge{display:inline-flex;align-items:center;gap:0.5rem;background:var(--gold-pale);border:1px solid rgba(212,168,83,0.3);border-radius:8px;padding:0.5rem 1rem;font-size:0.82rem;font-weight:700;color:#92650A;margin-bottom:1.75rem;animation:fadeUp 0.5s 0.22s ease both}
+
+/* Search */
+.search-wrap{background:white;border:2px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.06);margin-bottom:1.25rem;animation:fadeUp 0.5s 0.25s ease both;transition:border-color 0.2s;display:flex}
+.search-wrap:focus-within{border-color:var(--accent)}
+.search-wrap select,.search-wrap input{border:none;outline:none;font-family:'Plus Jakarta Sans',sans-serif;font-size:0.92rem;background:transparent;color:var(--primary);padding:1rem 1.1rem}
+.search-wrap select{border-right:1px solid var(--border);color:var(--slate);min-width:150px;font-weight:600;cursor:pointer}
+.search-wrap input{flex:1}
+.search-wrap input::placeholder{color:var(--muted)}
+.btn-search{background:var(--accent);color:white;border:none;padding:0 1.5rem;font-size:0.9rem;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:background 0.2s;white-space:nowrap;letter-spacing:0.3px}
+.btn-search:hover{background:#c1121f}
+
+.quick-tags{display:flex;flex-wrap:wrap;gap:0.5rem;animation:fadeUp 0.5s 0.3s ease both}
+.quick-tag{background:var(--off);border:1.5px solid var(--border);border-radius:8px;padding:0.35rem 0.85rem;font-size:0.78rem;font-weight:600;color:var(--slate);cursor:pointer;transition:all 0.2s;letter-spacing:0.2px}
+.quick-tag:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-pale)}
+
+/* Hero visual */
+.hero-visual{position:relative;animation:fadeUp 0.5s 0.15s ease both}
+
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1.25rem}
+.stat-pill{background:white;border:1.5px solid var(--border);border-radius:14px;padding:1.1rem;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,0.04)}
+.stat-pill .num{font-size:1.4rem;font-weight:800;color:var(--primary);font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:-0.5px}
+.stat-pill .lbl{font-size:0.72rem;color:var(--muted);margin-top:3px;font-weight:600;letter-spacing:0.3px}
+
+.provider-showcase{background:white;border:1.5px solid var(--border);border-radius:20px;padding:1.5rem;box-shadow:0 8px 32px rgba(0,0,0,0.07)}
+.ps-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.1rem}
+.ps-title{font-size:0.78rem;font-weight:700;color:var(--slate);text-transform:uppercase;letter-spacing:1.5px}
+.ps-badge{background:var(--green-pale);color:var(--green);border-radius:50px;padding:0.25rem 0.65rem;font-size:0.72rem;font-weight:700}
+
+.ps-provider{display:flex;align-items:center;gap:0.9rem;padding:0.85rem 0;border-bottom:1px solid var(--border)}
+.ps-provider:last-child{border-bottom:none;padding-bottom:0}
+.ps-avatar{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+.ps-info{flex:1}
+.ps-name{font-weight:700;font-size:0.88rem;color:var(--primary)}
+.ps-role{font-size:0.75rem;color:var(--muted);margin-top:1px}
+.ps-rating{font-size:0.75rem;color:#D97706;font-weight:700}
+.ps-rate{font-size:0.82rem;font-weight:800;color:var(--primary)}
+.ps-rate span{font-size:0.7rem;font-weight:400;color:var(--muted)}
+
+/* ── METRICS BAND ── */
+.metrics-band{background:var(--primary);padding:2.5rem 5%}
+.metrics-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:2rem}
+.metric{text-align:center}
+.metric .big{font-size:2.2rem;font-weight:800;color:white;font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:-1px}
+.metric .big span{color:var(--gold)}
+.metric .desc{font-size:0.82rem;color:rgba(255,255,255,0.5);margin-top:4px;font-weight:500}
+
+/* ── SECTION SHARED ── */
+section{padding:80px 5%}
+.section-inner{max-width:1200px;margin:0 auto}
+.eyebrow{display:inline-block;font-size:0.72rem;font-weight:800;text-transform:uppercase;letter-spacing:2.5px;color:var(--accent);margin-bottom:0.75rem}
+h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(1.8rem,3vw,2.5rem);font-weight:800;color:var(--primary);line-height:1.2;margin-bottom:0.9rem;letter-spacing:-0.5px}
+h2 span{color:var(--accent)}
+.sec-sub{font-size:0.97rem;color:var(--slate);line-height:1.75;max-width:540px;margin-bottom:3rem}
+
+/* ── CATEGORIES ── */
+.categories-section{background:var(--off)}
+.cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:0.85rem}
+.cat-card{background:white;border:1.5px solid var(--border);border-radius:14px;padding:1.4rem 1rem;text-align:center;cursor:pointer;transition:all 0.25s}
+.cat-card:hover{border-color:var(--accent);box-shadow:0 8px 24px rgba(230,57,70,0.1);transform:translateY(-3px)}
+.cat-card .emoji{font-size:1.75rem;margin-bottom:0.65rem;display:block}
+.cat-card h4{font-size:0.85rem;font-weight:700;color:var(--primary);margin-bottom:0.2rem}
+.cat-card p{font-size:0.72rem;color:var(--muted)}
+
+/* ── HOW IT WORKS ── */
+.how-section{background:white}
+.steps-wrap{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;position:relative}
+.steps-wrap::before{content:'';position:absolute;top:36px;left:15%;right:15%;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent-light));opacity:0.2;z-index:0}
+.step-card{background:var(--off);border:1.5px solid var(--border);border-radius:18px;padding:2rem 1.5rem;text-align:center;position:relative;z-index:1;transition:all 0.3s}
+.step-card:hover{background:white;box-shadow:0 12px 40px rgba(0,0,0,0.07);transform:translateY(-4px)}
+.step-num{width:52px;height:52px;background:var(--accent);color:white;border-radius:14px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.1rem;margin:0 auto 1.2rem;box-shadow:0 4px 12px rgba(230,57,70,0.3)}
+.step-card h3{font-size:0.95rem;font-weight:700;margin-bottom:0.5rem;color:var(--primary)}
+.step-card p{font-size:0.85rem;color:var(--slate);line-height:1.65}
+
+/* ── PROVIDERS ── */
+.providers-section{background:var(--off)}
+.providers-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:1.25rem}
+.pcard{background:white;border:1.5px solid var(--border);border-radius:18px;padding:1.5rem;transition:all 0.3s;cursor:pointer}
+.pcard:hover{box-shadow:0 16px 48px rgba(0,0,0,0.09);transform:translateY(-4px);border-color:rgba(230,57,70,0.3)}
+.pcard-top{display:flex;align-items:center;gap:0.9rem;margin-bottom:1rem}
+.pcard-avatar{width:50px;height:50px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0}
+.pcard-name{font-weight:700;font-size:0.92rem;color:var(--primary)}
+.pcard-role{font-size:0.77rem;color:var(--muted);margin-top:2px}
+.pcard-tags{display:flex;flex-wrap:wrap;gap:0.35rem;margin-bottom:1rem}
+.tag{background:var(--off);border:1px solid var(--border);border-radius:6px;padding:0.2rem 0.6rem;font-size:0.72rem;font-weight:600;color:var(--slate)}
+.pcard-footer{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--border);padding-top:1rem}
+.pcard-rate{font-weight:800;font-size:1rem;color:var(--primary)}
+.pcard-rate span{font-size:0.72rem;font-weight:400;color:var(--muted)}
+.pcard-verified{font-size:0.74rem;color:var(--green);font-weight:700}
+.btn-view{background:var(--primary);color:white;border:none;border-radius:8px;padding:0.45rem 1rem;font-size:0.8rem;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:background 0.2s}
+.btn-view:hover{background:var(--accent)}
+
+/* ── WHY SERVLO ── */
+.why-section{background:white}
+.why-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.25rem}
+.why-card{padding:1.75rem;border-radius:16px;border:1.5px solid var(--border);background:var(--off);transition:all 0.3s}
+.why-card:hover{background:white;box-shadow:0 8px 32px rgba(0,0,0,0.06);transform:translateY(-3px)}
+.why-icon{font-size:1.75rem;margin-bottom:1rem;display:block}
+.why-card h3{font-size:0.92rem;font-weight:700;margin-bottom:0.5rem;color:var(--primary)}
+.why-card p{font-size:0.85rem;color:var(--slate);line-height:1.65}
+
+/* ── TESTIMONIALS ── */
+.testi-section{background:var(--primary)}
+.testi-section h2{color:white}
+.testi-section .eyebrow{color:var(--gold)}
+.testi-section .sec-sub{color:rgba(255,255,255,0.5)}
+.testi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.25rem}
+.testi-card{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:18px;padding:1.75rem}
+.testi-stars{color:var(--gold);margin-bottom:1rem;font-size:0.9rem;letter-spacing:2px}
+.testi-text{font-size:0.92rem;color:rgba(255,255,255,0.8);line-height:1.75;margin-bottom:1.25rem;font-style:italic}
+.testi-author{display:flex;align-items:center;gap:0.75rem}
+.testi-avatar{width:40px;height:40px;border-radius:50%;background:rgba(230,57,70,0.2);display:flex;align-items:center;justify-content:center;font-size:1rem}
+.testi-name{font-weight:700;font-size:0.85rem;color:white}
+.testi-loc{font-size:0.75rem;color:rgba(255,255,255,0.4);margin-top:2px}
+
+/* ── JOIN PROVIDER ── */
+.join-section{background:var(--off)}
+.join-inner{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+.join-steps{list-style:none}
+.join-steps li{display:flex;align-items:flex-start;gap:1rem;margin-bottom:1.5rem}
+.join-dot{width:30px;height:30px;background:var(--accent);border-radius:8px;flex-shrink:0;display:flex;align-items:center;justify-content:center;color:white;font-size:0.78rem;font-weight:800;margin-top:1px}
+.join-steps li h4{font-weight:700;font-size:0.9rem;color:var(--primary);margin-bottom:3px}
+.join-steps li p{font-size:0.82rem;color:var(--slate);line-height:1.6}
+
+.join-form-box{background:white;border-radius:20px;padding:2rem;box-shadow:0 8px 32px rgba(0,0,0,0.07);border:1.5px solid var(--border)}
+.join-form-box h3{font-size:1.1rem;font-weight:800;margin-bottom:1.25rem;color:var(--primary)}
+.form-group{margin-bottom:1rem}
+.form-group label{display:block;font-size:0.8rem;font-weight:700;color:var(--slate);margin-bottom:0.4rem;letter-spacing:0.3px}
+.form-group input,.form-group select{width:100%;border:1.5px solid var(--border);border-radius:10px;padding:0.8rem 1rem;font-size:0.9rem;font-family:'Plus Jakarta Sans',sans-serif;color:var(--primary);outline:none;transition:border-color 0.2s;background:white}
+.form-group input:focus,.form-group select:focus{border-color:var(--accent)}
+.btn-join{width:100%;background:var(--accent);color:white;border:none;border-radius:12px;padding:0.95rem;font-size:0.95rem;font-weight:800;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:all 0.2s;margin-top:0.5rem;letter-spacing:0.3px}
+.btn-join:hover{background:#c1121f;transform:translateY(-1px)}
+
+/* ── CTA STRIP ── */
+.cta-strip{background:var(--accent);padding:70px 5%;text-align:center}
+.cta-strip h2{color:white;margin-bottom:0.75rem}
+.cta-strip p{color:rgba(255,255,255,0.85);font-size:0.97rem;margin-bottom:2rem}
+.cta-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+.btn-white{background:white;color:var(--accent);border:none;border-radius:12px;padding:0.9rem 2rem;font-size:0.95rem;font-weight:800;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:all 0.2s}
+.btn-white:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,0.15)}
+.btn-outline-white{background:transparent;color:white;border:2px solid rgba(255,255,255,0.5);border-radius:12px;padding:0.9rem 2rem;font-size:0.95rem;font-weight:800;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:all 0.2s}
+.btn-outline-white:hover{border-color:white;background:rgba(255,255,255,0.1)}
+
+/* ── FOOTER ── */
+footer{background:var(--primary);color:rgba(255,255,255,0.6);padding:60px 5% 32px}
+.footer-grid{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:3rem;margin-bottom:3rem}
+.footer-brand .logo{color:white}
+.footer-brand p{font-size:0.85rem;line-height:1.75;margin-top:0.75rem;color:rgba(255,255,255,0.4)}
+.footer-col h4{font-size:0.75rem;font-weight:800;color:white;margin-bottom:1rem;text-transform:uppercase;letter-spacing:1.5px}
+.footer-col ul{list-style:none}
+.footer-col ul li{margin-bottom:0.6rem}
+.footer-col ul li a{text-decoration:none;color:rgba(255,255,255,0.45);font-size:0.85rem;transition:color 0.2s}
+.footer-col ul li a:hover{color:white}
+.footer-bottom{max-width:1200px;margin:0 auto;border-top:1px solid rgba(255,255,255,0.08);padding-top:1.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+.footer-bottom p{font-size:0.8rem}
+.footer-badges{display:flex;gap:0.75rem}
+.footer-badge{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:0.4rem 0.85rem;font-size:0.75rem;color:rgba(255,255,255,0.5)}
+
+/* ── LOGIN MODAL ── */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(17,24,39,0.7);z-index:500;align-items:center;justify-content:center;backdrop-filter:blur(6px)}
+.modal-overlay.open{display:flex}
+.modal-box{background:white;border-radius:24px;padding:2.5rem;width:100%;max-width:420px;margin:1rem;position:relative;box-shadow:0 24px 64px rgba(0,0,0,0.2);animation:modalIn 0.3s ease}
+@keyframes modalIn{from{opacity:0;transform:translateY(20px) scale(0.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+.modal-close{position:absolute;top:1.25rem;right:1.25rem;background:var(--off);border:none;border-radius:50%;width:32px;height:32px;cursor:pointer;font-size:0.9rem;display:flex;align-items:center;justify-content:center;color:var(--slate);transition:background 0.2s}
+.modal-close:hover{background:var(--border)}
+.modal-logo{font-size:1.4rem;font-weight:800;color:var(--primary);margin-bottom:0.25rem}
+.modal-logo span{color:var(--accent)}
+.modal-tabs{display:flex;background:var(--off);border-radius:10px;padding:4px;margin:1.25rem 0}
+.modal-tab{flex:1;padding:0.6rem;border:none;background:transparent;border-radius:8px;font-size:0.86rem;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;color:var(--slate);transition:all 0.2s}
+.modal-tab.active{background:white;color:var(--primary);box-shadow:0 2px 8px rgba(0,0,0,0.08)}
+.modal-form{display:none}
+.modal-form.active{display:block}
+.modal-input-group{margin-bottom:1rem}
+.modal-input-group label{display:block;font-size:0.8rem;font-weight:700;color:var(--slate);margin-bottom:0.4rem}
+.modal-input-group input{width:100%;border:1.5px solid var(--border);border-radius:10px;padding:0.8rem 1rem;font-size:0.9rem;font-family:'Plus Jakarta Sans',sans-serif;color:var(--primary);outline:none;transition:border-color 0.2s}
+.modal-input-group input:focus{border-color:var(--accent)}
+.modal-submit-btn{width:100%;background:var(--accent);color:white;border:none;border-radius:12px;padding:0.9rem;font-size:0.92rem;font-weight:800;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:all 0.2s;margin-top:0.5rem}
+.modal-submit-btn:hover{background:#c1121f;transform:translateY(-1px)}
+.modal-note{font-size:0.76rem;color:var(--muted);text-align:center;margin-top:1rem;line-height:1.5}
+.modal-note a{color:var(--accent);text-decoration:none;font-weight:700}
+
+/* ── WHATSAPP ── */
+#waContainer{position:fixed;bottom:28px;right:28px;z-index:999;display:flex;flex-direction:column;gap:0.5rem;align-items:flex-end}
+.wa-main-btn{background:#25D366;color:white;border:none;border-radius:50px;padding:0.85rem 1.4rem;font-size:0.85rem;font-weight:800;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;display:flex;align-items:center;gap:0.6rem;box-shadow:0 8px 24px rgba(37,211,102,0.4);transition:all 0.3s;animation:pulse-green 2s infinite}
+.wa-main-btn:hover{transform:translateY(-3px)}
+@keyframes pulse-green{0%,100%{box-shadow:0 8px 24px rgba(37,211,102,0.4)}50%{box-shadow:0 8px 32px rgba(37,211,102,0.7)}}
+.wa-number-link{background:white;border:2px solid #25D366;color:#111;border-radius:50px;padding:0.6rem 1.1rem;font-size:0.82rem;font-weight:800;text-decoration:none;display:flex;align-items:center;gap:0.5rem;box-shadow:0 4px 16px rgba(0,0,0,0.1);white-space:nowrap;font-family:'Plus Jakarta Sans',sans-serif;transition:all 0.2s}
+.wa-number-link:hover{background:#f0fdf4;transform:translateX(-3px)}
+
+/* ── COMING SOON BADGE ── */
+.coming-soon-tag{display:inline-flex;align-items:center;gap:0.4rem;background:#FEF9C3;border:1px solid #FDE047;border-radius:6px;padding:0.2rem 0.6rem;font-size:0.7rem;font-weight:700;color:#854D0E;margin-left:0.5rem;vertical-align:middle}
+
+/* ── CITY LEAD MODAL ── */
+.city-modal-overlay{display:none;position:fixed;inset:0;background:rgba(17,24,39,0.7);z-index:600;align-items:center;justify-content:center;backdrop-filter:blur(6px)}
+.city-modal-overlay.open{display:flex}
+.city-modal-box{background:white;border-radius:24px;padding:2.5rem;width:100%;max-width:440px;margin:1rem;position:relative;box-shadow:0 24px 64px rgba(0,0,0,0.2);animation:modalIn 0.3s ease;text-align:center}
+.city-modal-box h3{font-size:1.3rem;font-weight:800;color:var(--primary);margin-bottom:0.5rem}
+.city-modal-box p{font-size:0.88rem;color:var(--slate);line-height:1.7;margin-bottom:1.5rem}
+.city-modal-input{width:100%;border:1.5px solid var(--border);border-radius:10px;padding:0.8rem 1rem;font-size:0.92rem;font-family:'Plus Jakarta Sans',sans-serif;color:var(--primary);outline:none;transition:border-color 0.2s;margin-bottom:0.75rem}
+.city-modal-input:focus{border-color:var(--accent)}
+.city-modal-btn{width:100%;background:var(--accent);color:white;border:none;border-radius:12px;padding:0.9rem;font-size:0.95rem;font-weight:800;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:all 0.2s}
+.city-modal-btn:hover{background:#c1121f}
+.city-modal-close{position:absolute;top:1.25rem;right:1.25rem;background:var(--off);border:none;border-radius:50%;width:32px;height:32px;cursor:pointer;font-size:0.9rem;display:flex;align-items:center;justify-content:center;color:var(--slate)}
+
+/* ── CONTACT SECTION ── */
+.contact-section{background:var(--off);padding:80px 5%}
+.contact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.25rem;margin-top:3rem}
+.contact-card{background:white;border:1.5px solid var(--border);border-radius:16px;padding:1.75rem;text-align:center;transition:all 0.3s}
+.contact-card:hover{box-shadow:0 8px 24px rgba(0,0,0,0.07);transform:translateY(-3px)}
+.contact-icon{font-size:2rem;margin-bottom:0.75rem;display:block}
+.contact-card h4{font-size:0.9rem;font-weight:700;color:var(--primary);margin-bottom:0.4rem}
+.contact-card p{font-size:0.82rem;color:var(--slate);margin-bottom:1rem;line-height:1.5}
+.contact-card a{display:inline-block;background:var(--primary);color:white;border-radius:8px;padding:0.5rem 1.25rem;font-size:0.82rem;font-weight:700;text-decoration:none;transition:background 0.2s;font-family:'Plus Jakarta Sans',sans-serif}
+.contact-card a:hover{background:var(--accent)}
+
+/* ── HOW WE VERIFY ── */
+.verify-section{background:white;padding:80px 5%}
+.verify-steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.5rem;margin-top:3rem}
+.verify-step{text-align:center;padding:1.75rem 1.25rem;background:var(--off);border-radius:16px;border:1.5px solid var(--border)}
+.verify-num{width:44px;height:44px;background:var(--green);color:white;border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1rem;margin:0 auto 1rem}
+.verify-step h4{font-size:0.88rem;font-weight:700;color:var(--primary);margin-bottom:0.4rem}
+.verify-step p{font-size:0.8rem;color:var(--slate);line-height:1.6}
+
+/* ── MOBILE FIX ── */
+#waContainer{bottom:20px;right:16px}
+@media(max-width:600px){
+  .hero{padding:50px 5% 60px}
+  #waContainer{bottom:16px;right:12px}
+  .wa-main-btn{padding:0.7rem 1rem;font-size:0.78rem}
+  .city-modal-box{padding:1.75rem}
+}
+
+/* ── FOOTER COMING SOON ── */
+.footer-cs{font-size:0.72rem;color:rgba(255,255,255,0.3);font-style:italic;margin-left:4px}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.reveal{opacity:0;transform:translateY(28px);transition:all 0.6s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  .hero-inner{grid-template-columns:1fr}
+  .hero-visual{display:none}
+  .join-inner{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr 1fr}
+  .nav-links{display:none}
+  .hamburger{display:flex}
+  .steps-wrap{grid-template-columns:1fr}
+  .steps-wrap::before{display:none}
+  .metrics-inner{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:600px){
+  .footer-grid{grid-template-columns:1fr}
+  .footer-bottom{flex-direction:column;text-align:center}
+  .search-wrap{flex-direction:column}
+  .search-wrap select{border-right:none;border-bottom:1px solid var(--border)}
+  .btn-search{padding:1rem}
+  .metrics-inner{grid-template-columns:repeat(2,1fr)}
+}
 </style>
 </head>
 <body>
@@ -1010,10 +368,9 @@
     <li><a href="#categories" data-i18n="nav_services">Services</a></li>
     <li><a href="#providers" data-i18n="nav_providers">Providers</a></li>
     <li><a href="#how" data-i18n="nav_how">How It Works</a></li>
-    <li><a href="#join" class="nav-cta" data-i18n="nav_join">Join as Provider</a></li>
+    <li><a href="#join" data-i18n="nav_join">Join as Provider</a></li>
   </ul>
-  <div style="display:flex; align-items:center; gap:0.75rem;">
-    <!-- Language Selector -->
+  <div class="nav-right">
     <div class="lang-selector">
       <button class="lang-btn" onclick="toggleLangDropdown()" id="langBtn">🌐 EN</button>
       <div class="lang-dropdown" id="langDropdown">
@@ -1022,37 +379,40 @@
         <div class="lang-option" onclick="setLang('mr')">🇮🇳 मराठी</div>
       </div>
     </div>
-    <!-- Login Button -->
     <button class="nav-login-btn" onclick="openModal()" id="loginNavBtn" data-i18n="nav_login">Login</button>
     <div class="user-greeting" id="userGreeting">
       <div class="user-avatar-small" id="userInitial">U</div>
       <span id="userName">User</span>
-      <button onclick="logout()" style="background:none;border:none;cursor:pointer;color:var(--muted);font-size:0.75rem;">✕</button>
+      <button onclick="logout()" style="background:none;border:none;cursor:pointer;color:var(--muted);font-size:0.75rem;margin-left:4px;">✕</button>
     </div>
   </div>
-  <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
-    <span></span><span></span><span></span>
-  </button>
+  <button class="hamburger" onclick="toggleMenu()" aria-label="Menu"><span></span><span></span><span></span></button>
 </nav>
 
 <div class="mobile-menu" id="mobileMenu">
-  <a href="#categories" onclick="toggleMenu()">Services</a>
-  <a href="#providers" onclick="toggleMenu()">Browse Providers</a>
-  <a href="#how" onclick="toggleMenu()">How It Works</a>
-  <a href="#join" onclick="toggleMenu()">Join as Provider</a>
+  <a href="#categories" onclick="toggleMenu()" data-i18n="nav_services">Services</a>
+  <a href="#providers" onclick="toggleMenu()" data-i18n="nav_providers">Providers</a>
+  <a href="#how" onclick="toggleMenu()" data-i18n="nav_how">How It Works</a>
+  <a href="#join" onclick="toggleMenu()" data-i18n="nav_join">Join as Provider</a>
+</div>
+
+<!-- ANNOUNCE BAR -->
+<div class="announce-bar">
+  <span data-i18n="announce">⚡ Quick Response Guaranteed &nbsp;·&nbsp; <span data-i18n="tagline_short">आपका काम, हमारी ज़िम्मेदारी</span> &nbsp;·&nbsp; ✅ All Providers Verified</span>
 </div>
 
 <!-- HERO -->
 <section class="hero">
   <div class="hero-inner">
-    <div class="hero-content">
-      <div class="hero-badge" data-i18n="hero_badge">🇮🇳 Serving India's Best Local Talent</div>
-      <h1 data-i18n="hero_title">Find <span>Verified</span> Service Experts Near You</h1>
-      <p class="hero-sub" data-i18n="hero_sub">
-        Servlo connects you with background-checked, customer-rated local professionals — electricians, plumbers, tutors, cleaners &amp; more. You choose who to hire.
-      </p>
+    <div>
+      <div class="hero-eyebrow" data-i18n="hero_badge">🇮🇳 Serving India's Best Local Talent</div>
+      <h1 data-i18n="hero_title">Find <span>Verified</span> Experts Near You</h1>
+      <p class="hero-tagline" data-i18n="hero_tagline">"Your Work, Our Responsibility"</p>
+      <p class="hero-sub" data-i18n="hero_sub">Servlo connects you with background-checked, customer-rated local professionals. Electricians, plumbers, tutors, cleaners & more — you choose who to hire.</p>
 
-      <div class="search-bar">
+      <div class="response-badge" data-i18n="response_badge">⚡ Quick Response · Same Day Service Available · Verified Experts Only</div>
+
+      <div class="search-wrap">
         <select id="serviceSelect">
           <option value="" data-i18n="search_all">All Services</option>
           <option data-i18n="cat_electrician">Electrician</option>
@@ -1069,206 +429,135 @@
         <button class="btn-search" onclick="handleSearch()" data-i18n="btn_search">🔍 Search</button>
       </div>
 
-      <div class="hero-tags">
-        <span onclick="quickSearch('Electrician')" data-i18n="tag_electrician">⚡ Electrician</span>
-        <span onclick="quickSearch('Plumber')" data-i18n="tag_plumber">🔧 Plumber</span>
-        <span onclick="quickSearch('Tutor')" data-i18n="tag_tutor">📚 Tutor</span>
-        <span onclick="quickSearch('Cleaning')" data-i18n="tag_cleaning">🧹 Cleaning</span>
-        <span onclick="quickSearch('Painter')" data-i18n="tag_painter">🎨 Painter</span>
-        <span onclick="quickSearch('AC Repair')" data-i18n="tag_ac">❄️ AC Repair</span>
+      <div class="quick-tags">
+        <span class="quick-tag" onclick="quickSearch('Electrician')" data-i18n="tag_electrician">⚡ Electrician</span>
+        <span class="quick-tag" onclick="quickSearch('Plumber')" data-i18n="tag_plumber">🔧 Plumber</span>
+        <span class="quick-tag" onclick="quickSearch('Tutor')" data-i18n="tag_tutor">📚 Tutor</span>
+        <span class="quick-tag" onclick="quickSearch('Cleaning')" data-i18n="tag_cleaning">🧹 Cleaning</span>
+        <span class="quick-tag" onclick="quickSearch('Painter')" data-i18n="tag_painter">🎨 Painter</span>
+        <span class="quick-tag" onclick="quickSearch('AC Repair')" data-i18n="tag_ac">❄️ AC Repair</span>
       </div>
     </div>
 
     <div class="hero-visual">
-      <div class="float-card top-left">✅ Booking Confirmed!</div>
-      <div class="provider-card-big">
-        <div class="provider-top">
-          <div class="avatar" style="background:#FFF3E8;">🔧</div>
-          <div>
-            <h3>Ramesh Kumar</h3>
-            <p>Master Electrician · Pune</p>
-            <div class="stars">★★★★★ <span>4.9 (142 reviews)</span></div>
+      <!-- How it works quick visual -->
+      <div class="provider-showcase">
+        <div class="ps-header">
+          <span class="ps-title" data-i18n="ps_title">Why Servlo?</span>
+          <span class="ps-badge" data-i18n="ps_badge">✓ Genuine</span>
+        </div>
+        <div class="ps-provider">
+          <div class="ps-avatar" style="background:#F0FDF4;">🔍</div>
+          <div class="ps-info">
+            <div class="ps-name" data-i18n="hero_point1_title">Manually Verified</div>
+            <div class="ps-role" data-i18n="hero_point1_desc">Every provider ID & background checked</div>
           </div>
         </div>
-        <div class="verified-badge">✔ Verified &amp; Background Checked</div>
-        <div class="provider-stats">
-          <div class="stat-box"><div class="val">8yr</div><div class="lbl">Experience</div></div>
-          <div class="stat-box"><div class="val">340+</div><div class="lbl">Jobs Done</div></div>
-          <div class="stat-box"><div class="val">₹300</div><div class="lbl">Per Hour</div></div>
+        <div class="ps-provider">
+          <div class="ps-avatar" style="background:#FFF0F0;">⭐</div>
+          <div class="ps-info">
+            <div class="ps-name" data-i18n="hero_point2_title">Real Reviews Only</div>
+            <div class="ps-role" data-i18n="hero_point2_desc">No fake ratings — ever</div>
+          </div>
         </div>
-        <button class="btn-hire">Contact &amp; Hire →</button>
+        <div class="ps-provider">
+          <div class="ps-avatar" style="background:#F0F4FF;">🎯</div>
+          <div class="ps-info">
+            <div class="ps-name" data-i18n="hero_point3_title">You Choose</div>
+            <div class="ps-role" data-i18n="hero_point3_desc">No forced assignment, full freedom</div>
+          </div>
+        </div>
+        <div class="ps-provider" style="border-bottom:none; padding-bottom:0;">
+          <div class="ps-avatar" style="background:#FFFBF0;">💰</div>
+          <div class="ps-info">
+            <div class="ps-name" data-i18n="hero_point4_title">Transparent Pricing</div>
+            <div class="ps-role" data-i18n="hero_point4_desc">Upfront rates, no hidden charges</div>
+          </div>
+        </div>
       </div>
-      <div class="float-card bottom-right">🎉 2,400+ Happy Customers</div>
     </div>
   </div>
 </section>
 
-<!-- TRUST BAR -->
-<div class="trust-bar">
-  <div class="trust-item" data-i18n="trust1">✅ Verified Professionals</div>
-  <div class="trust-item" data-i18n="trust2">⭐ Rated by Real Customers</div>
-  <div class="trust-item" data-i18n="trust3">🔒 Secure Payments</div>
-  <div class="trust-item" data-i18n="trust4">🕐 24/7 Support</div>
-  <div class="trust-item" data-i18n="trust5">🛡️ Service Guarantee</div>
+<!-- TRUST BAND -->
+<div class="metrics-band">
+  <div class="metrics-inner">
+    <div class="metric"><div class="big">✅</div><div class="desc" data-i18n="trust1">Verified Professionals</div></div>
+    <div class="metric"><div class="big">⭐</div><div class="desc" data-i18n="trust2">Real Customer Reviews</div></div>
+    <div class="metric"><div class="big">🔒</div><div class="desc" data-i18n="trust3">Secure Payments</div></div>
+    <div class="metric"><div class="big">🛡️</div><div class="desc" data-i18n="trust5">Service Guarantee</div></div>
+  </div>
 </div>
 
 <!-- CATEGORIES -->
-<section class="categories" id="categories">
+<section class="categories-section" id="categories">
   <div class="section-inner">
-    <span class="section-label" data-i18n="cat_label">Browse by Category</span>
+    <span class="eyebrow" data-i18n="cat_label">Browse by Category</span>
     <h2 data-i18n="cat_title">What do you <span>need help</span> with?</h2>
-    <p class="section-sub" data-i18n="cat_sub">From home repairs to personal tutoring — find the right expert for any job in your city.</p>
+    <p class="sec-sub" data-i18n="cat_sub">From home repairs to personal tutoring — find the right expert for any job in your city.</p>
     <div class="cat-grid reveal">
       <div class="cat-card" onclick="quickSearch('Electrician')"><span class="emoji">⚡</span><h4 data-i18n="cat_electrician">Electrician</h4><p data-i18n="cat_electrician_sub">Wiring, fuse, fitting</p></div>
       <div class="cat-card" onclick="quickSearch('Plumber')"><span class="emoji">🔧</span><h4 data-i18n="cat_plumber">Plumber</h4><p data-i18n="cat_plumber_sub">Pipes, taps, drains</p></div>
-      <div class="cat-card" onclick="quickSearch('Carpenter')"><span class="emoji">🪚</span><h4 data-i18n="cat_carpenter">Carpenter</h4><p data-i18n="cat_carpenter_sub">Furniture, doors, wood</p></div>
-      <div class="cat-card" onclick="quickSearch('Painter')"><span class="emoji">🎨</span><h4 data-i18n="cat_painter">Painter</h4><p data-i18n="cat_painter_sub">Interior &amp; exterior</p></div>
       <div class="cat-card" onclick="quickSearch('AC Repair')"><span class="emoji">❄️</span><h4 data-i18n="cat_ac">AC Repair</h4><p data-i18n="cat_ac_sub">Service, gas, install</p></div>
-      <div class="cat-card" onclick="quickSearch('Cleaning')"><span class="emoji">🧹</span><h4 data-i18n="cat_cleaning">Cleaning</h4><p data-i18n="cat_cleaning_sub">Home &amp; deep clean</p></div>
-      <div class="cat-card" onclick="quickSearch('Tutor')"><span class="emoji">📚</span><h4 data-i18n="cat_tutor">Tutor</h4><p data-i18n="cat_tutor_sub">School, college, JEE</p></div>
-      <div class="cat-card" onclick="quickSearch('Photographer')"><span class="emoji">📷</span><h4 data-i18n="cat_photo">Photographer</h4><p data-i18n="cat_photo_sub">Events, portraits</p></div>
-      <div class="cat-card" onclick="quickSearch('IT Support')"><span class="emoji">💻</span><h4 data-i18n="cat_it">IT Support</h4><p data-i18n="cat_it_sub">Laptop, wifi, setup</p></div>
-      <div class="cat-card"><span class="emoji">🏠</span><h4 data-i18n="cat_interior">Interior</h4><p data-i18n="cat_interior_sub">Design, decor, plan</p></div>
-      <div class="cat-card"><span class="emoji">🔒</span><h4 data-i18n="cat_security">Security</h4><p data-i18n="cat_security_sub">CCTV, lock, gates</p></div>
-      <div class="cat-card"><span class="emoji">🚗</span><h4 data-i18n="cat_mechanic">Car Mechanic</h4><p data-i18n="cat_mechanic_sub">Repair, service, wash</p></div>
+      <div class="cat-card" onclick="quickSearch('CCTV')"><span class="emoji">📹</span><h4 data-i18n="cat_security">CCTV Installation</h4><p data-i18n="cat_security_sub">Supply &amp; install</p></div>
+      <div class="cat-card" style="opacity:0.6;cursor:not-allowed;"><span class="emoji">🪚</span><h4 data-i18n="cat_carpenter">Carpenter</h4><p style="color:var(--accent);font-weight:700;font-size:0.72rem;">🕐 Coming Soon</p></div>
+      <div class="cat-card" style="opacity:0.6;cursor:not-allowed;"><span class="emoji">🎨</span><h4 data-i18n="cat_painter">Painter</h4><p style="color:var(--accent);font-weight:700;font-size:0.72rem;">🕐 Coming Soon</p></div>
+      <div class="cat-card" style="opacity:0.6;cursor:not-allowed;"><span class="emoji">🧹</span><h4 data-i18n="cat_cleaning">Cleaning</h4><p style="color:var(--accent);font-weight:700;font-size:0.72rem;">🕐 Coming Soon</p></div>
+      <div class="cat-card" style="opacity:0.6;cursor:not-allowed;"><span class="emoji">📚</span><h4 data-i18n="cat_tutor">Tutor</h4><p style="color:var(--accent);font-weight:700;font-size:0.72rem;">🕐 Coming Soon</p></div>
+      <div class="cat-card" style="opacity:0.6;cursor:not-allowed;"><span class="emoji">📷</span><h4 data-i18n="cat_photo">Photographer</h4><p style="color:var(--accent);font-weight:700;font-size:0.72rem;">🕐 Coming Soon</p></div>
+      <div class="cat-card" style="opacity:0.6;cursor:not-allowed;"><span class="emoji">💻</span><h4 data-i18n="cat_it">IT Support</h4><p style="color:var(--accent);font-weight:700;font-size:0.72rem;">🕐 Coming Soon</p></div>
+      <div class="cat-card" style="opacity:0.6;cursor:not-allowed;"><span class="emoji">🏠</span><h4 data-i18n="cat_interior">Interior</h4><p style="color:var(--accent);font-weight:700;font-size:0.72rem;">🕐 Coming Soon</p></div>
+      <div class="cat-card" style="opacity:0.6;cursor:not-allowed;"><span class="emoji">🚗</span><h4 data-i18n="cat_mechanic">Car Mechanic</h4><p style="color:var(--accent);font-weight:700;font-size:0.72rem;">🕐 Coming Soon</p></div>
     </div>
   </div>
 </section>
 
 <!-- HOW IT WORKS -->
-<section id="how">
+<section class="how-section" id="how">
   <div class="section-inner">
-    <span class="section-label" data-i18n="how_label">Simple Process</span>
+    <span class="eyebrow" data-i18n="how_label">Simple Process</span>
     <h2 data-i18n="how_title">Book a service in <span>3 easy steps</span></h2>
-    <p class="section-sub" data-i18n="how_sub">No middlemen, no confusion. You see the best providers and decide who to call.</p>
-    <div class="steps-grid reveal">
-      <div class="step">
-        <div class="step-num">1</div>
-        <h3 data-i18n="step1_title">Search Your Service</h3>
-        <p data-i18n="step1_desc">Tell us what you need and your location. We show you the top-rated verified providers near you instantly.</p>
-      </div>
-      <div class="step">
-        <div class="step-num">2</div>
-        <h3 data-i18n="step2_title">Compare &amp; Choose</h3>
-        <p data-i18n="step2_desc">Check ratings, reviews, pricing and experience. You decide who to contact — no pressure, full freedom.</p>
-      </div>
-      <div class="step">
-        <div class="step-num">3</div>
-        <h3 data-i18n="step3_title">Book &amp; Get it Done</h3>
-        <p data-i18n="step3_desc">Contact the provider directly, confirm the job, pay securely, and leave a review to help others.</p>
-      </div>
+    <p class="sec-sub" data-i18n="how_sub">No middlemen, no confusion. You see the best providers and decide who to call.</p>
+    <div class="steps-wrap reveal">
+      <div class="step-card"><div class="step-num">1</div><h3 data-i18n="step1_title">Search Your Service</h3><p data-i18n="step1_desc">Tell us what you need and your location. We show you top-rated verified providers near you instantly.</p></div>
+      <div class="step-card"><div class="step-num">2</div><h3 data-i18n="step2_title">Compare &amp; Choose</h3><p data-i18n="step2_desc">Check ratings, reviews, pricing and experience. You decide who to contact — no pressure, full freedom.</p></div>
+      <div class="step-card"><div class="step-num">3</div><h3 data-i18n="step3_title">Book &amp; Get it Done</h3><p data-i18n="step3_desc">Contact the provider directly, confirm the job, pay securely, and leave a review to help others.</p></div>
     </div>
   </div>
 </section>
 
-<!-- FEATURED PROVIDERS -->
-<section class="providers" id="providers">
+<!-- PROVIDERS -->
+<section class="providers-section" id="providers">
   <div class="section-inner">
-    <span class="section-label" data-i18n="prov_label">Top Rated This Week</span>
-    <h2 data-i18n="prov_title">Meet Our <span>Best Providers</span></h2>
-    <p class="section-sub" data-i18n="prov_sub">All providers are manually verified, background-checked, and rated by real customers like you.</p>
-    <div class="providers-grid reveal">
+    <span class="eyebrow" data-i18n="prov_label">Our Providers</span>
+    <h2 data-i18n="prov_title">Verified Experts <span>Near You</span></h2>
+    <p class="sec-sub" data-i18n="prov_sub">All providers are manually verified, background-checked, and rated by real customers like you.</p>
 
-      <div class="pcard">
-        <div class="pcard-top">
-          <div class="pcard-avatar" style="background:#FFF3E8;">⚡</div>
-          <div>
-            <div class="pcard-name">Ramesh Kumar</div>
-            <div class="pcard-role">⭐ 4.9 · 142 reviews · Pune</div>
-          </div>
-        </div>
-        <div class="pcard-tags"><span class="tag">Home Wiring</span><span class="tag">MCB Fixing</span><span class="tag">Fan Install</span></div>
-        <div class="pcard-footer">
-          <div><div class="pcard-rate">₹300<span>/hr</span></div><div class="pcard-verified">✔ Verified</div></div>
-          <button class="btn-view">View Profile</button>
-        </div>
+    <div style="background:white;border:1.5px solid var(--border);border-radius:24px;padding:3rem 2rem;text-align:center;box-shadow:0 4px 20px rgba(0,0,0,0.05);">
+      <div style="font-size:3rem;margin-bottom:1rem;">🚀</div>
+      <h3 style="font-family:'Plus Jakarta Sans',sans-serif;font-size:1.3rem;font-weight:800;color:var(--primary);margin-bottom:0.75rem;" data-i18n="no_providers_title">Be First in Your City!</h3>
+      <p style="color:var(--slate);font-size:0.92rem;max-width:460px;margin:0 auto 2rem;line-height:1.75;" data-i18n="no_providers_desc">We are onboarding verified providers city by city. Enter your city below and we'll notify you as soon as experts are available near you!</p>
+
+      <div style="display:flex;gap:0.75rem;max-width:420px;margin:0 auto 1rem;flex-wrap:wrap;justify-content:center;">
+        <input type="text" id="cityLeadInput" placeholder="Enter your city..." data-i18n-placeholder="search_placeholder"
+          style="flex:1;min-width:200px;border:1.5px solid var(--border);border-radius:10px;padding:0.8rem 1rem;font-size:0.9rem;font-family:'Plus Jakarta Sans',sans-serif;color:var(--primary);outline:none;">
+        <button onclick="handleCityLead()" data-i18n="city_notify_btn"
+          style="background:var(--accent);color:white;border:none;border-radius:10px;padding:0.8rem 1.5rem;font-size:0.9rem;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;white-space:nowrap;">
+          Notify Me 🔔
+        </button>
       </div>
-
-      <div class="pcard">
-        <div class="pcard-top">
-          <div class="pcard-avatar" style="background:#EFF6FF;">🔧</div>
-          <div>
-            <div class="pcard-name">Suresh Patil</div>
-            <div class="pcard-role">⭐ 4.8 · 98 reviews · Mumbai</div>
-          </div>
-        </div>
-        <div class="pcard-tags"><span class="tag">Pipe Repair</span><span class="tag">Tap Fixing</span><span class="tag">Drainage</span></div>
-        <div class="pcard-footer">
-          <div><div class="pcard-rate">₹250<span>/hr</span></div><div class="pcard-verified">✔ Verified</div></div>
-          <button class="btn-view">View Profile</button>
-        </div>
-      </div>
-
-      <div class="pcard">
-        <div class="pcard-top">
-          <div class="pcard-avatar" style="background:#F0FDF4;">📚</div>
-          <div>
-            <div class="pcard-name">Priya Sharma</div>
-            <div class="pcard-role">⭐ 5.0 · 67 reviews · Delhi</div>
-          </div>
-        </div>
-        <div class="pcard-tags"><span class="tag">Maths</span><span class="tag">Science</span><span class="tag">JEE Prep</span></div>
-        <div class="pcard-footer">
-          <div><div class="pcard-rate">₹400<span>/hr</span></div><div class="pcard-verified">✔ Verified</div></div>
-          <button class="btn-view">View Profile</button>
-        </div>
-      </div>
-
-      <div class="pcard">
-        <div class="pcard-top">
-          <div class="pcard-avatar" style="background:#FFF7ED;">🎨</div>
-          <div>
-            <div class="pcard-name">Anil Mehta</div>
-            <div class="pcard-role">⭐ 4.7 · 113 reviews · Ahmedabad</div>
-          </div>
-        </div>
-        <div class="pcard-tags"><span class="tag">Interior Paint</span><span class="tag">Texture</span><span class="tag">Waterproof</span></div>
-        <div class="pcard-footer">
-          <div><div class="pcard-rate">₹200<span>/hr</span></div><div class="pcard-verified">✔ Verified</div></div>
-          <button class="btn-view">View Profile</button>
-        </div>
-      </div>
-
-      <div class="pcard">
-        <div class="pcard-top">
-          <div class="pcard-avatar" style="background:#FDF2F8;">🧹</div>
-          <div>
-            <div class="pcard-name">Savita Joshi</div>
-            <div class="pcard-role">⭐ 4.9 · 201 reviews · Bangalore</div>
-          </div>
-        </div>
-        <div class="pcard-tags"><span class="tag">Deep Clean</span><span class="tag">Kitchen</span><span class="tag">Move-in</span></div>
-        <div class="pcard-footer">
-          <div><div class="pcard-rate">₹180<span>/hr</span></div><div class="pcard-verified">✔ Verified</div></div>
-          <button class="btn-view">View Profile</button>
-        </div>
-      </div>
-
-      <div class="pcard">
-        <div class="pcard-top">
-          <div class="pcard-avatar" style="background:#ECFDF5;">❄️</div>
-          <div>
-            <div class="pcard-name">Vikram Singh</div>
-            <div class="pcard-role">⭐ 4.8 · 89 reviews · Jaipur</div>
-          </div>
-        </div>
-        <div class="pcard-tags"><span class="tag">AC Service</span><span class="tag">Gas Refill</span><span class="tag">Install</span></div>
-        <div class="pcard-footer">
-          <div><div class="pcard-rate">₹350<span>/hr</span></div><div class="pcard-verified">✔ Verified</div></div>
-          <button class="btn-view">View Profile</button>
-        </div>
-      </div>
-
+      <p style="font-size:0.78rem;color:var(--muted);" data-i18n="city_notify_note">We'll WhatsApp / Email you when Servlo launches in your city. No spam.</p>
+      <div id="cityLeadSuccess" style="display:none;margin-top:1rem;background:var(--green-pale);border-radius:10px;padding:0.75rem 1rem;color:var(--green);font-size:0.88rem;font-weight:700;" data-i18n="city_notify_success">✅ Done! We'll notify you when Servlo launches in your city.</div>
     </div>
   </div>
 </section>
 
 <!-- WHY SERVLO -->
-<section>
+<section class="why-section">
   <div class="section-inner">
-    <span class="section-label" data-i18n="why_label">Why Choose Us</span>
-    <h2 data-i18n="why_title">Different from <span>JustDial &amp; others</span></h2>
-    <p class="section-sub" data-i18n="why_sub">We curate only the best — verified, rated, real. And you stay in control of who you hire.</p>
+    <span class="eyebrow" data-i18n="why_label">Why Choose Us</span>
+    <h2 data-i18n="why_title">Why <span>Servlo</span> is Different</h2>
+    <p class="sec-sub" data-i18n="why_sub">We curate only the best — verified, rated, real. And you stay in control of who you hire.</p>
     <div class="why-grid reveal">
       <div class="why-card"><span class="why-icon">🔍</span><h3 data-i18n="why1_title">Manually Verified Providers</h3><p data-i18n="why1_desc">Every provider goes through ID check, skills test, and background verification before being listed on Servlo.</p></div>
       <div class="why-card"><span class="why-icon">⭐</span><h3 data-i18n="why2_title">Real Customer Reviews</h3><p data-i18n="why2_desc">Only customers who actually booked can leave reviews. No fake ratings, no paid promotions — ever.</p></div>
@@ -1281,39 +570,29 @@
 </section>
 
 <!-- TESTIMONIALS -->
-<section class="testimonials">
+<section class="testi-section">
   <div class="section-inner">
-    <span class="section-label" data-i18n="testi_label">Customer Stories</span>
-    <h2 data-i18n="testi_title">Real people. <span style="color:#FBBF24;">Real results.</span></h2>
-    <p class="section-sub" data-i18n="testi_sub">Thousands of happy customers across India trust Servlo for everyday needs.</p>
+    <span class="eyebrow" data-i18n="testi_label">Customer Stories</span>
+    <h2 data-i18n="testi_title">Real people. <span style="color:var(--gold)">Real results.</span></h2>
+    <p class="sec-sub" data-i18n="testi_sub">Thousands of happy customers across India trust Servlo for everyday needs.</p>
     <div class="testi-grid reveal">
-      <div class="testi-card">
-        <div class="testi-stars">★★★★★</div>
-        <p class="testi-text" data-i18n="testi1_text">"Found an amazing electrician within 10 minutes. He came the same day, fixed everything properly. Price was exactly what was shown. No drama at all!"</p>
-        <div class="testi-author"><div class="testi-avatar">👩</div><div><div class="testi-name">Neha Gupta</div><div class="testi-loc" data-i18n="testi1_loc">Pune · Hired Electrician</div></div></div>
-      </div>
-      <div class="testi-card">
-        <div class="testi-stars">★★★★★</div>
-        <p class="testi-text" data-i18n="testi2_text">"JustDial never gave me reliable people. Servlo's provider was background checked and I could see his reviews. Felt completely safe having him at home."</p>
-        <div class="testi-author"><div class="testi-avatar">👨</div><div><div class="testi-name">Rahul Sharma</div><div class="testi-loc" data-i18n="testi2_loc">Mumbai · Hired Plumber</div></div></div>
-      </div>
-      <div class="testi-card">
-        <div class="testi-stars">★★★★★</div>
-        <p class="testi-text" data-i18n="testi3_text">"My daughter's JEE score improved after just 2 months with the tutor I found on Servlo. The rating system helped me pick exactly the right one."</p>
-        <div class="testi-author"><div class="testi-avatar">👩</div><div><div class="testi-name">Sunita Agarwal</div><div class="testi-loc" data-i18n="testi3_loc">Delhi · Hired Tutor</div></div></div>
+      <div class="testi-card" style="grid-column:1/-1; text-align:center; padding:3rem 2rem; background:rgba(255,255,255,0.04); border:1px dashed rgba(255,255,255,0.15);">
+        <div style="font-size:2.5rem; margin-bottom:1rem;">💬</div>
+        <h3 style="color:white; font-size:1.1rem; font-weight:800; margin-bottom:0.75rem;" data-i18n="no_reviews_title">Real Reviews Coming Soon</h3>
+        <p style="color:rgba(255,255,255,0.5); font-size:0.9rem; max-width:420px; margin:0 auto; line-height:1.7;" data-i18n="no_reviews_desc">We only show genuine reviews from real customers. As bookings happen, authentic reviews will appear here.</p>
       </div>
     </div>
   </div>
 </section>
 
 <!-- JOIN AS PROVIDER -->
-<section class="join-provider" id="join">
+<section class="join-section" id="join">
   <div class="section-inner">
     <div class="join-inner">
       <div>
-        <span class="section-label" data-i18n="join_label">For Service Providers</span>
+        <span class="eyebrow" data-i18n="join_label">For Service Providers</span>
         <h2 data-i18n="join_title">Earn more by joining <span>Servlo</span></h2>
-        <p class="section-sub" data-i18n="join_sub">Get genuine customers, build your reputation, and grow your income — all on your own schedule.</p>
+        <p class="sec-sub" data-i18n="join_sub">Get genuine customers, build your reputation, and grow your income — all on your own schedule.</p>
         <ul class="join-steps">
           <li><div class="join-dot">1</div><div><h4 data-i18n="join1_title">Register &amp; Submit Documents</h4><p data-i18n="join1_desc">Basic ID and skill proof — takes less than 5 minutes online.</p></div></li>
           <li><div class="join-dot">2</div><div><h4 data-i18n="join2_title">Get Verified by Our Team</h4><p data-i18n="join2_desc">We review your profile within 24–48 hours and activate your listing.</p></div></li>
@@ -1321,7 +600,6 @@
           <li><div class="join-dot">4</div><div><h4 data-i18n="join4_title">Build Reviews &amp; Grow</h4><p data-i18n="join4_desc">More good reviews = higher ranking = more customers. Simple.</p></div></li>
         </ul>
       </div>
-
       <div class="join-form-box">
         <h3 data-i18n="form_title">📝 Register as a Provider</h3>
         <form id="providerForm" action="https://formspree.io/f/mqeyjrga" method="POST">
@@ -1338,19 +616,79 @@
             </select>
           </div>
           <div class="form-group">
-            <label>Years of Experience</label>
+            <label data-i18n="form_exp">Experience</label>
             <select name="Experience">
-              <option>Less than 1 year</option><option>1–3 years</option>
-              <option>3–5 years</option><option>5–10 years</option><option>10+ years</option>
+              <option data-i18n="exp1">Less than 1 year</option><option data-i18n="exp2">1–3 years</option>
+              <option data-i18n="exp3">3–5 years</option><option data-i18n="exp4">5–10 years</option><option data-i18n="exp5">10+ years</option>
             </select>
           </div>
-          <button type="submit" class="btn-join">Apply to Join Servlo →</button>
+          <button type="submit" class="btn-join" data-i18n="btn_join_form">Apply to Join Servlo →</button>
         </form>
-        <div id="formSuccess" style="display:none; text-align:center; padding:1.5rem 0;">
-          <div style="font-size:2.5rem; margin-bottom:0.75rem;">🎉</div>
-          <h4 style="font-family:'Sora',sans-serif; color:var(--navy); margin-bottom:0.5rem;">Application Received!</h4>
-          <p style="color:var(--slate); font-size:0.9rem;">Our team will contact you within 24 hours.</p>
+        <div id="formSuccess" style="display:none;text-align:center;padding:1.5rem 0;">
+          <div style="font-size:2.5rem;margin-bottom:0.75rem;">🎉</div>
+          <h4 style="font-weight:800;color:var(--primary);margin-bottom:0.5rem;" data-i18n="form_success_title">Application Received!</h4>
+          <p style="color:var(--slate);font-size:0.88rem;" data-i18n="form_success_desc">Our team will contact you within 24 hours.</p>
         </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW WE VERIFY -->
+<section class="verify-section">
+  <div class="section-inner">
+    <span class="eyebrow" data-i18n="verify_label">Our Process</span>
+    <h2 data-i18n="verify_title">How We <span>Verify</span> Every Provider</h2>
+    <p class="sec-sub" data-i18n="verify_sub">We don't just list anyone. Every provider goes through a strict 4-step verification before appearing on Servlo.</p>
+    <div class="verify-steps reveal">
+      <div class="verify-step">
+        <div class="verify-num">1</div>
+        <h4 data-i18n="verify1_title">ID Verification</h4>
+        <p data-i18n="verify1_desc">Aadhar/PAN card checked and verified by our team personally.</p>
+      </div>
+      <div class="verify-step">
+        <div class="verify-num">2</div>
+        <h4 data-i18n="verify2_title">Skill Assessment</h4>
+        <p data-i18n="verify2_desc">Provider's skills and experience are evaluated before approval.</p>
+      </div>
+      <div class="verify-step">
+        <div class="verify-num">3</div>
+        <h4 data-i18n="verify3_title">Background Check</h4>
+        <p data-i18n="verify3_desc">Criminal record and references checked for your safety.</p>
+      </div>
+      <div class="verify-step">
+        <div class="verify-num">4</div>
+        <h4 data-i18n="verify4_title">Profile Approved</h4>
+        <p data-i18n="verify4_desc">Only then does the provider appear live on Servlo for customers.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section" id="contact">
+  <div class="section-inner">
+    <span class="eyebrow" data-i18n="contact_label">Get in Touch</span>
+    <h2 data-i18n="contact_title">We're Here to <span>Help You</span></h2>
+    <p class="sec-sub" data-i18n="contact_sub">Have a question? Need help? Want to partner with us? Reach out anytime.</p>
+    <div class="contact-grid reveal">
+      <div class="contact-card">
+        <span class="contact-icon">💬</span>
+        <h4 data-i18n="contact_wa_title">WhatsApp Us</h4>
+        <p data-i18n="contact_wa_desc">Chat directly with our team for quick help and queries.</p>
+        <a href="https://wa.me/917744031063?text=Hello%20Servlo!%20I%20have%20a%20query." target="_blank" data-i18n="contact_wa_btn">Chat Now →</a>
+      </div>
+      <div class="contact-card">
+        <span class="contact-icon">📧</span>
+        <h4 data-i18n="contact_email_title">Email Us</h4>
+        <p data-i18n="contact_email_desc">Send us your query and we'll respond within 24 hours.</p>
+        <a href="mailto:hello@servlo.in" data-i18n="contact_email_btn">Send Email →</a>
+      </div>
+      <div class="contact-card">
+        <span class="contact-icon">🤝</span>
+        <h4 data-i18n="contact_partner_title">Partner With Us</h4>
+        <p data-i18n="contact_partner_desc">Want to become a verified provider or bulk partner?</p>
+        <a href="#join" data-i18n="contact_partner_btn">Register Now →</a>
       </div>
     </div>
   </div>
@@ -1361,8 +699,8 @@
   <h2 data-i18n="cta_title">Ready to find the right expert?</h2>
   <p data-i18n="cta_sub">Join thousands of Indians who trust Servlo for reliable, verified local services.</p>
   <div class="cta-btns">
-    <button class="btn-white" onclick="window.scrollTo({top:0,behavior:'smooth'})">Find a Service Now</button>
-    <button class="btn-outline-white" onclick="document.getElementById('join').scrollIntoView({behavior:'smooth'})">List Your Services</button>
+    <button class="btn-white" onclick="window.scrollTo({top:0,behavior:'smooth'})" data-i18n="cta_btn1">Find a Service Now</button>
+    <button class="btn-outline-white" onclick="document.getElementById('join').scrollIntoView({behavior:'smooth'})" data-i18n="cta_btn2">List Your Services</button>
   </div>
 </div>
 
@@ -1371,35 +709,42 @@
   <div class="footer-grid">
     <div class="footer-brand">
       <div class="logo">Serv<span>lo</span></div>
-      <p>India's trusted platform for verified local service professionals. Connecting real customers with real experts — fairly and transparently.</p>
+      <p data-i18n="footer_about">India's trusted platform for verified local service professionals. Connecting real customers with real experts — fairly and transparently.</p>
     </div>
     <div class="footer-col">
-      <h4>Services</h4>
+      <h4 data-i18n="footer_services">Services</h4>
       <ul>
-        <li><a href="#">Electrician</a></li><li><a href="#">Plumber</a></li>
-        <li><a href="#">Carpenter</a></li><li><a href="#">AC Repair</a></li>
-        <li><a href="#">Home Cleaning</a></li><li><a href="#">Tutors</a></li>
+        <li><a href="#" data-i18n="cat_electrician">Electrician</a></li>
+        <li><a href="#" data-i18n="cat_plumber">Plumber</a></li>
+        <li><a href="#" data-i18n="cat_carpenter">Carpenter</a></li>
+        <li><a href="#" data-i18n="cat_ac">AC Repair</a></li>
+        <li><a href="#" data-i18n="cat_cleaning">Cleaning</a></li>
+        <li><a href="#" data-i18n="cat_tutor">Tutor</a></li>
       </ul>
     </div>
     <div class="footer-col">
-      <h4>Company</h4>
+      <h4 data-i18n="footer_company">Company</h4>
       <ul>
-        <li><a href="#">About Us</a></li><li><a href="#">How It Works</a></li>
-        <li><a href="#">For Providers</a></li><li><a href="#">Blog</a></li>
-        <li><a href="#">Careers</a></li><li><a href="#">Contact</a></li>
+        <li><a href="#contact" data-i18n="footer_contact">Contact</a></li>
+        <li><a href="#how" data-i18n="footer_how">How It Works</a></li>
+        <li><a href="#join" data-i18n="footer_providers_link">For Providers</a></li>
+        <li><span style="color:rgba(255,255,255,0.3);font-size:0.85rem;" data-i18n="footer_about_link">About Us</span><span class="footer-cs">soon</span></li>
+        <li><span style="color:rgba(255,255,255,0.3);font-size:0.85rem;" data-i18n="footer_blog">Blog</span><span class="footer-cs">soon</span></li>
       </ul>
     </div>
     <div class="footer-col">
-      <h4>Support</h4>
+      <h4 data-i18n="footer_support">Support</h4>
       <ul>
-        <li><a href="#">Help Center</a></li><li><a href="#">Safety Policy</a></li>
-        <li><a href="#">Privacy Policy</a></li><li><a href="#">Terms of Service</a></li>
-        <li><a href="#">Refund Policy</a></li>
+        <li><a href="#contact" data-i18n="footer_help">Help Center</a></li>
+        <li><span style="color:rgba(255,255,255,0.3);font-size:0.85rem;" data-i18n="footer_safety">Safety Policy</span><span class="footer-cs">soon</span></li>
+        <li><span style="color:rgba(255,255,255,0.3);font-size:0.85rem;" data-i18n="footer_privacy">Privacy Policy</span><span class="footer-cs">soon</span></li>
+        <li><span style="color:rgba(255,255,255,0.3);font-size:0.85rem;" data-i18n="footer_terms">Terms of Service</span><span class="footer-cs">soon</span></li>
+        <li><span style="color:rgba(255,255,255,0.3);font-size:0.85rem;" data-i18n="footer_refund">Refund Policy</span><span class="footer-cs">soon</span></li>
       </ul>
     </div>
   </div>
   <div class="footer-bottom">
-    <p>© 2025 Servlo. Made with ❤️ in India. All rights reserved.</p>
+    <p data-i18n="footer_copy">© 2025 Servlo. Made with ❤️ in India. All rights reserved.</p>
     <div class="footer-badges">
       <div class="footer-badge">🔒 SSL Secured</div>
       <div class="footer-badge">🇮🇳 Made in India</div>
@@ -1412,402 +757,477 @@
 <div class="modal-overlay" id="loginModal" onclick="closeModalOutside(event)">
   <div class="modal-box">
     <button class="modal-close" onclick="closeModal()">✕</button>
-
     <div class="modal-logo">Serv<span>lo</span></div>
-    <p style="font-size:0.88rem; color:var(--slate);" data-i18n="modal_welcome">Welcome! Login or create your account.</p>
-
+    <p style="font-size:0.85rem;color:var(--slate);" data-i18n="modal_welcome">Welcome! Login or create your account.</p>
     <div class="modal-tabs">
       <button class="modal-tab active" onclick="switchTab('login')" id="loginTab" data-i18n="tab_login">Login</button>
       <button class="modal-tab" onclick="switchTab('signup')" id="signupTab" data-i18n="tab_signup">Sign Up</button>
     </div>
-
-    <!-- LOGIN FORM -->
     <div class="modal-form active" id="loginForm">
-      <div class="modal-input-group">
-        <label data-i18n="label_email">Email Address</label>
-        <input type="email" id="loginEmail" placeholder="you@email.com">
-      </div>
-      <div class="modal-input-group">
-        <label data-i18n="label_password">Password</label>
-        <input type="password" id="loginPassword" placeholder="••••••••">
-      </div>
+      <div class="modal-input-group"><label data-i18n="label_email">Email Address</label><input type="email" id="loginEmail" placeholder="you@email.com"></div>
+      <div class="modal-input-group"><label data-i18n="label_password">Password</label><input type="password" id="loginPassword" placeholder="••••••••"></div>
       <button class="modal-submit-btn" onclick="handleLogin()" data-i18n="btn_login">Login to Servlo</button>
       <p class="modal-note" data-i18n="forgot_pass">Forgot password? <a href="#">Reset here</a></p>
     </div>
-
-    <!-- SIGNUP FORM -->
     <div class="modal-form" id="signupForm">
-      <div class="modal-input-group">
-        <label data-i18n="label_name">Full Name</label>
-        <input type="text" id="signupName" placeholder="Ramesh Kumar">
-      </div>
-      <div class="modal-input-group">
-        <label data-i18n="label_email">Email Address</label>
-        <input type="email" id="signupEmail" placeholder="you@email.com">
-      </div>
-      <div class="modal-input-group">
-        <label data-i18n="label_phone">Mobile Number</label>
-        <input type="tel" id="signupPhone" placeholder="+91 98765 43210">
-      </div>
-      <div class="modal-input-group">
-        <label data-i18n="label_password">Password</label>
-        <input type="password" id="signupPassword" placeholder="Min 6 characters">
-      </div>
+      <div class="modal-input-group"><label data-i18n="label_name">Full Name</label><input type="text" id="signupName" placeholder="Ramesh Kumar"></div>
+      <div class="modal-input-group"><label data-i18n="label_email">Email Address</label><input type="email" id="signupEmail" placeholder="you@email.com"></div>
+      <div class="modal-input-group"><label data-i18n="label_phone">Mobile Number</label><input type="tel" id="signupPhone" placeholder="+91 98765 43210"></div>
+      <div class="modal-input-group"><label data-i18n="label_password">Password</label><input type="password" id="signupPassword" placeholder="Min 6 characters"></div>
       <button class="modal-submit-btn" onclick="handleSignup()" data-i18n="btn_signup">Create Account</button>
       <p class="modal-note" data-i18n="terms_note">By signing up you agree to our <a href="#">Terms</a> and <a href="#">Privacy Policy</a></p>
     </div>
-
   </div>
 </div>
 
-<!-- WHATSAPP FLOATING BUTTON -->
-<div style="position:fixed; bottom:28px; right:28px; z-index:999; display:flex; flex-direction:column; gap:0.5rem; align-items:flex-end;" id="waContainer">
-
-  <!-- Two number buttons (hidden by default) -->
-  <div id="waNumbers" style="display:none; flex-direction:column; gap:0.5rem; align-items:flex-end;">
-    <a href="https://wa.me/917744031063?text=Hello%20Servlo!%20I%20need%20help%20with%20a%20service."
-       target="_blank"
-       style="background:white; border:2px solid #25D366; color:#1a1a1a; border-radius:50px; padding:0.6rem 1.1rem; font-size:0.82rem; font-weight:700; text-decoration:none; display:flex; align-items:center; gap:0.5rem; box-shadow:0 4px 16px rgba(0,0,0,0.1); white-space:nowrap;">
-      💬 +91 77440 31063
-    </a>
-    <a href="https://wa.me/918888149580?text=Hello%20Servlo!%20I%20need%20help%20with%20a%20service."
-       target="_blank"
-       style="background:white; border:2px solid #25D366; color:#1a1a1a; border-radius:50px; padding:0.6rem 1.1rem; font-size:0.82rem; font-weight:700; text-decoration:none; display:flex; align-items:center; gap:0.5rem; box-shadow:0 4px 16px rgba(0,0,0,0.1); white-space:nowrap;">
-      💬 +91 88881 49580
-    </a>
+<!-- CITY LEAD MODAL -->
+<div class="city-modal-overlay" id="cityLeadModal" onclick="closeCityModalOutside(event)">
+  <div class="city-modal-box">
+    <button class="city-modal-close" onclick="closeCityModal()">✕</button>
+    <div style="font-size:2.5rem;margin-bottom:0.75rem;">🔔</div>
+    <div id="cityModalForm">
+      <h3 data-i18n="city_modal_title">Get Notified!</h3>
+      <p data-i18n="city_modal_desc">We'll notify you as soon as verified providers are available near you. No spam — promise!</p>
+      <input type="text" id="cityLeadModalCity" class="city-modal-input" placeholder="Your city" data-i18n-placeholder="search_placeholder">
+      <input type="email" id="cityLeadModalEmail" class="city-modal-input" placeholder="Your email or WhatsApp number" data-i18n-placeholder="city_modal_contact_ph">
+      <button class="city-modal-btn" onclick="handleCityLeadModal()" data-i18n="city_notify_btn">Notify Me 🔔</button>
+    </div>
+    <div id="cityModalSuccess" style="display:none;">
+      <div style="font-size:2rem;margin-bottom:0.75rem;">✅</div>
+      <h3 style="color:var(--green);" data-i18n="city_modal_success_title">You're on the list!</h3>
+      <p style="color:var(--slate);font-size:0.88rem;margin-top:0.5rem;" data-i18n="city_modal_success_desc">We'll reach out as soon as Servlo launches in your city.</p>
+      <button onclick="closeCityModal()" style="margin-top:1.25rem;background:var(--primary);color:white;border:none;border-radius:10px;padding:0.7rem 1.5rem;font-size:0.88rem;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;" data-i18n="city_modal_close">Close</button>
+    </div>
   </div>
+</div>
 
-  <!-- Main WhatsApp button -->
-  <button onclick="toggleWaNumbers()" class="whatsapp-float" style="border:none; cursor:pointer;">
-    <span class="wa-icon">💬</span>
-    <span>Chat on WhatsApp</span>
-  </button>
-
+<!-- WHATSAPP -->
+<div id="waContainer">
+  <div id="waNumbers" style="display:none;flex-direction:column;gap:0.5rem;align-items:flex-end;">
+    <a href="https://wa.me/917744031063?text=Hello%20Servlo!%20I%20need%20help%20with%20a%20service." target="_blank" class="wa-number-link">💬 +91 77440 31063</a>
+    <a href="https://wa.me/918888149580?text=Hello%20Servlo!%20I%20need%20help%20with%20a%20service." target="_blank" class="wa-number-link">💬 +91 88881 49580</a>
+  </div>
+  <button onclick="toggleWaNumbers()" class="wa-main-btn">💬 <span data-i18n="wa_btn">Chat on WhatsApp</span></button>
 </div>
 
 <script>
-  // ── TRANSLATIONS ──
-  const translations = {
-    en: {
-      nav_services:'Services', nav_providers:'Providers', nav_how:'How It Works', nav_join:'Join as Provider', nav_login:'Login',
-      hero_badge:'🇮🇳 Serving India\'s Best Local Talent',
-      hero_title:'Find <span>Verified</span> Service Experts Near You',
-      hero_sub:'Servlo connects you with background-checked, customer-rated local professionals — electricians, plumbers, tutors, cleaners & more. You choose who to hire.',
-      search_all:'All Services', search_placeholder:'Enter your city or area...', btn_search:'🔍 Search',
-      tag_electrician:'⚡ Electrician', tag_plumber:'🔧 Plumber', tag_tutor:'📚 Tutor', tag_cleaning:'🧹 Cleaning', tag_painter:'🎨 Painter', tag_ac:'❄️ AC Repair',
-      cat_label:'Browse by Category', cat_title:'What do you <span>need help</span> with?', cat_sub:'From home repairs to personal tutoring — find the right expert for any job in your city.',
-      cat_electrician:'Electrician', cat_electrician_sub:'Wiring, fuse, fitting',
-      cat_plumber:'Plumber', cat_plumber_sub:'Pipes, taps, drains',
-      cat_carpenter:'Carpenter', cat_carpenter_sub:'Furniture, doors, wood',
-      cat_painter:'Painter', cat_painter_sub:'Interior & exterior',
-      cat_ac:'AC Repair', cat_ac_sub:'Service, gas, install',
-      cat_cleaning:'Cleaning', cat_cleaning_sub:'Home & deep clean',
-      cat_tutor:'Tutor', cat_tutor_sub:'School, college, JEE',
-      cat_photo:'Photographer', cat_photo_sub:'Events, portraits',
-      cat_it:'IT Support', cat_it_sub:'Laptop, wifi, setup',
-      cat_interior:'Interior', cat_interior_sub:'Design, decor, plan',
-      cat_security:'Security', cat_security_sub:'CCTV, lock, gates',
-      cat_mechanic:'Car Mechanic', cat_mechanic_sub:'Repair, service, wash',
-      how_label:'Simple Process', how_title:'Book a service in <span>3 easy steps</span>', how_sub:'No middlemen, no confusion. You see the best providers and decide who to call.',
-      step1_title:'Search Your Service', step1_desc:'Tell us what you need and your location. We show you the top-rated verified providers near you instantly.',
-      step2_title:'Compare & Choose', step2_desc:'Check ratings, reviews, pricing and experience. You decide who to contact — no pressure, full freedom.',
-      step3_title:'Book & Get it Done', step3_desc:'Contact the provider directly, confirm the job, pay securely, and leave a review to help others.',
-      prov_label:'Top Rated This Week', prov_title:'Meet Our <span>Best Providers</span>', prov_sub:'All providers are manually verified, background-checked, and rated by real customers like you.',
-      why_label:'Why Choose Us', why_title:'Different from <span>JustDial & others</span>', why_sub:'We curate only the best — verified, rated, real. And you stay in control of who you hire.',
-      why1_title:'Manually Verified Providers', why1_desc:'Every provider goes through ID check, skills test, and background verification before being listed on Servlo.',
-      why2_title:'Real Customer Reviews', why2_desc:'Only customers who actually booked can leave reviews. No fake ratings, no paid promotions — ever.',
-      why3_title:'You Choose, No Pressure', why3_desc:'Unlike platforms that assign workers, you see profiles and pick who you\'re comfortable with. Full control.',
-      why4_title:'Fair Pricing, No Surprises', why4_desc:'Providers list their rates upfront. What you see is what you pay. No hidden fees from Servlo\'s side.',
-      why5_title:'Local Jobs, Local Income', why5_desc:'We support real people in your city — not big corporates. Every booking directly helps a local family.',
-      why6_title:'Servlo Service Guarantee', why6_desc:'Not satisfied with the work? Raise a dispute within 24 hours and we\'ll resolve it — no questions asked.',
-      testi_label:'Customer Stories', testi_title:'Real people. <span style="color:#FBBF24;">Real results.</span>', testi_sub:'Thousands of happy customers across India trust Servlo for everyday needs.',
-      testi1_text:'"Found an amazing electrician within 10 minutes. He came the same day, fixed everything properly. Price was exactly what was shown. No drama at all!"',
-      testi1_loc:'Pune · Hired Electrician',
-      testi2_text:'"JustDial never gave me reliable people. Servlo\'s provider was background checked and I could see his reviews. Felt completely safe having him at home."',
-      testi2_loc:'Mumbai · Hired Plumber',
-      testi3_text:'"My daughter\'s JEE score improved after just 2 months with the tutor I found on Servlo. The rating system helped me pick exactly the right one."',
-      testi3_loc:'Delhi · Hired Tutor',
-      join_label:'For Service Providers', join_title:'Earn more by joining <span>Servlo</span>', join_sub:'Get genuine customers, build your reputation, and grow your income — all on your own schedule.',
-      join1_title:'Register & Submit Documents', join1_desc:'Basic ID and skill proof — takes less than 5 minutes online.',
-      join2_title:'Get Verified by Our Team', join2_desc:'We review your profile within 24–48 hours and activate your listing.',
-      join3_title:'Start Receiving Customers', join3_desc:'Customers find you, contact you, and you handle the job your way.',
-      join4_title:'Build Reviews & Grow', join4_desc:'More good reviews = higher ranking = more customers. Simple.',
-      form_title:'📝 Register as a Provider', form_name_ph:'Ramesh Kumar', form_city:'Your City', form_city_ph:'Pune, Mumbai, Delhi...', form_service:'Service Category', form_select:'Select your skill', form_other:'Other',
-      trust1:'✅ Verified Professionals', trust2:'⭐ Rated by Real Customers', trust3:'🔒 Secure Payments', trust4:'🕐 24/7 Support', trust5:'🛡️ Service Guarantee',
-      cta_title:'Ready to find the right expert?', cta_sub:'Join thousands of Indians who trust Servlo for reliable, verified local services.',
-      modal_welcome:'Welcome! Login or create your account.', tab_login:'Login', tab_signup:'Sign Up',
-      label_email:'Email Address', label_password:'Password', label_name:'Full Name', label_phone:'Mobile Number',
-      btn_login:'Login to Servlo', btn_signup:'Create Account',
-      forgot_pass:'Forgot password? <a href="#">Reset here</a>',
-      terms_note:'By signing up you agree to our <a href="#">Terms</a> and <a href="#">Privacy Policy</a>'
-    },
-    hi: {
-      nav_services:'सेवाएं', nav_providers:'प्रोवाइडर', nav_how:'कैसे काम करता है', nav_join:'प्रोवाइडर बनें', nav_login:'लॉगिन',
-      hero_badge:'🇮🇳 भारत के बेहतरीन लोकल टैलेंट',
-      hero_title:'अपने नजदीक <span>वेरिफाइड</span> सर्विस एक्सपर्ट खोजें',
-      hero_sub:'Servlo आपको बैकग्राउंड-चेक्ड, कस्टमर-रेटेड लोकल प्रोफेशनल्स से जोड़ता है — इलेक्ट्रीशियन, प्लंबर, ट्यूटर, क्लीनर और भी बहुत कुछ। आप तय करें किसे hire करना है।',
-      search_all:'सभी सेवाएं', search_placeholder:'अपना शहर या क्षेत्र डालें...', btn_search:'🔍 खोजें',
-      tag_electrician:'⚡ इलेक्ट्रीशियन', tag_plumber:'🔧 प्लंबर', tag_tutor:'📚 ट्यूटर', tag_cleaning:'🧹 क्लीनिंग', tag_painter:'🎨 पेंटर', tag_ac:'❄️ AC रिपेयर',
-      cat_label:'केटेगरी के अनुसार खोजें', cat_title:'आपको <span>किस चीज़ में मदद</span> चाहिए?', cat_sub:'घर की मरम्मत से लेकर ट्यूटरिंग तक — अपने शहर में किसी भी काम के लिए सही एक्सपर्ट खोजें।',
-      cat_electrician:'इलेक्ट्रीशियन', cat_electrician_sub:'वायरिंग, फ्यूज, फिटिंग',
-      cat_plumber:'प्लंबर', cat_plumber_sub:'पाइप, नल, नाली',
-      cat_carpenter:'कारपेंटर', cat_carpenter_sub:'फर्नीचर, दरवाजे, लकड़ी',
-      cat_painter:'पेंटर', cat_painter_sub:'इंटीरियर और एक्सटीरियर',
-      cat_ac:'AC रिपेयर', cat_ac_sub:'सर्विस, गैस, इंस्टॉल',
-      cat_cleaning:'क्लीनिंग', cat_cleaning_sub:'घर और डीप क्लीन',
-      cat_tutor:'ट्यूटर', cat_tutor_sub:'स्कूल, कॉलेज, JEE',
-      cat_photo:'फोटोग्राफर', cat_photo_sub:'इवेंट, पोर्ट्रेट',
-      cat_it:'IT सपोर्ट', cat_it_sub:'लैपटॉप, वाईफाई, सेटअप',
-      cat_interior:'इंटीरियर', cat_interior_sub:'डिज़ाइन, डेकोर, प्लान',
-      cat_security:'सिक्योरिटी', cat_security_sub:'CCTV, ताला, गेट',
-      cat_mechanic:'कार मैकेनिक', cat_mechanic_sub:'रिपेयर, सर्विस, वॉश',
-      how_label:'आसान प्रक्रिया', how_title:'<span>3 आसान स्टेप्स</span> में सर्विस बुक करें', how_sub:'कोई बिचौलिया नहीं, कोई कन्फ्यूजन नहीं। आप बेस्ट प्रोवाइडर देखें और तय करें किसे कॉल करना है।',
-      step1_title:'अपनी सर्विस खोजें', step1_desc:'बताएं आपको क्या चाहिए और लोकेशन। हम तुरंत नजदीकी टॉप-रेटेड वेरिफाइड प्रोवाइडर दिखाएंगे।',
-      step2_title:'तुलना करें और चुनें', step2_desc:'रेटिंग, रिव्यू, प्राइसिंग और अनुभव चेक करें। आप तय करें किससे संपर्क करना है — कोई दबाव नहीं।',
-      step3_title:'बुक करें और काम करवाएं', step3_desc:'प्रोवाइडर से सीधे संपर्क करें, काम कन्फर्म करें, सुरक्षित पेमेंट करें और रिव्यू छोड़ें।',
-      prov_label:'इस हफ्ते टॉप रेटेड', prov_title:'हमारे <span>बेस्ट प्रोवाइडर</span> से मिलें', prov_sub:'सभी प्रोवाइडर मैन्युअली वेरिफाइड, बैकग्राउंड-चेक्ड और रियल कस्टमर्स द्वारा रेटेड हैं।',
-      why_label:'हमें क्यों चुनें', why_title:'<span>JustDial और अन्य</span> से अलग', why_sub:'हम सिर्फ बेस्ट को चुनते हैं — वेरिफाइड, रेटेड, असली। और आप तय करते हैं किसे hire करना है।',
-      why1_title:'मैन्युअली वेरिफाइड प्रोवाइडर', why1_desc:'हर प्रोवाइडर ID चेक, स्किल टेस्ट और बैकग्राउंड वेरिफिकेशन से गुजरता है Servlo पर list होने से पहले।',
-      why2_title:'असली कस्टमर रिव्यू', why2_desc:'सिर्फ वो कस्टमर जिसने वाकई बुक किया वही रिव्यू दे सकता है। कोई फेक रेटिंग नहीं — कभी नहीं।',
-      why3_title:'आप चुनें, कोई दबाव नहीं', why3_desc:'जो प्लेटफॉर्म वर्कर assign करते हैं उनसे अलग — आप प्रोफाइल देखें और जिससे comfortable हों उसे चुनें।',
-      why4_title:'सही कीमत, कोई छिपा चार्ज नहीं', why4_desc:'प्रोवाइडर अपनी रेट पहले से बताते हैं। जो दिखे वही देना है। Servlo की तरफ से कोई hidden fees नहीं।',
-      why5_title:'लोकल नौकरियां, लोकल आमदनी', why5_desc:'हम आपके शहर के असली लोगों को सपोर्ट करते हैं। हर बुकिंग सीधे एक लोकल परिवार की मदद करती है।',
-      why6_title:'Servlo सर्विस गारंटी', why6_desc:'काम से संतुष्ट नहीं? 24 घंटे के अंदर dispute raise करें और हम हल करेंगे — बिना किसी सवाल के।',
-      testi_label:'कस्टमर की कहानियां', testi_title:'असली लोग। <span style="color:#FBBF24;">असली नतीजे।</span>', testi_sub:'भारत भर में हज़ारों खुश कस्टमर रोज़मर्रा की जरूरतों के लिए Servlo पर भरोसा करते हैं।',
-      testi1_text:'"10 मिनट में एक शानदार इलेक्ट्रीशियन मिला। वो उसी दिन आया, सब सही किया। कीमत वही थी जो दिखाई गई थी। कोई झंझट नहीं!"',
-      testi1_loc:'पुणे · इलेक्ट्रीशियन hire किया',
-      testi2_text:'"JustDial से कभी भरोसेमंद लोग नहीं मिले। Servlo के प्रोवाइडर का बैकग्राउंड चेक था और उसके रिव्यू दिख रहे थे। घर पर बुलाना बिल्कुल safe लगा।"',
-      testi2_loc:'मुंबई · प्लंबर hire किया',
-      testi3_text:'"Servlo पर मिले ट्यूटर के साथ सिर्फ 2 महीने में मेरी बेटी के JEE स्कोर में सुधार आया। रेटिंग सिस्टम से सही ट्यूटर चुनने में मदद मिली।"',
-      testi3_loc:'दिल्ली · ट्यूटर hire किया',
-      join_label:'सर्विस प्रोवाइडर के लिए', join_title:'<span>Servlo</span> से जुड़कर ज्यादा कमाएं', join_sub:'असली कस्टमर पाएं, अपनी reputation बनाएं और अपनी income बढ़ाएं — अपने schedule पर।',
-      join1_title:'रजिस्टर करें और डॉक्यूमेंट दें', join1_desc:'बेसिक ID और स्किल प्रूफ — ऑनलाइन 5 मिनट से भी कम समय लगता है।',
-      join2_title:'हमारी टीम द्वारा वेरिफाई हों', join2_desc:'हम 24-48 घंटों में आपकी प्रोफाइल रिव्यू करके लिस्टिंग activate करते हैं।',
-      join3_title:'कस्टमर आने लगेंगे', join3_desc:'कस्टमर आपको खोजते हैं, संपर्क करते हैं, और आप काम अपने तरीके से करते हैं।',
-      join4_title:'रिव्यू बनाएं और बढ़ें', join4_desc:'ज्यादा अच्छे रिव्यू = ऊंची रैंकिंग = ज्यादा कस्टमर। बस इतना सीधा।',
-      form_title:'📝 प्रोवाइडर के रूप में रजिस्टर करें', form_name_ph:'रमेश कुमार', form_city:'आपका शहर', form_city_ph:'पुणे, मुंबई, दिल्ली...', form_service:'सर्विस केटेगरी', form_select:'अपनी स्किल चुनें', form_other:'अन्य',
-      trust1:'✅ वेरिफाइड प्रोफेशनल्स', trust2:'⭐ असली कस्टमर्स द्वारा रेटेड', trust3:'🔒 सुरक्षित पेमेंट', trust4:'🕐 24/7 सपोर्ट', trust5:'🛡️ सर्विस गारंटी',
-      cta_title:'सही एक्सपर्ट खोजने के लिए तैयार हैं?', cta_sub:'हज़ारों भारतीयों से जुड़ें जो विश्वसनीय, वेरिफाइड लोकल सर्विसेज के लिए Servlo पर भरोसा करते हैं।',
-      modal_welcome:'स्वागत है! लॉगिन करें या अकाउंट बनाएं।', tab_login:'लॉगिन', tab_signup:'साइन अप',
-      label_email:'ईमेल पता', label_password:'पासवर्ड', label_name:'पूरा नाम', label_phone:'मोबाइल नंबर',
-      btn_login:'Servlo में लॉगिन करें', btn_signup:'अकाउंट बनाएं',
-      forgot_pass:'पासवर्ड भूल गए? <a href="#">यहां रीसेट करें</a>',
-      terms_note:'साइन अप करके आप हमारी <a href="#">शर्तों</a> और <a href="#">प्राइवेसी पॉलिसी</a> से सहमत हैं'
-    },
-    mr: {
-      nav_services:'सेवा', nav_providers:'प्रोव्हायडर', nav_how:'कसे काम करते', nav_join:'प्रोव्हायडर व्हा', nav_login:'लॉगिन',
-      hero_badge:'🇮🇳 भारतातील सर्वोत्तम स्थानिक प्रतिभा',
-      hero_title:'तुमच्या जवळ <span>सत्यापित</span> सेवा तज्ञ शोधा',
-      hero_sub:'Servlo तुम्हाला बॅकग्राउंड-चेक्ड, कस्टमर-रेटेड स्थानिक व्यावसायिकांशी जोडते — इलेक्ट्रिशियन, प्लंबर, ट्यूटर, क्लीनर आणि बरेच काही. तुम्ही ठरवा कोणाला hire करायचे.',
-      search_all:'सर्व सेवा', search_placeholder:'तुमचे शहर किंवा परिसर टाका...', btn_search:'🔍 शोधा',
-      tag_electrician:'⚡ इलेक्ट्रिशियन', tag_plumber:'🔧 प्लंबर', tag_tutor:'📚 ट्यूटर', tag_cleaning:'🧹 क्लीनिंग', tag_painter:'🎨 पेंटर', tag_ac:'❄️ AC दुरुस्ती',
-      cat_label:'श्रेणीनुसार ब्राउझ करा', cat_title:'तुम्हाला <span>कशात मदत</span> हवी आहे?', cat_sub:'घराच्या दुरुस्तीपासून शिकवणीपर्यंत — तुमच्या शहरात कोणत्याही कामासाठी योग्य तज्ञ शोधा.',
-      cat_electrician:'इलेक्ट्रिशियन', cat_electrician_sub:'वायरिंग, फ्यूज, फिटिंग',
-      cat_plumber:'प्लंबर', cat_plumber_sub:'पाईप, नळ, गटार',
-      cat_carpenter:'सुतार', cat_carpenter_sub:'फर्निचर, दरवाजे, लाकूड',
-      cat_painter:'रंगारी', cat_painter_sub:'आतील आणि बाहेरील',
-      cat_ac:'AC दुरुस्ती', cat_ac_sub:'सर्व्हिस, गॅस, इन्स्टॉल',
-      cat_cleaning:'क्लीनिंग', cat_cleaning_sub:'घर आणि डीप क्लीन',
-      cat_tutor:'ट्यूटर', cat_tutor_sub:'शाळा, महाविद्यालय, JEE',
-      cat_photo:'छायाचित्रकार', cat_photo_sub:'कार्यक्रम, पोर्ट्रेट',
-      cat_it:'IT सपोर्ट', cat_it_sub:'लॅपटॉप, वाईफाई, सेटअप',
-      cat_interior:'इंटेरियर', cat_interior_sub:'डिझाइन, सजावट, प्लान',
-      cat_security:'सुरक्षा', cat_security_sub:'CCTV, कुलूप, गेट',
-      cat_mechanic:'कार मेकॅनिक', cat_mechanic_sub:'दुरुस्ती, सर्व्हिस, वॉश',
-      how_label:'सोपी प्रक्रिया', how_title:'<span>३ सोप्या पायऱ्यांमध्ये</span> सेवा बुक करा', how_sub:'कोणताही मध्यस्थ नाही, गोंधळ नाही. सर्वोत्तम प्रोव्हायडर पाहा आणि कोणाला कॉल करायचे ते ठरवा.',
-      step1_title:'तुमची सेवा शोधा', step1_desc:'तुम्हाला काय हवे आहे आणि स्थान सांगा. आम्ही जवळचे टॉप-रेटेड सत्यापित प्रोव्हायडर दाखवतो.',
-      step2_title:'तुलना करा आणि निवडा', step2_desc:'रेटिंग, रिव्ह्यू, किंमत तपासा. तुम्ही ठरवा कोणाशी संपर्क करायचा — कोणताही दबाव नाही.',
-      step3_title:'बुक करा आणि काम करवा', step3_desc:'प्रोव्हायडरशी थेट संपर्क करा, काम कन्फर्म करा, सुरक्षित पेमेंट करा आणि रिव्ह्यू द्या.',
-      prov_label:'या आठवड्यातील टॉप रेटेड', prov_title:'आमच्या <span>सर्वोत्तम प्रोव्हायडर</span>ना भेटा', prov_sub:'सर्व प्रोव्हायडर मॅन्युअली सत्यापित, बॅकग्राउंड-चेक्ड आणि खऱ्या कस्टमर्सनी रेट केलेले आहेत.',
-      why_label:'आम्हाला का निवडा', why_title:'<span>JustDial आणि इतरांपेक्षा</span> वेगळे', why_sub:'आम्ही फक्त सर्वोत्तम निवडतो — सत्यापित, रेटेड, खरे. तुम्ही ठरवता कोणाला hire करायचे.',
-      why1_title:'मॅन्युअली सत्यापित प्रोव्हायडर', why1_desc:'प्रत्येक प्रोव्हायडर ID तपासणी, कौशल्य चाचणी आणि बॅकग्राउंड सत्यापनातून जातो.',
-      why2_title:'खऱ्या कस्टमरचे रिव्ह्यू', why2_desc:'फक्त प्रत्यक्ष बुक केलेले कस्टमरच रिव्ह्यू देऊ शकतात. खोटी रेटिंग नाही — कधीच नाही.',
-      why3_title:'तुम्ही निवडा, दबाव नाही', why3_desc:'इतर प्लॅटफॉर्मप्रमाणे worker assign होत नाही — तुम्ही प्रोफाइल पाहा आणि आरामदायक वाटेल त्याला निवडा.',
-      why4_title:'योग्य किंमत, छुपे शुल्क नाही', why4_desc:'प्रोव्हायडर आधीच दर सांगतात. जे दिसेल तेच द्यायचे. Servlo कडून कोणतेही hidden fees नाही.',
-      why5_title:'स्थानिक नोकऱ्या, स्थानिक उत्पन्न', why5_desc:'आम्ही तुमच्या शहरातील खऱ्या लोकांना आधार देतो. प्रत्येक बुकिंग थेट एका स्थानिक कुटुंबाला मदत करते.',
-      why6_title:'Servlo सेवा हमी', why6_desc:'कामावर समाधानी नाही? २४ तासांत तक्रार करा आणि आम्ही सोडवू — कोणताही प्रश्न न विचारता.',
-      testi_label:'कस्टमरच्या कथा', testi_title:'खरे लोक. <span style="color:#FBBF24;">खरे निकाल.</span>', testi_sub:'भारतभरातील हजारो आनंदी कस्टमर रोजच्या गरजांसाठी Servlo वर विश्वास ठेवतात.',
-      testi1_text:'"१० मिनिटांत एक उत्तम इलेक्ट्रिशियन मिळाला. तो त्याच दिवशी आला, सगळं नीट केलं. किंमत दाखवलेलीच होती. कोणताही त्रास नाही!"',
-      testi1_loc:'पुणे · इलेक्ट्रिशियन hire केला',
-      testi2_text:'"JustDial वरून कधीच विश्वासार्ह माणसं मिळाली नाहीत. Servlo च्या प्रोव्हायडरचे बॅकग्राउंड चेक होते आणि रिव्ह्यू दिसत होते. घरी बोलावणे पूर्णपणे सुरक्षित वाटले."',
-      testi2_loc:'मुंबई · प्लंबर hire केला',
-      testi3_text:'"Servlo वर मिळालेल्या ट्यूटरमुळे फक्त २ महिन्यांत माझ्या मुलीचा JEE स्कोर सुधारला. रेटिंग सिस्टममुळे योग्य ट्यूटर निवडता आला."',
-      testi3_loc:'दिल्ली · ट्यूटर hire केला',
-      join_label:'सेवा प्रोव्हायडरसाठी', join_title:'<span>Servlo</span> मध्ये सामील होऊन जास्त कमवा', join_sub:'खरे कस्टमर मिळवा, प्रतिष्ठा तयार करा आणि उत्पन्न वाढवा — स्वतःच्या वेळापत्रकावर.',
-      join1_title:'नोंदणी करा आणि कागदपत्रे द्या', join1_desc:'मूलभूत ID आणि कौशल्य पुरावा — ऑनलाइन ५ मिनिटांपेक्षा कमी वेळ.',
-      join2_title:'आमच्या टीमकडून सत्यापित व्हा', join2_desc:'आम्ही २४-४८ तासांत तुमची प्रोफाइल तपासून लिस्टिंग सक्रिय करतो.',
-      join3_title:'कस्टमर येऊ लागतील', join3_desc:'कस्टमर तुम्हाला शोधतात, संपर्क करतात आणि तुम्ही काम स्वतःच्या पद्धतीने करता.',
-      join4_title:'रिव्ह्यू तयार करा आणि वाढा', join4_desc:'जास्त चांगले रिव्ह्यू = उच्च रँकिंग = जास्त कस्टमर. एवढे सोपे.',
-      form_title:'📝 प्रोव्हायडर म्हणून नोंदणी करा', form_name_ph:'रमेश कुमार', form_city:'तुमचे शहर', form_city_ph:'पुणे, मुंबई, दिल्ली...', form_service:'सेवा श्रेणी', form_select:'तुमचे कौशल्य निवडा', form_other:'इतर',
-      trust1:'✅ सत्यापित व्यावसायिक', trust2:'⭐ खऱ्या कस्टमर्सनी रेट केलेले', trust3:'🔒 सुरक्षित पेमेंट', trust4:'🕐 २४/७ सपोर्ट', trust5:'🛡️ सेवा हमी',
-      cta_title:'योग्य तज्ञ शोधण्यासाठी तयार आहात?', cta_sub:'विश्वसनीय, सत्यापित स्थानिक सेवांसाठी Servlo वर विश्वास ठेवणाऱ्या हजारो भारतीयांमध्ये सामील व्हा.',
-      modal_welcome:'स्वागत आहे! लॉगिन करा किंवा खाते तयार करा.', tab_login:'लॉगिन', tab_signup:'साइन अप',
-      label_email:'ईमेल पत्ता', label_password:'पासवर्ड', label_name:'पूर्ण नाव', label_phone:'मोबाइल नंबर',
-      btn_login:'Servlo मध्ये लॉगिन करा', btn_signup:'खाते तयार करा',
-      forgot_pass:'पासवर्ड विसरलात? <a href="#">येथे रीसेट करा</a>',
-      terms_note:'साइन अप करून तुम्ही आमच्या <a href="#">अटी</a> आणि <a href="#">गोपनीयता धोरणाशी</a> सहमत आहात'
-    }
-  };
-
-  let currentLang = 'en';
-
-  function setLang(lang) {
-    currentLang = lang;
-    const t = translations[lang];
-    const langNames = { en: '🌐 EN', hi: '🇮🇳 HI', mr: '🇮🇳 MR' };
-    document.getElementById('langBtn').textContent = langNames[lang];
-    document.querySelectorAll('.lang-option').forEach(opt => {
-      opt.classList.toggle('active', opt.getAttribute('onclick').includes(`'${lang}'`));
-    });
-    document.querySelectorAll('[data-i18n]').forEach(el => {
-      const key = el.getAttribute('data-i18n');
-      if (t[key] !== undefined) el.innerHTML = t[key];
-    });
-    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
-      const key = el.getAttribute('data-i18n-placeholder');
-      if (t[key] !== undefined) el.placeholder = t[key];
-    });
-    document.getElementById('langDropdown').classList.remove('open');
+// ── TRANSLATIONS ──
+const translations = {
+  en:{
+    nav_services:'Services',nav_providers:'Providers',nav_how:'How It Works',nav_join:'Join as Provider',nav_login:'Login',
+    announce:'⚡ Quick Response Guaranteed &nbsp;·&nbsp; <span>Your Work, Our Responsibility</span> &nbsp;·&nbsp; ✅ All Providers Verified',
+    tagline_short:'Your Work, Our Responsibility',
+    hero_badge:'🇮🇳 Serving India\'s Best Local Talent',
+    hero_title:'Find <span>Verified</span> Experts Near You',
+    hero_tagline:'"Your Work, Our Responsibility"',
+    hero_sub:'Servlo connects you with background-checked, customer-rated local professionals. Electricians, plumbers, tutors, cleaners & more — you choose who to hire.',
+    response_badge:'⚡ Quick Response · Same Day Service Available · Verified Experts Only',
+    search_all:'All Services',search_placeholder:'Enter your city or area...',btn_search:'🔍 Search',
+    tag_electrician:'⚡ Electrician',tag_plumber:'🔧 Plumber',tag_tutor:'📚 Tutor',tag_cleaning:'🧹 Cleaning',tag_painter:'🎨 Painter',tag_ac:'❄️ AC Repair',
+    stat1:'Happy Customers',stat2:'Verified Experts',stat3:'Avg Rating',
+    ps_title:'Why Servlo?',ps_badge:'✓ Genuine',
+    hero_point1_title:'Manually Verified',hero_point1_desc:'Every provider ID & background checked',
+    hero_point2_title:'Real Reviews Only',hero_point2_desc:'No fake ratings — ever',
+    hero_point3_title:'You Choose',hero_point3_desc:'No forced assignment, full freedom',
+    hero_point4_title:'Transparent Pricing',hero_point4_desc:'Upfront rates, no hidden charges',
+    no_providers_title:'Providers Being Verified',
+    no_providers_desc:'We are currently onboarding and verifying local service providers in your area. Register below to be among the first!',
+    no_providers_btn:'Register as Provider →',
+    no_reviews_title:'Real Reviews Coming Soon',
+    no_reviews_desc:'We only show genuine reviews from real customers. As bookings happen, authentic reviews will appear here.',
+    cat_label:'Browse by Category',cat_title:'What do you <span>need help</span> with?',cat_sub:'From home repairs to personal tutoring — find the right expert for any job in your city.',
+    cat_electrician:'Electrician',cat_electrician_sub:'Wiring, fuse, fitting',
+    cat_plumber:'Plumber',cat_plumber_sub:'Pipes, taps, drains',
+    cat_carpenter:'Carpenter',cat_carpenter_sub:'Furniture, doors, wood',
+    cat_painter:'Painter',cat_painter_sub:'Interior & exterior',
+    cat_ac:'AC Repair',cat_ac_sub:'Service, gas, install',
+    cat_cleaning:'Cleaning',cat_cleaning_sub:'Home & deep clean',
+    cat_tutor:'Tutor',cat_tutor_sub:'School, college, JEE',
+    cat_photo:'Photographer',cat_photo_sub:'Events, portraits',
+    cat_it:'IT Support',cat_it_sub:'Laptop, wifi, setup',
+    cat_interior:'Interior',cat_interior_sub:'Design, decor, plan',
+    cat_security:'CCTV Installation',cat_security_sub:'Supply & install',
+    cat_mechanic:'Car Mechanic',cat_mechanic_sub:'Repair, service, wash',
+    how_label:'Simple Process',how_title:'Book a service in <span>3 easy steps</span>',how_sub:'No middlemen, no confusion. You see the best providers and decide who to call.',
+    step1_title:'Search Your Service',step1_desc:'Tell us what you need and your location. We show you top-rated verified providers near you instantly.',
+    step2_title:'Compare & Choose',step2_desc:'Check ratings, reviews, pricing and experience. You decide who to contact — no pressure, full freedom.',
+    step3_title:'Book & Get it Done',step3_desc:'Contact the provider directly, confirm the job, pay securely, and leave a review to help others.',
+    prov_label:'Top Rated This Week',prov_title:'Meet Our <span>Best Providers</span>',prov_sub:'All providers are manually verified, background-checked, and rated by real customers like you.',
+    btn_view:'View Profile',
+    why_label:'Why Choose Us',why_title:'Why <span>Servlo</span> is Different',why_sub:'We curate only the best — verified, rated, real. And you stay in full control of who you hire.',
+    why1_title:'Manually Verified Providers',why1_desc:'Every provider goes through ID check, skills test, and background verification before being listed on Servlo.',
+    why2_title:'Real Customer Reviews',why2_desc:'Only customers who actually booked can leave reviews. No fake ratings, no paid promotions — ever.',
+    why3_title:'You Choose, No Pressure',why3_desc:'Unlike platforms that assign workers, you see profiles and pick who you\'re comfortable with. Full control.',
+    why4_title:'Fair Pricing, No Surprises',why4_desc:'Providers list their rates upfront. What you see is what you pay. No hidden fees from Servlo\'s side.',
+    why5_title:'Local Jobs, Local Income',why5_desc:'We support real people in your city — not big corporates. Every booking directly helps a local family.',
+    why6_title:'Servlo Service Guarantee',why6_desc:'Not satisfied with the work? Raise a dispute within 24 hours and we\'ll resolve it — no questions asked.',
+    testi_label:'Customer Stories',testi_title:'Real people. <span style="color:var(--gold)">Real results.</span>',testi_sub:'Thousands of happy customers across India trust Servlo for everyday needs.',
+    testi1_text:'"Found an amazing electrician within 10 minutes. He came the same day, fixed everything properly. Price was exactly what was shown. No drama at all!"',testi1_loc:'Pune · Hired Electrician',
+    testi2_text:'"Other platforms never gave me reliable people. Servlo\'s provider was background checked. Felt completely safe having him at home."',testi2_loc:'Mumbai · Hired Plumber',
+    testi3_text:'"My daughter\'s JEE score improved after just 2 months with the tutor I found on Servlo. The rating system helped me pick exactly the right one."',testi3_loc:'Delhi · Hired Tutor',
+    join_label:'For Service Providers',join_title:'Earn more by joining <span>Servlo</span>',join_sub:'Get genuine customers, build your reputation, and grow your income — all on your own schedule.',
+    join1_title:'Register & Submit Documents',join1_desc:'Basic ID and skill proof — takes less than 5 minutes online.',
+    join2_title:'Get Verified by Our Team',join2_desc:'We review your profile within 24–48 hours and activate your listing.',
+    join3_title:'Start Receiving Customers',join3_desc:'Customers find you, contact you, and you handle the job your way.',
+    join4_title:'Build Reviews & Grow',join4_desc:'More good reviews = higher ranking = more customers. Simple.',
+    form_title:'📝 Register as a Provider',form_name_ph:'Ramesh Kumar',form_city:'Your City',form_city_ph:'Pune, Mumbai, Delhi...',form_service:'Service Category',form_select:'Select your skill',form_other:'Other',form_exp:'Experience',
+    exp1:'Less than 1 year',exp2:'1–3 years',exp3:'3–5 years',exp4:'5–10 years',exp5:'10+ years',
+    btn_join_form:'Apply to Join Servlo →',
+    form_success_title:'Application Received!',form_success_desc:'Our team will contact you within 24 hours.',
+    cta_title:'Ready to find the right expert?',cta_sub:'Join thousands of Indians who trust Servlo for reliable, verified local services.',
+    cta_btn1:'Find a Service Now',cta_btn2:'List Your Services',
+    footer_about:'India\'s trusted platform for verified local service professionals. Connecting real customers with real experts — fairly and transparently.',
+    footer_services:'Services',footer_company:'Company',footer_support:'Support',
+    footer_about_link:'About Us',footer_how:'How It Works',footer_providers_link:'For Providers',footer_blog:'Blog',footer_contact:'Contact',
+    footer_help:'Help Center',footer_safety:'Safety Policy',footer_privacy:'Privacy Policy',footer_terms:'Terms of Service',footer_refund:'Refund Policy',
+    footer_copy:'© 2025 Servlo. Made with ❤️ in India. All rights reserved.',
+    modal_welcome:'Welcome! Login or create your account.',tab_login:'Login',tab_signup:'Sign Up',
+    label_email:'Email Address',label_password:'Password',label_name:'Full Name',label_phone:'Mobile Number',
+    btn_login:'Login to Servlo',btn_signup:'Create Account',
+    forgot_pass:'Forgot password? <a href="#">Reset here</a>',
+    terms_note:'By signing up you agree to our <a href="#">Terms</a> and <a href="#">Privacy Policy</a>',
+    wa_btn:'Chat on WhatsApp',trust1:'✅ Verified Professionals',trust2:'⭐ Rated by Real Customers',trust3:'🔒 Secure Payments',trust4:'🕐 24/7 Support',trust5:'🛡️ Service Guarantee',
+    city_notify_btn:'Notify Me 🔔',city_notify_note:'We\'ll WhatsApp / Email you when Servlo launches in your city. No spam.',city_notify_success:'✅ Done! We\'ll notify you when Servlo launches in your city.',
+    city_modal_title:'Get Notified!',city_modal_desc:'We\'ll notify you as soon as verified providers are available near you. No spam — promise!',
+    city_modal_contact_ph:'Your email or WhatsApp number',city_modal_success_title:'You\'re on the list!',
+    city_modal_success_desc:'We\'ll reach out as soon as Servlo launches in your city.',city_modal_close:'Close',
+    verify_label:'Our Process',verify_title:'How We <span>Verify</span> Every Provider',
+    verify_sub:'We don\'t just list anyone. Every provider goes through a strict 4-step verification before appearing on Servlo.',
+    verify1_title:'ID Verification',verify1_desc:'Aadhar/PAN card checked and verified by our team personally.',
+    verify2_title:'Skill Assessment',verify2_desc:'Provider\'s skills and experience are evaluated before approval.',
+    verify3_title:'Background Check',verify3_desc:'Criminal record and references checked for your safety.',
+    verify4_title:'Profile Approved',verify4_desc:'Only then does the provider appear live on Servlo for customers.',
+    contact_label:'Get in Touch',contact_title:'We\'re Here to <span>Help You</span>',contact_sub:'Have a question? Need help? Want to partner with us? Reach out anytime.',
+    contact_wa_title:'WhatsApp Us',contact_wa_desc:'Chat directly with our team for quick help.',contact_wa_btn:'Chat Now →',
+    contact_email_title:'Email Us',contact_email_desc:'Send us your query and we\'ll respond within 24 hours.',contact_email_btn:'Send Email →',
+    contact_partner_title:'Partner With Us',contact_partner_desc:'Want to become a verified provider or bulk partner?',contact_partner_btn:'Register Now →'
+  },
+  hi:{
+    nav_services:'सेवाएं',nav_providers:'प्रोवाइडर',nav_how:'कैसे काम करता है',nav_join:'प्रोवाइडर बनें',nav_login:'लॉगिन',
+    announce:'⚡ त्वरित प्रतिक्रिया की गारंटी &nbsp;·&nbsp; <span>आपका काम, हमारी ज़िम्मेदारी</span> &nbsp;·&nbsp; ✅ सभी प्रोवाइडर वेरिफाइड',
+    tagline_short:'आपका काम, हमारी ज़िम्मेदारी',
+    hero_badge:'🇮🇳 भारत के बेहतरीन लोकल टैलेंट',
+    hero_title:'अपने नजदीक <span>वेरिफाइड</span> एक्सपर्ट खोजें',
+    hero_tagline:'"आपका काम, हमारी ज़िम्मेदारी"',
+    hero_sub:'Servlo आपको बैकग्राउंड-चेक्ड, कस्टमर-रेटेड लोकल प्रोफेशनल्स से जोड़ता है। इलेक्ट्रीशियन, प्लंबर, ट्यूटर, क्लीनर — आप तय करें किसे hire करना है।',
+    response_badge:'⚡ त्वरित प्रतिक्रिया · Same Day सर्विस उपलब्ध · केवल वेरिफाइड एक्सपर्ट',
+    search_all:'सभी सेवाएं',search_placeholder:'अपना शहर या क्षेत्र डालें...',btn_search:'🔍 खोजें',
+    tag_electrician:'⚡ इलेक्ट्रीशियन',tag_plumber:'🔧 प्लंबर',tag_tutor:'📚 ट्यूटर',tag_cleaning:'🧹 क्लीनिंग',tag_painter:'🎨 पेंटर',tag_ac:'❄️ AC रिपेयर',
+    stat1:'खुश कस्टमर',stat2:'वेरिफाइड एक्सपर्ट',stat3:'औसत रेटिंग',
+    ps_title:'Servlo क्यों?',ps_badge:'✓ असली',
+    hero_point1_title:'मैन्युअली वेरिफाइड',hero_point1_desc:'हर प्रोवाइडर ID और बैकग्राउंड चेक',
+    hero_point2_title:'सिर्फ असली रिव्यू',hero_point2_desc:'कोई फेक रेटिंग नहीं — कभी नहीं',
+    hero_point3_title:'आप चुनें',hero_point3_desc:'कोई forced assignment नहीं, पूरी आज़ादी',
+    hero_point4_title:'पारदर्शी कीमत',hero_point4_desc:'पहले से रेट, कोई छिपा चार्ज नहीं',
+    no_providers_title:'प्रोवाइडर वेरिफाई हो रहे हैं',
+    no_providers_desc:'हम अभी आपके क्षेत्र में लोकल सर्विस प्रोवाइडर onboard और verify कर रहे हैं। पहले बनने के लिए नीचे रजिस्टर करें!',
+    no_providers_btn:'प्रोवाइडर के रूप में रजिस्टर करें →',
+    no_reviews_title:'असली रिव्यू जल्द आएंगे',
+    no_reviews_desc:'हम सिर्फ असली कस्टमर के genuine रिव्यू दिखाते हैं। जैसे-जैसे बुकिंग होगी, असली रिव्यू यहां दिखेंगे।',
+    cat_label:'केटेगरी के अनुसार खोजें',cat_title:'आपको <span>किस चीज़ में मदद</span> चाहिए?',cat_sub:'घर की मरम्मत से ट्यूटरिंग तक — अपने शहर में किसी भी काम के लिए सही एक्सपर्ट खोजें।',
+    cat_electrician:'इलेक्ट्रीशियन',cat_electrician_sub:'वायरिंग, फ्यूज, फिटिंग',
+    cat_plumber:'प्लंबर',cat_plumber_sub:'पाइप, नल, नाली',
+    cat_carpenter:'कारपेंटर',cat_carpenter_sub:'फर्नीचर, दरवाजे, लकड़ी',
+    cat_painter:'पेंटर',cat_painter_sub:'इंटीरियर और एक्सटीरियर',
+    cat_ac:'AC रिपेयर',cat_ac_sub:'सर्विस, गैस, इंस्टॉल',
+    cat_cleaning:'क्लीनिंग',cat_cleaning_sub:'घर और डीप क्लीन',
+    cat_tutor:'ट्यूटर',cat_tutor_sub:'स्कूल, कॉलेज, JEE',
+    cat_photo:'फोटोग्राफर',cat_photo_sub:'इवेंट, पोर्ट्रेट',
+    cat_it:'IT सपोर्ट',cat_it_sub:'लैपटॉप, वाईफाई, सेटअप',
+    cat_interior:'इंटीरियर',cat_interior_sub:'डिज़ाइन, डेकोर, प्लान',
+    cat_security:'CCTV इंस्टॉलेशन',cat_security_sub:'सप्लाई और इंस्टॉल',
+    cat_mechanic:'कार मैकेनिक',cat_mechanic_sub:'रिपेयर, सर्विस, वॉश',
+    how_label:'आसान प्रक्रिया',how_title:'<span>3 आसान स्टेप्स</span> में सर्विस बुक करें',how_sub:'कोई बिचौलिया नहीं, कोई कन्फ्यूजन नहीं। बेस्ट प्रोवाइडर देखें और तय करें किसे कॉल करना है।',
+    step1_title:'अपनी सर्विस खोजें',step1_desc:'बताएं आपको क्या चाहिए और लोकेशन। हम तुरंत नजदीकी टॉप-रेटेड वेरिफाइड प्रोवाइडर दिखाएंगे।',
+    step2_title:'तुलना करें और चुनें',step2_desc:'रेटिंग, रिव्यू, प्राइसिंग चेक करें। आप तय करें किससे संपर्क करना है — कोई दबाव नहीं।',
+    step3_title:'बुक करें और काम करवाएं',step3_desc:'प्रोवाइडर से सीधे संपर्क करें, काम कन्फर्म करें, सुरक्षित पेमेंट करें और रिव्यू दें।',
+    prov_label:'इस हफ्ते टॉप रेटेड',prov_title:'हमारे <span>बेस्ट प्रोवाइडर</span> से मिलें',prov_sub:'सभी प्रोवाइडर मैन्युअली वेरिफाइड, बैकग्राउंड-चेक्ड और रियल कस्टमर्स द्वारा रेटेड हैं।',
+    btn_view:'प्रोफाइल देखें',
+    why_label:'हमें क्यों चुनें',why_title:'<span>Servlo</span> क्यों अलग है',why_sub:'हम सिर्फ बेस्ट को चुनते हैं — वेरिफाइड, रेटेड, असली। आप तय करते हैं किसे hire करना है।',
+    why1_title:'मैन्युअली वेरिफाइड प्रोवाइडर',why1_desc:'हर प्रोवाइडर ID चेक, स्किल टेस्ट और बैकग्राउंड वेरिफिकेशन से गुजरता है।',
+    why2_title:'असली कस्टमर रिव्यू',why2_desc:'सिर्फ वो कस्टमर जिसने वाकई बुक किया वही रिव्यू दे सकता है। कोई फेक रेटिंग नहीं।',
+    why3_title:'आप चुनें, कोई दबाव नहीं',why3_desc:'आप प्रोफाइल देखें और जिससे comfortable हों उसे चुनें। पूरा कंट्रोल आपके पास।',
+    why4_title:'सही कीमत, कोई छिपा चार्ज नहीं',why4_desc:'प्रोवाइडर अपनी रेट पहले से बताते हैं। जो दिखे वही देना है।',
+    why5_title:'लोकल नौकरियां, लोकल आमदनी',why5_desc:'हम आपके शहर के असली लोगों को सपोर्ट करते हैं। हर बुकिंग एक लोकल परिवार की मदद करती है।',
+    why6_title:'Servlo सर्विस गारंटी',why6_desc:'काम से संतुष्ट नहीं? 24 घंटे में dispute raise करें और हम हल करेंगे।',
+    testi_label:'कस्टमर की कहानियां',testi_title:'असली लोग। <span style="color:var(--gold)">असली नतीजे।</span>',testi_sub:'भारत भर में हज़ारों खुश कस्टमर Servlo पर भरोसा करते हैं।',
+    testi1_text:'"10 मिनट में शानदार इलेक्ट्रीशियन मिला। उसी दिन आया, सब सही किया। कीमत वही थी जो दिखाई थी!"',testi1_loc:'पुणे · इलेक्ट्रीशियन hire किया',
+    testi2_text:'"दूसरे platforms से कभी भरोसेमंद लोग नहीं मिले। Servlo के प्रोवाइडर का बैकग्राउंड चेक था। घर पर बुलाना बिल्कुल safe लगा।"',testi2_loc:'मुंबई · प्लंबर hire किया',
+    testi3_text:'"Servlo पर मिले ट्यूटर से 2 महीने में मेरी बेटी के JEE स्कोर में सुधार आया।"',testi3_loc:'दिल्ली · ट्यूटर hire किया',
+    join_label:'सर्विस प्रोवाइडर के लिए',join_title:'<span>Servlo</span> से जुड़कर ज्यादा कमाएं',join_sub:'असली कस्टमर पाएं, reputation बनाएं और income बढ़ाएं — अपने schedule पर।',
+    join1_title:'रजिस्टर करें और डॉक्यूमेंट दें',join1_desc:'बेसिक ID और स्किल प्रूफ — ऑनलाइन 5 मिनट से भी कम।',
+    join2_title:'हमारी टीम से वेरिफाई हों',join2_desc:'हम 24-48 घंटों में प्रोफाइल रिव्यू करके लिस्टिंग activate करते हैं।',
+    join3_title:'कस्टमर आने लगेंगे',join3_desc:'कस्टमर आपको खोजते हैं, संपर्क करते हैं, आप काम अपने तरीके से करते हैं।',
+    join4_title:'रिव्यू बनाएं और बढ़ें',join4_desc:'ज्यादा अच्छे रिव्यू = ऊंची रैंकिंग = ज्यादा कस्टमर।',
+    form_title:'📝 प्रोवाइडर के रूप में रजिस्टर करें',form_name_ph:'रमेश कुमार',form_city:'आपका शहर',form_city_ph:'पुणे, मुंबई, दिल्ली...',form_service:'सर्विस केटेगरी',form_select:'अपनी स्किल चुनें',form_other:'अन्य',form_exp:'अनुभव',
+    exp1:'1 साल से कम',exp2:'1–3 साल',exp3:'3–5 साल',exp4:'5–10 साल',exp5:'10+ साल',
+    btn_join_form:'Servlo में Join करें →',
+    form_success_title:'आवेदन मिल गया!',form_success_desc:'हमारी टीम 24 घंटे में आपसे संपर्क करेगी।',
+    cta_title:'सही एक्सपर्ट खोजने के लिए तैयार हैं?',cta_sub:'हज़ारों भारतीयों से जुड़ें जो Servlo पर भरोसा करते हैं।',
+    cta_btn1:'सर्विस खोजें',cta_btn2:'अपनी सेवा लिस्ट करें',
+    footer_about:'भारत का विश्वसनीय प्लेटफॉर्म वेरिफाइड लोकल सर्विस प्रोफेशनल्स के लिए।',
+    footer_services:'सेवाएं',footer_company:'कंपनी',footer_support:'सपोर्ट',
+    footer_about_link:'हमारे बारे में',footer_how:'कैसे काम करता है',footer_providers_link:'प्रोवाइडर के लिए',footer_blog:'ब्लॉग',footer_contact:'संपर्क',
+    footer_help:'हेल्प सेंटर',footer_safety:'सेफ्टी पॉलिसी',footer_privacy:'प्राइवेसी पॉलिसी',footer_terms:'सेवा शर्तें',footer_refund:'रिफंड पॉलिसी',
+    footer_copy:'© 2025 Servlo. भारत में ❤️ के साथ बनाया। सर्वाधिकार सुरक्षित।',
+    modal_welcome:'स्वागत है! लॉगिन करें या अकाउंट बनाएं।',tab_login:'लॉगिन',tab_signup:'साइन अप',
+    label_email:'ईमेल पता',label_password:'पासवर्ड',label_name:'पूरा नाम',label_phone:'मोबाइल नंबर',
+    btn_login:'Servlo में लॉगिन करें',btn_signup:'अकाउंट बनाएं',
+    forgot_pass:'पासवर्ड भूल गए? <a href="#">यहां रीसेट करें</a>',
+    terms_note:'साइन अप करके आप हमारी <a href="#">शर्तों</a> से सहमत हैं',
+    wa_btn:'WhatsApp पर चैट करें',trust1:'✅ वेरिफाइड प्रोफेशनल्स',trust2:'⭐ असली कस्टमर रेटेड',trust3:'🔒 सुरक्षित पेमेंट',trust4:'🕐 24/7 सपोर्ट',trust5:'🛡️ सर्विस गारंटी',
+    city_notify_btn:'सूचित करें 🔔',city_notify_note:'जब Servlo आपके शहर में आएगा तो हम WhatsApp/Email करेंगे। कोई spam नहीं।',city_notify_success:'✅ हो गया! जब Servlo आपके शहर में आएगा तो सूचित करेंगे।',
+    city_modal_title:'सूचना पाएं!',city_modal_desc:'जैसे ही आपके नजदीक वेरिफाइड प्रोवाइडर उपलब्ध होंगे, हम सूचित करेंगे। कोई spam नहीं।',
+    city_modal_contact_ph:'आपका email या WhatsApp नंबर',city_modal_success_title:'आप list में हैं!',
+    city_modal_success_desc:'जैसे ही Servlo आपके शहर में आएगा, हम संपर्क करेंगे।',city_modal_close:'बंद करें',
+    verify_label:'हमारी प्रक्रिया',verify_title:'हम हर प्रोवाइडर को <span>कैसे वेरिफाई</span> करते हैं',
+    verify_sub:'हम किसी को भी list नहीं करते। Servlo पर आने से पहले हर प्रोवाइडर 4-स्टेप verification से गुजरता है।',
+    verify1_title:'ID वेरिफिकेशन',verify1_desc:'Aadhar/PAN card हमारी टीम द्वारा personally चेक और verify किया जाता है।',
+    verify2_title:'स्किल असेसमेंट',verify2_desc:'प्रोवाइडर की skills और अनुभव approve होने से पहले evaluate किए जाते हैं।',
+    verify3_title:'बैकग्राउंड चेक',verify3_desc:'आपकी safety के लिए criminal record और references चेक किए जाते हैं।',
+    verify4_title:'प्रोफाइल Approved',verify4_desc:'तब ही प्रोवाइडर Servlo पर customers के लिए live होता है।',
+    contact_label:'संपर्क करें',contact_title:'हम <span>आपकी मदद</span> के लिए यहां हैं',contact_sub:'कोई सवाल? मदद चाहिए? हमसे कभी भी संपर्क करें।',
+    contact_wa_title:'WhatsApp करें',contact_wa_desc:'त्वरित मदद के लिए हमारी टीम से सीधे चैट करें।',contact_wa_btn:'अभी चैट करें →',
+    contact_email_title:'Email करें',contact_email_desc:'अपना सवाल भेजें, हम 24 घंटे में जवाब देंगे।',contact_email_btn:'Email भेजें →',
+    contact_partner_title:'हमारे साथ पार्टनर बनें',contact_partner_desc:'वेरिफाइड प्रोवाइडर बनना चाहते हैं?',contact_partner_btn:'अभी रजिस्टर करें →'
+  },
+  mr:{
+    nav_services:'सेवा',nav_providers:'प्रोव्हायडर',nav_how:'कसे काम करते',nav_join:'प्रोव्हायडर व्हा',nav_login:'लॉगिन',
+    announce:'⚡ त्वरित प्रतिसाद हमी &nbsp;·&nbsp; <span>तुमचे काम, आमची जबाबदारी</span> &nbsp;·&nbsp; ✅ सर्व प्रोव्हायडर सत्यापित',
+    tagline_short:'तुमचे काम, आमची जबाबदारी',
+    hero_badge:'🇮🇳 भारतातील सर्वोत्तम स्थानिक प्रतिभा',
+    hero_title:'तुमच्या जवळ <span>सत्यापित</span> तज्ञ शोधा',
+    hero_tagline:'"तुमचे काम, आमची जबाबदारी"',
+    hero_sub:'Servlo तुम्हाला बॅकग्राउंड-चेक्ड, कस्टमर-रेटेड स्थानिक व्यावसायिकांशी जोडते. इलेक्ट्रिशियन, प्लंबर, ट्यूटर, क्लीनर — तुम्ही ठरवा कोणाला hire करायचे.',
+    response_badge:'⚡ त्वरित प्रतिसाद · Same Day सेवा उपलब्ध · फक्त सत्यापित तज्ञ',
+    search_all:'सर्व सेवा',search_placeholder:'तुमचे शहर किंवा परिसर टाका...',btn_search:'🔍 शोधा',
+    tag_electrician:'⚡ इलेक्ट्रिशियन',tag_plumber:'🔧 प्लंबर',tag_tutor:'📚 ट्यूटर',tag_cleaning:'🧹 क्लीनिंग',tag_painter:'🎨 रंगारी',tag_ac:'❄️ AC दुरुस्ती',
+    stat1:'आनंदी कस्टमर',stat2:'सत्यापित तज्ञ',stat3:'सरासरी रेटिंग',
+    ps_title:'Servlo का निवडा?',ps_badge:'✓ खरे',
+    hero_point1_title:'मॅन्युअली सत्यापित',hero_point1_desc:'प्रत्येक प्रोव्हायडर ID आणि बॅकग्राउंड तपासणी',
+    hero_point2_title:'फक्त खरे रिव्ह्यू',hero_point2_desc:'खोटी रेटिंग नाही — कधीच नाही',
+    hero_point3_title:'तुम्ही निवडा',hero_point3_desc:'जबरदस्ती assignment नाही, पूर्ण स्वातंत्र्य',
+    hero_point4_title:'पारदर्शी किंमत',hero_point4_desc:'आधीच दर, छुपे शुल्क नाही',
+    no_providers_title:'प्रोव्हायडर सत्यापित होत आहेत',
+    no_providers_desc:'आम्ही सध्या तुमच्या परिसरातील स्थानिक सेवा प्रोव्हायडर onboard आणि verify करत आहोत. पहिल्यांपैकी एक होण्यासाठी खाली नोंदणी करा!',
+    no_providers_btn:'प्रोव्हायडर म्हणून नोंदणी करा →',
+    no_reviews_title:'खरे रिव्ह्यू लवकरच येतील',
+    no_reviews_desc:'आम्ही फक्त खऱ्या कस्टमरचे genuine रिव्ह्यू दाखवतो. बुकिंग होत जाईल तसे खरे रिव्ह्यू येथे दिसतील.',
+    cat_label:'श्रेणीनुसार ब्राउझ करा',cat_title:'तुम्हाला <span>कशात मदत</span> हवी आहे?',cat_sub:'घराच्या दुरुस्तीपासून शिकवणीपर्यंत — तुमच्या शहरात योग्य तज्ञ शोधा.',
+    cat_electrician:'इलेक्ट्रिशियन',cat_electrician_sub:'वायरिंग, फ्यूज, फिटिंग',
+    cat_plumber:'प्लंबर',cat_plumber_sub:'पाईप, नळ, गटार',
+    cat_carpenter:'सुतार',cat_carpenter_sub:'फर्निचर, दरवाजे, लाकूड',
+    cat_painter:'रंगारी',cat_painter_sub:'आतील आणि बाहेरील',
+    cat_ac:'AC दुरुस्ती',cat_ac_sub:'सर्व्हिस, गॅस, इन्स्टॉल',
+    cat_cleaning:'क्लीनिंग',cat_cleaning_sub:'घर आणि डीप क्लीन',
+    cat_tutor:'ट्यूटर',cat_tutor_sub:'शाळा, महाविद्यालय, JEE',
+    cat_photo:'छायाचित्रकार',cat_photo_sub:'कार्यक्रम, पोर्ट्रेट',
+    cat_it:'IT सपोर्ट',cat_it_sub:'लॅपटॉप, वाईफाई, सेटअप',
+    cat_interior:'इंटेरियर',cat_interior_sub:'डिझाइन, सजावट, प्लान',
+    cat_security:'CCTV इन्स्टॉलेशन',cat_security_sub:'पुरवठा आणि इन्स्टॉल',
+    cat_mechanic:'कार मेकॅनिक',cat_mechanic_sub:'दुरुस्ती, सर्व्हिस, वॉश',
+    how_label:'सोपी प्रक्रिया',how_title:'<span>३ सोप्या पायऱ्यांमध्ये</span> सेवा बुक करा',how_sub:'कोणताही मध्यस्थ नाही, गोंधळ नाही. सर्वोत्तम प्रोव्हायडर पाहा आणि कोणाला कॉल करायचे ते ठरवा.',
+    step1_title:'तुमची सेवा शोधा',step1_desc:'तुम्हाला काय हवे आणि स्थान सांगा. आम्ही जवळचे टॉप-रेटेड सत्यापित प्रोव्हायडर दाखवतो.',
+    step2_title:'तुलना करा आणि निवडा',step2_desc:'रेटिंग, रिव्ह्यू, किंमत तपासा. तुम्ही ठरवा कोणाशी संपर्क करायचा — दबाव नाही.',
+    step3_title:'बुक करा आणि काम करवा',step3_desc:'प्रोव्हायडरशी थेट संपर्क करा, काम कन्फर्म करा, सुरक्षित पेमेंट करा आणि रिव्ह्यू द्या.',
+    prov_label:'या आठवड्यातील टॉप रेटेड',prov_title:'आमच्या <span>सर्वोत्तम प्रोव्हायडर</span>ना भेटा',prov_sub:'सर्व प्रोव्हायडर मॅन्युअली सत्यापित, बॅकग्राउंड-चेक्ड आणि खऱ्या कस्टमर्सनी रेट केलेले आहेत.',
+    btn_view:'प्रोफाइल पाहा',
+    why_label:'आम्हाला का निवडा',why_title:'<span>Servlo</span> का वेगळे आहे',why_sub:'आम्ही फक्त सर्वोत्तम निवडतो — सत्यापित, रेटेड, खरे. तुम्ही ठरवता कोणाला hire करायचे.',
+    why1_title:'मॅन्युअली सत्यापित प्रोव्हायडर',why1_desc:'प्रत्येक प्रोव्हायडर ID तपासणी, कौशल्य चाचणी आणि बॅकग्राउंड सत्यापनातून जातो.',
+    why2_title:'खऱ्या कस्टमरचे रिव्ह्यू',why2_desc:'फक्त प्रत्यक्ष बुक केलेले कस्टमरच रिव्ह्यू देऊ शकतात. खोटी रेटिंग नाही.',
+    why3_title:'तुम्ही निवडा, दबाव नाही',why3_desc:'तुम्ही प्रोफाइल पाहा आणि आरामदायक वाटेल त्याला निवडा. पूर्ण नियंत्रण.',
+    why4_title:'योग्य किंमत, छुपे शुल्क नाही',why4_desc:'प्रोव्हायडर आधीच दर सांगतात. जे दिसेल तेच द्यायचे.',
+    why5_title:'स्थानिक नोकऱ्या, स्थानिक उत्पन्न',why5_desc:'आम्ही तुमच्या शहरातील खऱ्या लोकांना आधार देतो. प्रत्येक बुकिंग एका कुटुंबाला मदत करते.',
+    why6_title:'Servlo सेवा हमी',why6_desc:'कामावर समाधानी नाही? २४ तासांत तक्रार करा आणि आम्ही सोडवू.',
+    testi_label:'कस्टमरच्या कथा',testi_title:'खरे लोक. <span style="color:var(--gold)">खरे निकाल.</span>',testi_sub:'भारतभरातील हजारो आनंदी कस्टमर Servlo वर विश्वास ठेवतात.',
+    testi1_text:'"१० मिनिटांत उत्तम इलेक्ट्रिशियन मिळाला. त्याच दिवशी आला, सगळं नीट केलं. किंमत दाखवलेलीच होती!"',testi1_loc:'पुणे · इलेक्ट्रिशियन hire केला',
+    testi2_text:'"इतर platforms वरून विश्वासार्ह माणसं मिळाली नाहीत. Servlo च्या प्रोव्हायडरचे बॅकग्राउंड चेक होते. घरी बोलावणे सुरक्षित वाटले."',testi2_loc:'मुंबई · प्लंबर hire केला',
+    testi3_text:'"Servlo वरील ट्यूटरमुळे फक्त २ महिन्यांत माझ्या मुलीचा JEE स्कोर सुधारला."',testi3_loc:'दिल्ली · ट्यूटर hire केला',
+    join_label:'सेवा प्रोव्हायडरसाठी',join_title:'<span>Servlo</span> मध्ये सामील होऊन जास्त कमवा',join_sub:'खरे कस्टमर मिळवा, प्रतिष्ठा तयार करा आणि उत्पन्न वाढवा — स्वतःच्या वेळापत्रकावर.',
+    join1_title:'नोंदणी करा आणि कागदपत्रे द्या',join1_desc:'मूलभूत ID आणि कौशल्य पुरावा — ऑनलाइन ५ मिनिटांपेक्षा कमी वेळ.',
+    join2_title:'आमच्या टीमकडून सत्यापित व्हा',join2_desc:'आम्ही २४-४८ तासांत प्रोफाइल तपासून लिस्टिंग सक्रिय करतो.',
+    join3_title:'कस्टमर येऊ लागतील',join3_desc:'कस्टमर तुम्हाला शोधतात, संपर्क करतात आणि तुम्ही काम स्वतःच्या पद्धतीने करता.',
+    join4_title:'रिव्ह्यू तयार करा आणि वाढा',join4_desc:'जास्त चांगले रिव्ह्यू = उच्च रँकिंग = जास्त कस्टमर.',
+    form_title:'📝 प्रोव्हायडर म्हणून नोंदणी करा',form_name_ph:'रमेश कुमार',form_city:'तुमचे शहर',form_city_ph:'पुणे, मुंबई, दिल्ली...',form_service:'सेवा श्रेणी',form_select:'तुमचे कौशल्य निवडा',form_other:'इतर',form_exp:'अनुभव',
+    exp1:'१ वर्षापेक्षा कमी',exp2:'१–३ वर्षे',exp3:'३–५ वर्षे',exp4:'५–१० वर्षे',exp5:'१०+ वर्षे',
+    btn_join_form:'Servlo मध्ये सामील व्हा →',
+    form_success_title:'अर्ज मिळाला!',form_success_desc:'आमची टीम २४ तासांत तुमच्याशी संपर्क करेल.',
+    cta_title:'योग्य तज्ञ शोधण्यासाठी तयार आहात?',cta_sub:'Servlo वर विश्वास ठेवणाऱ्या हजारो भारतीयांमध्ये सामील व्हा.',
+    cta_btn1:'सेवा शोधा',cta_btn2:'तुमची सेवा लिस्ट करा',
+    footer_about:'भारताचे विश्वसनीय व्यासपीठ सत्यापित स्थानिक सेवा व्यावसायिकांसाठी.',
+    footer_services:'सेवा',footer_company:'कंपनी',footer_support:'सपोर्ट',
+    footer_about_link:'आमच्याबद्दल',footer_how:'कसे काम करते',footer_providers_link:'प्रोव्हायडरसाठी',footer_blog:'ब्लॉग',footer_contact:'संपर्क',
+    footer_help:'मदत केंद्र',footer_safety:'सुरक्षा धोरण',footer_privacy:'गोपनीयता धोरण',footer_terms:'सेवा अटी',footer_refund:'परतावा धोरण',
+    footer_copy:'© 2025 Servlo. भारतात ❤️ सह बनवले. सर्व हक्क राखीव.',
+    modal_welcome:'स्वागत आहे! लॉगिन करा किंवा खाते तयार करा.',tab_login:'लॉगिन',tab_signup:'साइन अप',
+    label_email:'ईमेल पत्ता',label_password:'पासवर्ड',label_name:'पूर्ण नाव',label_phone:'मोबाइल नंबर',
+    btn_login:'Servlo मध्ये लॉगिन करा',btn_signup:'खाते तयार करा',
+    forgot_pass:'पासवर्ड विसरलात? <a href="#">येथे रीसेट करा</a>',
+    terms_note:'साइन अप करून तुम्ही आमच्या <a href="#">अटींशी</a> सहमत आहात',
+    wa_btn:'WhatsApp वर चॅट करा',trust1:'✅ सत्यापित व्यावसायिक',trust2:'⭐ खऱ्या कस्टमर रेटेड',trust3:'🔒 सुरक्षित पेमेंट',trust4:'🕐 २४/७ सपोर्ट',trust5:'🛡️ सेवा हमी',
+    city_notify_btn:'सूचित करा 🔔',city_notify_note:'Servlo तुमच्या शहरात आल्यावर आम्ही WhatsApp/Email करू. Spam नाही.',city_notify_success:'✅ झाले! Servlo तुमच्या शहरात आल्यावर सूचित करू.',
+    city_modal_title:'सूचना मिळवा!',city_modal_desc:'तुमच्या जवळ सत्यापित प्रोव्हायडर उपलब्ध होताच आम्ही सूचित करू. Spam नाही.',
+    city_modal_contact_ph:'तुमचा email किंवा WhatsApp नंबर',city_modal_success_title:'तुम्ही यादीत आहात!',
+    city_modal_success_desc:'Servlo तुमच्या शहरात आल्यावर आम्ही संपर्क करू.',city_modal_close:'बंद करा',
+    verify_label:'आमची प्रक्रिया',verify_title:'आम्ही प्रत्येक प्रोव्हायडरला <span>कसे सत्यापित</span> करतो',
+    verify_sub:'आम्ही कोणालाही list करत नाही. Servlo वर येण्यापूर्वी प्रत्येक प्रोव्हायडर ४-स्टेप सत्यापनातून जातो.',
+    verify1_title:'ID सत्यापन',verify1_desc:'Aadhar/PAN card आमच्या टीमकडून वैयक्तिकरित्या तपासले जाते.',
+    verify2_title:'कौशल्य मूल्यांकन',verify2_desc:'प्रोव्हायडरचे कौशल्य आणि अनुभव मंजुरीपूर्वी तपासले जातात.',
+    verify3_title:'बॅकग्राउंड तपासणी',verify3_desc:'तुमच्या सुरक्षिततेसाठी गुन्हेगारी नोंद आणि संदर्भ तपासले जातात.',
+    verify4_title:'प्रोफाइल मंजूर',verify4_desc:'तेव्हाच प्रोव्हायडर Servlo वर कस्टमरसाठी live होतो.',
+    contact_label:'संपर्क करा',contact_title:'आम्ही <span>तुमच्या मदतीसाठी</span> येथे आहोत',contact_sub:'प्रश्न आहे? मदत हवी? आमच्याशी कधीही संपर्क करा.',
+    contact_wa_title:'WhatsApp करा',contact_wa_desc:'त्वरित मदतीसाठी आमच्या टीमशी थेट चॅट करा.',contact_wa_btn:'आता चॅट करा →',
+    contact_email_title:'Email करा',contact_email_desc:'तुमचा प्रश्न पाठवा, आम्ही २४ तासांत उत्तर देऊ.',contact_email_btn:'Email पाठवा →',
+    contact_partner_title:'आमच्यासोबत भागीदार व्हा',contact_partner_desc:'सत्यापित प्रोव्हायडर बनायचे आहे?',contact_partner_btn:'आता नोंदणी करा →'
   }
+};
 
-  function toggleLangDropdown() {
-    document.getElementById('langDropdown').classList.toggle('open');
-  }
+let currentLang='en';
 
-  // Close lang dropdown on outside click
-  document.addEventListener('click', function(e) {
-    if (!e.target.closest('.lang-selector')) {
-      document.getElementById('langDropdown').classList.remove('open');
-    }
+function setLang(lang){
+  currentLang=lang;
+  const t=translations[lang];
+  const names={en:'🌐 EN',hi:'🇮🇳 HI',mr:'🇮🇳 MR'};
+  document.getElementById('langBtn').textContent=names[lang];
+  document.querySelectorAll('.lang-option').forEach(o=>o.classList.toggle('active',o.getAttribute('onclick').includes(`'${lang}'`)));
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const k=el.getAttribute('data-i18n');
+    if(t[k]!==undefined) el.innerHTML=t[k];
   });
-
-  // ── LOGIN MODAL ──
-  function openModal() {
-    document.getElementById('loginModal').classList.add('open');
-    document.body.style.overflow = 'hidden';
-  }
-
-  function closeModal() {
-    document.getElementById('loginModal').classList.remove('open');
-    document.body.style.overflow = '';
-  }
-
-  function closeModalOutside(e) {
-    if (e.target === document.getElementById('loginModal')) closeModal();
-  }
-
-  function switchTab(tab) {
-    document.getElementById('loginForm').classList.toggle('active', tab === 'login');
-    document.getElementById('signupForm').classList.toggle('active', tab === 'signup');
-    document.getElementById('loginTab').classList.toggle('active', tab === 'login');
-    document.getElementById('signupTab').classList.toggle('active', tab === 'signup');
-  }
-
-  function handleLogin() {
-    const email = document.getElementById('loginEmail').value;
-    const pass = document.getElementById('loginPassword').value;
-    if (!email || !pass) { alert('Please fill all fields.'); return; }
-    // Simulate login - replace with real backend later
-    const name = email.split('@')[0];
-    setLoggedIn(name);
-    closeModal();
-  }
-
-  function handleSignup() {
-    const name = document.getElementById('signupName').value;
-    const email = document.getElementById('signupEmail').value;
-    const phone = document.getElementById('signupPhone').value;
-    const pass = document.getElementById('signupPassword').value;
-    if (!name || !email || !phone || !pass) { alert('Please fill all fields.'); return; }
-    if (pass.length < 6) { alert('Password must be at least 6 characters.'); return; }
-    setLoggedIn(name);
-    closeModal();
-    alert('✅ Welcome to Servlo, ' + name + '!\n\nYour account has been created successfully.');
-  }
-
-  function setLoggedIn(name) {
-    document.getElementById('loginNavBtn').style.display = 'none';
-    const greeting = document.getElementById('userGreeting');
-    greeting.style.display = 'flex';
-    document.getElementById('userName').textContent = name.charAt(0).toUpperCase() + name.slice(1);
-    document.getElementById('userInitial').textContent = name.charAt(0).toUpperCase();
-  }
-
-  function logout() {
-    document.getElementById('loginNavBtn').style.display = 'block';
-    document.getElementById('userGreeting').style.display = 'none';
-  }
-
-  function toggleWaNumbers() {
-    const nums = document.getElementById('waNumbers');
-    nums.style.display = nums.style.display === 'none' ? 'flex' : 'none';
-  }
-
-  // Close WA numbers on outside click
-  document.addEventListener('click', function(e) {
-    if (!e.target.closest('#waContainer')) {
-      const nums = document.getElementById('waNumbers');
-      if (nums) nums.style.display = 'none';
-    }
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el=>{
+    const k=el.getAttribute('data-i18n-placeholder');
+    if(t[k]!==undefined) el.placeholder=t[k];
   });
+  document.getElementById('langDropdown').classList.remove('open');
+}
 
-  function toggleMenu() {
-    document.getElementById('mobileMenu').classList.toggle('open');
+function toggleLangDropdown(){document.getElementById('langDropdown').classList.toggle('open')}
+document.addEventListener('click',function(e){if(!e.target.closest('.lang-selector'))document.getElementById('langDropdown').classList.remove('open')});
+
+// Modal
+function openModal(){document.getElementById('loginModal').classList.add('open');document.body.style.overflow='hidden'}
+function closeModal(){document.getElementById('loginModal').classList.remove('open');document.body.style.overflow=''}
+function closeModalOutside(e){if(e.target===document.getElementById('loginModal'))closeModal()}
+function switchTab(tab){
+  document.getElementById('loginForm').classList.toggle('active',tab==='login');
+  document.getElementById('signupForm').classList.toggle('active',tab==='signup');
+  document.getElementById('loginTab').classList.toggle('active',tab==='login');
+  document.getElementById('signupTab').classList.toggle('active',tab==='signup');
+}
+function handleLogin(){
+  const email=document.getElementById('loginEmail').value;
+  const pass=document.getElementById('loginPassword').value;
+  if(!email||!pass){alert('Please fill all fields.');return}
+  setLoggedIn(email.split('@')[0]);
+  closeModal();
+}
+function handleSignup(){
+  const name=document.getElementById('signupName').value;
+  const email=document.getElementById('signupEmail').value;
+  const phone=document.getElementById('signupPhone').value;
+  const pass=document.getElementById('signupPassword').value;
+  if(!name||!email||!phone||!pass){alert('Please fill all fields.');return}
+  if(pass.length<6){alert('Password must be at least 6 characters.');return}
+  setLoggedIn(name);
+  closeModal();
+  alert('✅ Welcome to Servlo, '+name+'!\n\nYour account has been created.');
+}
+function setLoggedIn(name){
+  document.getElementById('loginNavBtn').style.display='none';
+  const g=document.getElementById('userGreeting');
+  g.style.display='flex';
+  document.getElementById('userName').textContent=name.charAt(0).toUpperCase()+name.slice(1);
+  document.getElementById('userInitial').textContent=name.charAt(0).toUpperCase();
+}
+function logout(){
+  document.getElementById('loginNavBtn').style.display='block';
+  document.getElementById('userGreeting').style.display='none';
+}
+
+// WhatsApp
+function toggleWaNumbers(){
+  const n=document.getElementById('waNumbers');
+  n.style.display=n.style.display==='none'?'flex':'none';
+}
+document.addEventListener('click',function(e){
+  if(!e.target.closest('#waContainer')){
+    const n=document.getElementById('waNumbers');
+    if(n)n.style.display='none';
   }
+});
 
-  function quickSearch(service) {
-    document.getElementById('serviceSelect').value = service;
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    setTimeout(() => document.getElementById('cityInput').focus(), 600);
-  }
-
-  function handleSearch() {
-    const service = document.getElementById('serviceSelect').value || 'services';
-    const city = document.getElementById('cityInput').value;
-    if (!city) { document.getElementById('cityInput').focus(); return; }
-    alert('🔍 Searching for ' + service + ' in ' + city + '...\n\nThis will show results once your backend is connected!');
-  }
-
-  // Formspree AJAX form submit
-  const form = document.getElementById('providerForm');
-  if (form) {
-    form.addEventListener('submit', async function(e) {
-      e.preventDefault();
-      const btn = form.querySelector('.btn-join');
-      btn.textContent = 'Sending...';
-      btn.disabled = true;
-      try {
-        const response = await fetch(form.action, {
-          method: 'POST',
-          body: new FormData(form),
-          headers: { 'Accept': 'application/json' }
-        });
-        if (response.ok) {
-          form.style.display = 'none';
-          document.getElementById('formSuccess').style.display = 'block';
-        } else {
-          btn.textContent = 'Try Again';
-          btn.disabled = false;
-          alert('Something went wrong. Please try again.');
-        }
-      } catch {
-        btn.textContent = 'Try Again';
-        btn.disabled = false;
-        alert('Network error. Please check your connection.');
-      }
-    });
-  }
-
-  // Scroll reveal
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
-  }, { threshold: 0.1 });
-  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-  // Nav shadow on scroll
-  window.addEventListener('scroll', () => {
-    document.getElementById('mainNav').style.boxShadow = window.scrollY > 20 ? '0 4px 20px rgba(0,0,0,0.08)' : 'none';
+// Formspree
+const form=document.getElementById('providerForm');
+if(form){
+  form.addEventListener('submit',async function(e){
+    e.preventDefault();
+    const btn=form.querySelector('.btn-join');
+    btn.textContent='Sending...';
+    btn.disabled=true;
+    try{
+      const res=await fetch(form.action,{method:'POST',body:new FormData(form),headers:{'Accept':'application/json'}});
+      if(res.ok){form.style.display='none';document.getElementById('formSuccess').style.display='block'}
+      else{btn.textContent='Try Again';btn.disabled=false;alert('Something went wrong.')}
+    }catch{btn.textContent='Try Again';btn.disabled=false;alert('Network error.')}
   });
+}
+
+// Search
+function handleSearch(){
+  const service=document.getElementById('serviceSelect').value||'services';
+  const city=document.getElementById('cityInput').value.trim();
+  if(!city){document.getElementById('cityInput').focus();return}
+  // Show city lead modal
+  document.getElementById('cityLeadModal').classList.add('open');
+  document.getElementById('cityLeadModalCity').value=city;
+  document.getElementById('cityLeadModalService').textContent=service;
+  document.body.style.overflow='hidden';
+}
+
+function handleCityLead(){
+  const city=document.getElementById('cityLeadInput').value.trim();
+  if(!city){document.getElementById('cityLeadInput').focus();return}
+  document.getElementById('cityLeadSuccess').style.display='block';
+  document.getElementById('cityLeadInput').value='';
+  document.getElementById('cityLeadInput').disabled=true;
+  document.querySelector('[onclick="handleCityLead()"]').disabled=true;
+}
+
+function handleCityLeadModal(){
+  const city=document.getElementById('cityLeadModalCity').value.trim();
+  const email=document.getElementById('cityLeadModalEmail').value.trim();
+  if(!city){return}
+  document.getElementById('cityModalSuccess').style.display='block';
+  document.getElementById('cityModalForm').style.display='none';
+}
+
+function closeCityModal(){
+  document.getElementById('cityLeadModal').classList.remove('open');
+  document.body.style.overflow='';
+  document.getElementById('cityModalSuccess').style.display='none';
+  document.getElementById('cityModalForm').style.display='block';
+}
+function quickSearch(service){
+  document.getElementById('serviceSelect').value=service;
+  window.scrollTo({top:0,behavior:'smooth'});
+  setTimeout(()=>document.getElementById('cityInput').focus(),600);
+}
+
+// Mobile menu
+function closeCityModalOutside(e){if(e.target===document.getElementById('cityLeadModal'))closeCityModal()}
+
+function toggleMenu(){document.getElementById('mobileMenu').classList.toggle('open')}
+
+// Scroll reveal
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}})
+},{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+// Nav shadow
+window.addEventListener('scroll',()=>{
+  document.getElementById('mainNav').style.boxShadow=window.scrollY>20?'0 4px 20px rgba(0,0,0,0.06)':'none';
+});
 </script>
 </body>
-         </html>
+     </html>
