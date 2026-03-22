@@ -586,10 +586,10 @@ footer{background:var(--primary);color:rgba(255,255,255,0.6);padding:60px 5% 32p
             <div class="pcard-verified">✔ Verified Provider</div>
             <div style="font-size:0.78rem;color:var(--green);font-weight:600;margin-top:3px;">🟢 Available Now</div>
           </div>
-          <a href="https://wa.me/918888149580?text=Hello%20Ankesh!%20I%20found%20you%20on%20Taskzo.%20I%20need%20CCTV%20service."
+          <a href="https://wa.me/917744031063?text=Hello%20Taskzo!%20I%20want%20to%20book%20CCTV%20Installation%20service.%20Please%20help%20me."
              target="_blank"
-             style="background:var(--primary);color:white;border:none;border-radius:8px;padding:0.45rem 1rem;font-size:0.82rem;font-weight:700;text-decoration:none;font-family:'Plus Jakarta Sans',sans-serif;transition:background 0.2s;display:inline-block;">
-            Contact →
+             style="background:var(--accent);color:white;border:none;border-radius:8px;padding:0.45rem 1rem;font-size:0.82rem;font-weight:700;text-decoration:none;font-family:'Plus Jakarta Sans',sans-serif;transition:background 0.2s;display:inline-block;">
+            Book Now →
           </a>
         </div>
       </div>
@@ -1322,14 +1322,41 @@ if(form){
 
 // Search
 function handleSearch(){
-  const service=document.getElementById('serviceSelect').value||'services';
-  const city=document.getElementById('cityInput').value.trim();
-  if(!city){document.getElementById('cityInput').focus();return}
-  // Show city lead modal
+  const service = (document.getElementById('serviceSelect').value || '').toLowerCase();
+  const city = document.getElementById('cityInput').value.trim().toLowerCase();
+  if(!city){ document.getElementById('cityInput').focus(); return; }
+
+  // CCTV keywords aur Ankesh ki service areas
+  const cctvKeywords = ['cctv','camera','security'];
+  const ankeshCities = ['amalner','dhule','parola','dharangaon','chopda','shirpur','bhusawal','jalgaon','pachora','jamner'];
+
+  const isCCTV = cctvKeywords.some(k => service.includes(k) || city.includes(k));
+  const isAnkeshCity = ankeshCities.some(c => city.includes(c));
+
+  if(isCCTV || isAnkeshCity){
+    // Providers section pe scroll karo
+    document.getElementById('providers').scrollIntoView({behavior:'smooth'});
+    setTimeout(()=>{
+      const card = document.querySelector('.pcard');
+      if(card){
+        card.style.border = '2.5px solid var(--accent)';
+        card.style.boxShadow = '0 0 32px rgba(230,57,70,0.25)';
+        card.style.transform = 'translateY(-4px)';
+        setTimeout(()=>{
+          card.style.border = '';
+          card.style.boxShadow = '';
+          card.style.transform = '';
+        }, 3000);
+      }
+    }, 800);
+    return;
+  }
+
+  // Baaki services ke liye city lead modal
   document.getElementById('cityLeadModal').classList.add('open');
-  document.getElementById('cityLeadModalCity').value=city;
-  document.getElementById('cityLeadModalService').textContent=service;
-  document.body.style.overflow='hidden';
+  document.getElementById('cityLeadModalCity').value = document.getElementById('cityInput').value;
+  document.getElementById('cityLeadModalService').textContent = service || 'services';
+  document.body.style.overflow = 'hidden';
 }
 
 function handleCityLead(){
@@ -1378,4 +1405,4 @@ window.addEventListener('scroll',()=>{
 });
 </script>
 </body>
-</html>
+                                                                                   </html>
