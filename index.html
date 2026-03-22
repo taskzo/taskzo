@@ -550,11 +550,56 @@ footer{background:var(--primary);color:rgba(255,255,255,0.6);padding:60px 5% 32p
     <h2 data-i18n="prov_title">Verified Experts <span>Near You</span></h2>
     <p class="sec-sub" data-i18n="prov_sub">All providers are manually verified, background-checked, and rated by real customers like you.</p>
 
-    <div style="background:white;border:1.5px solid var(--border);border-radius:24px;padding:3rem 2rem;text-align:center;box-shadow:0 4px 20px rgba(0,0,0,0.05);">
-      <div style="font-size:3rem;margin-bottom:1rem;">🚀</div>
-      <h3 style="font-family:'Plus Jakarta Sans',sans-serif;font-size:1.3rem;font-weight:800;color:var(--primary);margin-bottom:0.75rem;" data-i18n="no_providers_title">Be First in Your City!</h3>
-      <p style="color:var(--slate);font-size:0.92rem;max-width:460px;margin:0 auto 2rem;line-height:1.75;" data-i18n="no_providers_desc">We are onboarding verified providers city by city. Enter your city below and we'll notify you as soon as experts are available near you!</p>
+    <!-- Real Provider Card -->
+    <div class="providers-grid reveal" style="margin-bottom:2rem;">
+      <div class="pcard">
+        <div class="pcard-top">
+          <div class="pcard-avatar" style="background:#F0F4FF;">📹</div>
+          <div>
+            <div class="pcard-name">Ankesh Patil</div>
+            <div class="pcard-role">CCTV Expert · Maharashtra</div>
+          </div>
+        </div>
+        <div class="pcard-tags">
+          <span class="tag">CCTV Supply</span>
+          <span class="tag">CCTV Installation</span>
+          <span class="tag">Home Security</span>
+          <span class="tag">Shop Security</span>
+        </div>
+        <div style="margin-bottom:1rem;">
+          <div style="font-size:0.78rem;font-weight:700;color:var(--slate);margin-bottom:0.4rem;">📍 Service Areas:</div>
+          <div style="display:flex;flex-wrap:wrap;gap:0.35rem;">
+            <span class="tag">Amalner</span>
+            <span class="tag">Dhule</span>
+            <span class="tag">Parola</span>
+            <span class="tag">Dharangaon</span>
+            <span class="tag">Chopda</span>
+            <span class="tag">Shirpur</span>
+            <span class="tag">Bhusawal</span>
+            <span class="tag">Jalgaon</span>
+            <span class="tag">Pachora</span>
+            <span class="tag">Jamner</span>
+          </div>
+        </div>
+        <div class="pcard-footer">
+          <div>
+            <div class="pcard-verified">✔ Verified Provider</div>
+            <div style="font-size:0.78rem;color:var(--green);font-weight:600;margin-top:3px;">🟢 Available Now</div>
+          </div>
+          <a href="https://wa.me/918888149580?text=Hello%20Ankesh!%20I%20found%20you%20on%20Taskzo.%20I%20need%20CCTV%20service."
+             target="_blank"
+             style="background:var(--primary);color:white;border:none;border-radius:8px;padding:0.45rem 1rem;font-size:0.82rem;font-weight:700;text-decoration:none;font-family:'Plus Jakarta Sans',sans-serif;transition:background 0.2s;display:inline-block;">
+            Contact →
+          </a>
+        </div>
+      </div>
+    </div>
 
+    <!-- More providers coming -->
+    <div style="background:white;border:1.5px solid var(--border);border-radius:24px;padding:2.5rem 2rem;text-align:center;box-shadow:0 4px 20px rgba(0,0,0,0.05);">
+      <div style="font-size:2.5rem;margin-bottom:1rem;">🚀</div>
+      <h3 style="font-family:'Plus Jakarta Sans',sans-serif;font-size:1.1rem;font-weight:800;color:var(--primary);margin-bottom:0.75rem;" data-i18n="no_providers_title">Be First in Your City!</h3>
+      <p style="color:var(--slate);font-size:0.9rem;max-width:460px;margin:0 auto 1.5rem;line-height:1.75;" data-i18n="no_providers_desc">We are onboarding verified providers city by city. Enter your city below and we'll notify you as soon as experts are available near you!</p>
       <div style="display:flex;gap:0.75rem;max-width:420px;margin:0 auto 1rem;flex-wrap:wrap;justify-content:center;">
         <input type="text" id="cityLeadInput" placeholder="Enter your city..." data-i18n-placeholder="search_placeholder"
           style="flex:1;min-width:200px;border:1.5px solid var(--border);border-radius:10px;padding:0.8rem 1rem;font-size:0.9rem;font-family:'Plus Jakarta Sans',sans-serif;color:var(--primary);outline:none;">
@@ -1333,4 +1378,4 @@ window.addEventListener('scroll',()=>{
 });
 </script>
 </body>
-            </html>
+</html>
