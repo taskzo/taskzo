@@ -317,6 +317,36 @@ footer{background:var(--primary);color:rgba(255,255,255,0.6);padding:60px 5% 32p
 .about-card p{font-size:0.82rem;color:rgba(255,255,255,0.55);line-height:1.6}
 @media(max-width:900px){.about-grid{grid-template-columns:1fr}}
 
+/* ── CCTV SERVICE PAGE ── */
+.service-page-overlay{display:none;position:fixed;inset:0;background:white;z-index:400;overflow-y:auto;}
+.service-page-overlay.open{display:block;}
+.service-page-header{background:var(--primary);padding:1.25rem 5%;display:flex;align-items:center;gap:1rem;position:sticky;top:0;z-index:10;}
+.service-page-back{background:rgba(255,255,255,0.1);border:none;color:white;border-radius:8px;padding:0.5rem 1rem;font-size:0.85rem;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;display:flex;align-items:center;gap:0.4rem;}
+.service-page-back:hover{background:rgba(255,255,255,0.2);}
+.service-page-title{font-size:1.1rem;font-weight:800;color:white;font-family:'Plus Jakarta Sans',sans-serif;}
+.service-page-body{max-width:900px;margin:0 auto;padding:2.5rem 5%;}
+.service-hero{background:linear-gradient(135deg,#EFF6FF,#DBEAFE);border-radius:20px;padding:2rem;margin-bottom:2rem;display:flex;align-items:center;gap:1.5rem;}
+.service-hero-icon{font-size:3.5rem;flex-shrink:0;}
+.service-hero h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.4rem;font-weight:800;color:var(--primary);margin-bottom:0.4rem;}
+.service-hero p{font-size:0.88rem;color:var(--slate);line-height:1.6;}
+.service-packages{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin-bottom:2rem;}
+.pkg-card{background:white;border:1.5px solid var(--border);border-radius:16px;padding:1.5rem;text-align:center;transition:all 0.2s;}
+.pkg-card:hover{border-color:var(--accent);box-shadow:0 8px 24px rgba(230,57,70,0.1);transform:translateY(-3px);}
+.pkg-card .pkg-icon{font-size:2rem;margin-bottom:0.75rem;display:block;}
+.pkg-card h4{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:0.95rem;color:var(--primary);margin-bottom:0.4rem;}
+.pkg-card p{font-size:0.8rem;color:var(--slate);line-height:1.5;margin-bottom:1rem;}
+.pkg-card .pkg-price{font-size:0.82rem;font-weight:700;color:var(--green);margin-bottom:1rem;}
+.btn-book-pkg{width:100%;background:var(--accent);color:white;border:none;border-radius:10px;padding:0.75rem;font-size:0.88rem;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:all 0.2s;text-decoration:none;display:block;}
+.btn-book-pkg:hover{background:#c1121f;}
+.service-areas-box{background:var(--off);border-radius:16px;padding:1.5rem;margin-bottom:2rem;}
+.service-areas-box h4{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:0.95rem;color:var(--primary);margin-bottom:1rem;}
+.area-tags{display:flex;flex-wrap:wrap;gap:0.5rem;}
+.area-tag{background:white;border:1.5px solid var(--border);border-radius:50px;padding:0.3rem 0.85rem;font-size:0.8rem;font-weight:600;color:var(--slate);}
+.provider-highlight{background:white;border:1.5px solid var(--border);border-radius:16px;padding:1.5rem;display:flex;align-items:center;gap:1rem;margin-bottom:2rem;}
+.provider-highlight .ph-avatar{width:56px;height:56px;background:#F0F4FF;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0;}
+.provider-highlight h4{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1rem;color:var(--primary);}
+.provider-highlight p{font-size:0.82rem;color:var(--slate);margin-top:2px;}
+
 /* ── CONTACT SECTION ── */
 .contact-section{background:var(--off);padding:80px 5%}
 .contact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.25rem;margin-top:3rem}
@@ -516,7 +546,7 @@ footer{background:var(--primary);color:rgba(255,255,255,0.6);padding:60px 5% 32p
       <div class="cat-card" onclick="quickSearch('Electrician')"><span class="emoji">⚡</span><h4 data-i18n="cat_electrician">Electrician</h4><p data-i18n="cat_electrician_sub">Wiring, fuse, fitting</p></div>
       <div class="cat-card" onclick="quickSearch('Plumber')"><span class="emoji">🔧</span><h4 data-i18n="cat_plumber">Plumber</h4><p data-i18n="cat_plumber_sub">Pipes, taps, drains</p></div>
       <div class="cat-card" onclick="quickSearch('AC Repair')"><span class="emoji">❄️</span><h4 data-i18n="cat_ac">AC Repair</h4><p data-i18n="cat_ac_sub">Service, gas, install</p></div>
-      <div class="cat-card" onclick="quickSearch('CCTV')"><span class="emoji">📹</span><h4 data-i18n="cat_security">CCTV Installation</h4><p data-i18n="cat_security_sub">Supply &amp; install</p></div>
+      <div class="cat-card" onclick="searchCCTV()"><span class="emoji">📹</span><h4 data-i18n="cat_security">CCTV Installation</h4><p data-i18n="cat_security_sub">Supply &amp; install</p></div>
       <div class="cat-card" style="opacity:0.6;cursor:not-allowed;"><span class="emoji">🪚</span><h4 data-i18n="cat_carpenter">Carpenter</h4><p style="color:var(--accent);font-weight:700;font-size:0.72rem;">🕐 Coming Soon</p></div>
       <div class="cat-card" style="opacity:0.6;cursor:not-allowed;"><span class="emoji">🎨</span><h4 data-i18n="cat_painter">Painter</h4><p style="color:var(--accent);font-weight:700;font-size:0.72rem;">🕐 Coming Soon</p></div>
       <div class="cat-card" style="opacity:0.6;cursor:not-allowed;"><span class="emoji">🧹</span><h4 data-i18n="cat_cleaning">Cleaning</h4><p style="color:var(--accent);font-weight:700;font-size:0.72rem;">🕐 Coming Soon</p></div>
@@ -864,6 +894,101 @@ footer{background:var(--primary);color:rgba(255,255,255,0.6);padding:60px 5% 32p
     </div>
   </div>
 </footer>
+
+<!-- CCTV SERVICE PAGE -->
+<div class="service-page-overlay" id="cctvPage">
+  <div class="service-page-header">
+    <button class="service-page-back" onclick="closeCCTVPage()">← Back</button>
+    <div class="service-page-title">📹 CCTV Installation Services</div>
+  </div>
+  <div class="service-page-body">
+
+    <div class="service-hero">
+      <div class="service-hero-icon">📹</div>
+      <div>
+        <h2>CCTV Supply &amp; Installation</h2>
+        <p>Get your home, shop or office secured with professional CCTV cameras — supply, installation and maintenance all in one place. Verified expert, quality guaranteed.</p>
+      </div>
+    </div>
+
+    <!-- Packages -->
+    <h3 style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.1rem;color:var(--primary);margin-bottom:1rem;">📦 Choose Your Package</h3>
+    <div class="service-packages">
+      <div class="pkg-card">
+        <span class="pkg-icon">🏠</span>
+        <h4>Home Basic</h4>
+        <p>2 cameras — perfect for main door &amp; back entry. Ideal for small homes.</p>
+        <div class="pkg-price">Starting ₹5,000</div>
+        <a href="https://wa.me/917744031063?text=Hello%20Taskzo!%20I%20want%20to%20book%20Home%20Basic%20CCTV%20package%20(2%20cameras)." target="_blank" class="btn-book-pkg">Book Now →</a>
+      </div>
+      <div class="pkg-card">
+        <span class="pkg-icon">🏪</span>
+        <h4>Shop / Office</h4>
+        <p>4 cameras — full coverage for your shop or small office. Most popular!</p>
+        <div class="pkg-price">Starting ₹9,000</div>
+        <a href="https://wa.me/917744031063?text=Hello%20Taskzo!%20I%20want%20to%20book%20Shop%20CCTV%20package%20(4%20cameras)." target="_blank" class="btn-book-pkg">Book Now →</a>
+      </div>
+      <div class="pkg-card">
+        <span class="pkg-icon">🏢</span>
+        <h4>Full Coverage</h4>
+        <p>8 cameras — complete security for large homes, offices or warehouses.</p>
+        <div class="pkg-price">Starting ₹16,000</div>
+        <a href="https://wa.me/917744031063?text=Hello%20Taskzo!%20I%20want%20to%20book%20Full%20Coverage%20CCTV%20package%20(8%20cameras)." target="_blank" class="btn-book-pkg">Book Now →</a>
+      </div>
+      <div class="pkg-card">
+        <span class="pkg-icon">🛠️</span>
+        <h4>AMC &amp; Repair</h4>
+        <p>Annual maintenance, camera repair, wire issues — we fix everything.</p>
+        <div class="pkg-price">Get Custom Quote</div>
+        <a href="https://wa.me/917744031063?text=Hello%20Taskzo!%20I%20need%20CCTV%20repair%20or%20maintenance%20service." target="_blank" class="btn-book-pkg">Get Quote →</a>
+      </div>
+    </div>
+
+    <!-- Verified Provider -->
+    <h3 style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.1rem;color:var(--primary);margin-bottom:1rem;">✅ Verified Provider</h3>
+    <div class="provider-highlight">
+      <div class="ph-avatar">📹</div>
+      <div style="flex:1;">
+        <h4>Ankesh Patil</h4>
+        <p>CCTV Supply &amp; Installation Expert · Verified by Taskzo</p>
+        <div style="display:flex;gap:0.5rem;margin-top:0.5rem;flex-wrap:wrap;">
+          <span style="background:#DCFCE7;color:#166534;border-radius:50px;padding:0.2rem 0.65rem;font-size:0.75rem;font-weight:700;">✔ ID Verified</span>
+          <span style="background:#DCFCE7;color:#166534;border-radius:50px;padding:0.2rem 0.65rem;font-size:0.75rem;font-weight:700;">✔ Background Checked</span>
+          <span style="background:#EFF6FF;color:#1D4ED8;border-radius:50px;padding:0.2rem 0.65rem;font-size:0.75rem;font-weight:700;">🟢 Available Now</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Service Areas -->
+    <div class="service-areas-box">
+      <h4>📍 Service Areas</h4>
+      <div class="area-tags">
+        <span class="area-tag">Amalner</span>
+        <span class="area-tag">Dhule</span>
+        <span class="area-tag">Parola</span>
+        <span class="area-tag">Dharangaon</span>
+        <span class="area-tag">Chopda</span>
+        <span class="area-tag">Shirpur</span>
+        <span class="area-tag">Bhusawal</span>
+        <span class="area-tag">Jalgaon</span>
+        <span class="area-tag">Pachora</span>
+        <span class="area-tag">Jamner</span>
+      </div>
+    </div>
+
+    <!-- Book CTA -->
+    <div style="background:var(--primary);border-radius:16px;padding:2rem;text-align:center;">
+      <div style="font-size:2rem;margin-bottom:0.75rem;">🔒</div>
+      <h3 style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;color:white;margin-bottom:0.5rem;">Ready to secure your place?</h3>
+      <p style="color:rgba(255,255,255,0.6);font-size:0.88rem;margin-bottom:1.5rem;">Book now on WhatsApp — our team will guide you through the best package for your needs.</p>
+      <a href="https://wa.me/917744031063?text=Hello%20Taskzo!%20I%20want%20to%20book%20CCTV%20Installation%20service.%20Please%20help%20me." target="_blank"
+        style="background:#25D366;color:white;border-radius:12px;padding:0.9rem 2rem;font-size:0.95rem;font-weight:800;text-decoration:none;display:inline-block;font-family:'Plus Jakarta Sans',sans-serif;">
+        💬 Book on WhatsApp
+      </a>
+    </div>
+
+  </div>
+</div>
 
 <!-- LOGIN MODAL -->
 <div class="modal-overlay" id="loginModal" onclick="closeModalOutside(event)">
@@ -1326,33 +1451,45 @@ function handleSearch(){
   const city = document.getElementById('cityInput').value.trim().toLowerCase();
   if(!city){ document.getElementById('cityInput').focus(); return; }
 
-  // CCTV keywords aur Ankesh ki service areas
-  const cctvKeywords = ['cctv','camera','security'];
   const ankeshCities = ['amalner','dhule','parola','dharangaon','chopda','shirpur','bhusawal','jalgaon','pachora','jamner'];
+  const cctvKeywords = ['cctv','camera','security'];
 
-  const isCCTV = cctvKeywords.some(k => service.includes(k) || city.includes(k));
   const isAnkeshCity = ankeshCities.some(c => city.includes(c));
+  const isCCTV = cctvKeywords.some(k => service.includes(k));
+  const noServiceSelected = service === '' || service === 'all services';
 
-  if(isCCTV || isAnkeshCity){
-    // Providers section pe scroll karo
-    document.getElementById('providers').scrollIntoView({behavior:'smooth'});
-    setTimeout(()=>{
-      const card = document.querySelector('.pcard');
-      if(card){
-        card.style.border = '2.5px solid var(--accent)';
-        card.style.boxShadow = '0 0 32px rgba(230,57,70,0.25)';
-        card.style.transform = 'translateY(-4px)';
-        setTimeout(()=>{
-          card.style.border = '';
-          card.style.boxShadow = '';
-          card.style.transform = '';
-        }, 3000);
-      }
-    }, 800);
+  if(isAnkeshCity){
+    // Scroll to categories to show all available services
+    document.getElementById('categories').scrollIntoView({behavior:'smooth'});
+
+    // Show search results banner
+    let banner = document.getElementById('searchResultBanner');
+    if(!banner){
+      banner = document.createElement('div');
+      banner.id = 'searchResultBanner';
+      banner.style.cssText = 'background:#ECFDF5;border:1.5px solid #6EE7B7;border-radius:12px;padding:1rem 1.25rem;margin-bottom:1.5rem;font-size:0.88rem;font-weight:600;color:#065F46;display:flex;align-items:center;gap:0.5rem;';
+      const catSection = document.querySelector('.categories-section .section-inner');
+      catSection.insertBefore(banner, catSection.querySelector('.cat-grid'));
+    }
+    banner.innerHTML = '✅ Services available in <strong>' + document.getElementById('cityInput').value + '</strong> — Active services shown below. Coming Soon services launching soon!';
+
+    // If CCTV specifically selected, also highlight provider
+    if(isCCTV || service.includes('cctv')){
+      setTimeout(()=>{
+        document.getElementById('providers').scrollIntoView({behavior:'smooth'});
+        const card = document.querySelector('.pcard');
+        if(card){
+          card.style.border = '2.5px solid var(--accent)';
+          card.style.boxShadow = '0 0 32px rgba(230,57,70,0.25)';
+          card.style.transform = 'translateY(-4px)';
+          setTimeout(()=>{ card.style.border=''; card.style.boxShadow=''; card.style.transform=''; }, 3000);
+        }
+      }, 1500);
+    }
     return;
   }
 
-  // Baaki services ke liye city lead modal
+  // City not in service area — show city lead modal
   document.getElementById('cityLeadModal').classList.add('open');
   document.getElementById('cityLeadModalCity').value = document.getElementById('cityInput').value;
   document.getElementById('cityLeadModalService').textContent = service || 'services';
@@ -1382,6 +1519,17 @@ function closeCityModal(){
   document.getElementById('cityModalSuccess').style.display='none';
   document.getElementById('cityModalForm').style.display='block';
 }
+function searchCCTV(){
+  document.getElementById('cctvPage').classList.add('open');
+  document.getElementById('cctvPage').scrollTop = 0;
+  document.body.style.overflow = 'hidden';
+}
+
+function closeCCTVPage(){
+  document.getElementById('cctvPage').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
 function quickSearch(service){
   document.getElementById('serviceSelect').value=service;
   window.scrollTo({top:0,behavior:'smooth'});
@@ -1405,4 +1553,4 @@ window.addEventListener('scroll',()=>{
 });
 </script>
 </body>
-                                                                                   </html>
+  </html>
