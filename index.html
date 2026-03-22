@@ -301,6 +301,22 @@ footer{background:var(--primary);color:rgba(255,255,255,0.6);padding:60px 5% 32p
 .city-modal-btn:hover{background:#c1121f}
 .city-modal-close{position:absolute;top:1.25rem;right:1.25rem;background:var(--off);border:none;border-radius:50%;width:32px;height:32px;cursor:pointer;font-size:0.9rem;display:flex;align-items:center;justify-content:center;color:var(--slate)}
 
+/* ── ABOUT SECTION ── */
+.about-section{background:var(--primary);padding:80px 5%}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;max-width:1200px;margin:0 auto}
+.about-text h2{color:white;margin-bottom:1rem}
+.about-text .eyebrow{color:var(--gold)}
+.about-text p{color:rgba(255,255,255,0.7);font-size:0.95rem;line-height:1.8;margin-bottom:1.25rem}
+.about-points{list-style:none;margin-top:1.5rem}
+.about-points li{display:flex;align-items:flex-start;gap:0.75rem;margin-bottom:1rem;color:rgba(255,255,255,0.8);font-size:0.9rem;line-height:1.6}
+.about-points li .icon{font-size:1.1rem;margin-top:1px;flex-shrink:0}
+.about-cards{display:flex;flex-direction:column;gap:1rem}
+.about-card{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:16px;padding:1.5rem;display:flex;align-items:flex-start;gap:1rem}
+.about-card-icon{font-size:1.75rem;flex-shrink:0}
+.about-card h4{font-size:0.92rem;font-weight:700;color:white;margin-bottom:0.35rem}
+.about-card p{font-size:0.82rem;color:rgba(255,255,255,0.55);line-height:1.6}
+@media(max-width:900px){.about-grid{grid-template-columns:1fr}}
+
 /* ── CONTACT SECTION ── */
 .contact-section{background:var(--off);padding:80px 5%}
 .contact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.25rem;margin-top:3rem}
@@ -366,6 +382,7 @@ footer{background:var(--primary);color:rgba(255,255,255,0.6);padding:60px 5% 32p
   <div class="logo">Task<span>zo</span></div>
   <ul class="nav-links">
     <li><a href="#categories" data-i18n="nav_services">Services</a></li>
+    <li><a href="#about" data-i18n="nav_about">About</a></li>
     <li><a href="#providers" data-i18n="nav_providers">Providers</a></li>
     <li><a href="#how" data-i18n="nav_how">How It Works</a></li>
     <li><a href="#join" data-i18n="nav_join">Join as Provider</a></li>
@@ -634,6 +651,56 @@ footer{background:var(--primary);color:rgba(255,255,255,0.6);padding:60px 5% 32p
   </div>
 </section>
 
+<!-- ABOUT TASKZO -->
+<section class="about-section" id="about">
+  <div class="about-grid">
+    <div class="about-text">
+      <span class="eyebrow" data-i18n="about_label">About Taskzo</span>
+      <h2 data-i18n="about_title">We Don't Just Connect — <span style="color:var(--gold)">We Take Responsibility</span></h2>
+      <p data-i18n="about_desc1">Taskzo is a verified local service platform built for real India. We connect customers with background-checked, skilled professionals — and we stay accountable for the quality of every service.</p>
+      <p data-i18n="about_desc2">Unlike other platforms that simply list numbers or assign random workers, Taskzo carefully onboards every provider, monitors their performance through real customer feedback, and removes anyone who doesn't meet our quality standards.</p>
+
+      <ul class="about-points">
+        <li><span class="icon">✅</span><span data-i18n="about_point1">Every provider is manually verified with ID and background check before listing</span></li>
+        <li><span class="icon">⭐</span><span data-i18n="about_point2">After every service, we collect genuine customer feedback — no fake reviews</span></li>
+        <li><span class="icon">🚫</span><span data-i18n="about_point3">Providers who deliver poor quality are removed — we don't compromise on standards</span></li>
+        <li><span class="icon">🎯</span><span data-i18n="about_point4">You choose your expert — no forced assignment, full transparency</span></li>
+      </ul>
+    </div>
+
+    <div class="about-cards">
+      <div class="about-card">
+        <span class="about-card-icon">🔍</span>
+        <div>
+          <h4 data-i18n="about_card1_title">Strict Onboarding</h4>
+          <p data-i18n="about_card1_desc">We verify every provider personally — ID proof, skill check, and background verification. Not just anyone can join Taskzo.</p>
+        </div>
+      </div>
+      <div class="about-card">
+        <span class="about-card-icon">💬</span>
+        <div>
+          <h4 data-i18n="about_card2_title">Real Feedback After Every Job</h4>
+          <p data-i18n="about_card2_desc">After each service, we collect honest customer feedback. This keeps providers on their best behavior — always.</p>
+        </div>
+      </div>
+      <div class="about-card">
+        <span class="about-card-icon">🚫</span>
+        <div>
+          <h4 data-i18n="about_card3_title">Zero Tolerance for Bad Work</h4>
+          <p data-i18n="about_card3_desc">Providers with consistent complaints or poor ratings are removed from Taskzo. Quality is non-negotiable for us.</p>
+        </div>
+      </div>
+      <div class="about-card">
+        <span class="about-card-icon">🛡️</span>
+        <div>
+          <h4 data-i18n="about_card4_title">Your Satisfaction, Our Responsibility</h4>
+          <p data-i18n="about_card4_desc">Not happy with the service? Raise a complaint within 24 hours and we personally resolve it — no runaround.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- HOW WE VERIFY -->
 <section class="verify-section">
   <div class="section-inner">
@@ -728,7 +795,7 @@ footer{background:var(--primary);color:rgba(255,255,255,0.6);padding:60px 5% 32p
         <li><a href="#contact" data-i18n="footer_contact">Contact</a></li>
         <li><a href="#how" data-i18n="footer_how">How It Works</a></li>
         <li><a href="#join" data-i18n="footer_providers_link">For Providers</a></li>
-        <li><span style="color:rgba(255,255,255,0.3);font-size:0.85rem;" data-i18n="footer_about_link">About Us</span><span class="footer-cs">soon</span></li>
+        <li><a href="#about" data-i18n="footer_about_link">About Us</a></li>
         <li><span style="color:rgba(255,255,255,0.3);font-size:0.85rem;" data-i18n="footer_blog">Blog</span><span class="footer-cs">soon</span></li>
       </ul>
     </div>
@@ -814,7 +881,19 @@ footer{background:var(--primary);color:rgba(255,255,255,0.6);padding:60px 5% 32p
 // ── TRANSLATIONS ──
 const translations = {
   en:{
-    nav_services:'Services',nav_providers:'Providers',nav_how:'How It Works',nav_join:'Join as Provider',nav_login:'Login',
+    nav_about:'About',
+    about_label:'About Taskzo',
+    about_title:'We Don\'t Just Connect — <span style="color:var(--gold)">We Take Responsibility</span>',
+    about_desc1:'Taskzo is a verified local service platform built for real India. We connect customers with background-checked, skilled professionals — and we stay accountable for the quality of every service.',
+    about_desc2:'Unlike other platforms that simply list numbers or assign random workers, Taskzo carefully onboards every provider, monitors their performance through real customer feedback, and removes anyone who doesn\'t meet our quality standards.',
+    about_point1:'Every provider is manually verified with ID and background check before listing',
+    about_point2:'After every service, we collect genuine customer feedback — no fake reviews',
+    about_point3:'Providers who deliver poor quality are removed — we don\'t compromise on standards',
+    about_point4:'You choose your expert — no forced assignment, full transparency',
+    about_card1_title:'Strict Onboarding',about_card1_desc:'We verify every provider personally — ID proof, skill check, and background verification. Not just anyone can join Taskzo.',
+    about_card2_title:'Real Feedback After Every Job',about_card2_desc:'After each service, we collect honest customer feedback. This keeps providers on their best behavior — always.',
+    about_card3_title:'Zero Tolerance for Bad Work',about_card3_desc:'Providers with consistent complaints or poor ratings are removed from Taskzo. Quality is non-negotiable for us.',
+    about_card4_title:'Your Satisfaction, Our Responsibility',about_card4_desc:'Not happy with the service? Raise a complaint within 24 hours and we personally resolve it — no runaround.',nav_providers:'Providers',nav_how:'How It Works',nav_join:'Join as Provider',nav_login:'Login',
     announce:'⚡ Quick Response Guaranteed &nbsp;·&nbsp; <span>Your Work, Our Responsibility</span> &nbsp;·&nbsp; ✅ All Providers Verified',
     tagline_short:'Your Work, Our Responsibility',
     hero_badge:'🇮🇳 Serving India\'s Best Local Talent',
@@ -903,7 +982,19 @@ const translations = {
     contact_partner_title:'Partner With Us',contact_partner_desc:'Want to become a verified provider or bulk partner?',contact_partner_btn:'Register Now →'
   },
   hi:{
-    nav_services:'सेवाएं',nav_providers:'प्रोवाइडर',nav_how:'कैसे काम करता है',nav_join:'प्रोवाइडर बनें',nav_login:'लॉगिन',
+    nav_services:'सेवाएं',nav_about:'हमारे बारे में',nav_providers:'प्रोवाइडर',nav_how:'कैसे काम करता है',nav_join:'प्रोवाइडर बनें',nav_login:'लॉगिन',
+    about_label:'Taskzo के बारे में',
+    about_title:'हम सिर्फ जोड़ते नहीं — <span style="color:var(--gold)">हम जिम्मेदारी लेते हैं</span>',
+    about_desc1:'Taskzo एक verified लोकल सर्विस प्लेटफॉर्म है जो असली भारत के लिए बना है। हम customers को background-checked, skilled professionals से जोड़ते हैं — और हर सर्विस की quality के लिए जवाबदेह रहते हैं।',
+    about_desc2:'दूसरे platforms सिर्फ नंबर list करते हैं या random workers assign करते हैं — Taskzo हर provider को carefully onboard करता है, real customer feedback से उनकी performance monitor करता है, और quality standards पूरे न करने वालों को हटा देता है।',
+    about_point1:'हर provider की ID और background check के बाद ही listing होती है',
+    about_point2:'हर सर्विस के बाद genuine customer feedback लिया जाता है — कोई fake review नहीं',
+    about_point3:'खराब काम करने वाले providers को हटाया जाता है — quality से कोई समझौता नहीं',
+    about_point4:'आप अपना expert खुद चुनें — कोई forced assignment नहीं, पूरी transparency',
+    about_card1_title:'Strict Onboarding',about_card1_desc:'हम हर provider को personally verify करते हैं — ID proof, skill check, और background verification। Taskzo में कोई भी join नहीं कर सकता।',
+    about_card2_title:'हर काम के बाद असली feedback',about_card2_desc:'हर सर्विस के बाद honest customer feedback collect किया जाता है। इससे providers हमेशा अपना best देते हैं।',
+    about_card3_title:'खराब काम बर्दाश्त नहीं',about_card3_desc:'लगातार complaints या खराब ratings वाले providers को Taskzo से हटाया जाता है। Quality non-negotiable है।',
+    about_card4_title:'आपकी संतुष्टि, हमारी जिम्मेदारी',about_card4_desc:'सर्विस से खुश नहीं? 24 घंटे में complaint करें और हम personally resolve करेंगे।',
     announce:'⚡ त्वरित प्रतिक्रिया की गारंटी &nbsp;·&nbsp; <span>आपका काम, हमारी ज़िम्मेदारी</span> &nbsp;·&nbsp; ✅ सभी प्रोवाइडर वेरिफाइड',
     tagline_short:'आपका काम, हमारी ज़िम्मेदारी',
     hero_badge:'🇮🇳 भारत के बेहतरीन लोकल टैलेंट',
@@ -992,7 +1083,19 @@ const translations = {
     contact_partner_title:'हमारे साथ पार्टनर बनें',contact_partner_desc:'वेरिफाइड प्रोवाइडर बनना चाहते हैं?',contact_partner_btn:'अभी रजिस्टर करें →'
   },
   mr:{
-    nav_services:'सेवा',nav_providers:'प्रोव्हायडर',nav_how:'कसे काम करते',nav_join:'प्रोव्हायडर व्हा',nav_login:'लॉगिन',
+    nav_services:'सेवा',nav_about:'आमच्याबद्दल',nav_providers:'प्रोव्हायडर',nav_how:'कसे काम करते',nav_join:'प्रोव्हायडर व्हा',nav_login:'लॉगिन',
+    about_label:'Taskzo बद्दल',
+    about_title:'आम्ही फक्त जोडत नाही — <span style="color:var(--gold)">आम्ही जबाबदारी घेतो</span>',
+    about_desc1:'Taskzo हे खऱ्या भारतासाठी बनवलेले verified स्थानिक सेवा व्यासपीठ आहे. आम्ही कस्टमरना background-checked, कुशल व्यावसायिकांशी जोडतो — आणि प्रत्येक सेवेच्या गुणवत्तेसाठी जबाबदार राहतो.',
+    about_desc2:'इतर platforms फक्त नंबर list करतात — Taskzo प्रत्येक प्रोव्हायडरला काळजीपूर्वक onboard करते, खऱ्या feedback द्वारे performance monitor करते आणि गुणवत्ता न राखणाऱ्यांना काढून टाकते.',
+    about_point1:'प्रत्येक प्रोव्हायडरची ID आणि background तपासणीनंतरच listing होते',
+    about_point2:'प्रत्येक सेवेनंतर खरा customer feedback घेतला जातो — खोटे review नाहीत',
+    about_point3:'खराब काम करणाऱ्या प्रोव्हायडरना काढले जाते — गुणवत्तेशी तडजोड नाही',
+    about_point4:'तुम्ही तुमचा तज्ञ निवडा — जबरदस्ती assignment नाही, पूर्ण पारदर्शकता',
+    about_card1_title:'कठोर Onboarding',about_card1_desc:'आम्ही प्रत्येक प्रोव्हायडरला वैयक्तिकरित्या verify करतो — ID proof, skill check आणि background verification.',
+    about_card2_title:'प्रत्येक कामानंतर खरा feedback',about_card2_desc:'प्रत्येक सेवेनंतर honest customer feedback गोळा केला जातो. यामुळे प्रोव्हायडर नेहमी सर्वोत्तम देतात.',
+    about_card3_title:'खराब कामाला शून्य सहनशीलता',about_card3_desc:'सतत तक्रारी असलेल्या प्रोव्हायडरना Taskzo मधून काढले जाते. गुणवत्ता non-negotiable आहे.',
+    about_card4_title:'तुमचे समाधान, आमची जबाबदारी',about_card4_desc:'सेवेवर समाधानी नाही? २४ तासांत तक्रार करा आणि आम्ही वैयक्तिकरित्या सोडवू.',
     announce:'⚡ त्वरित प्रतिसाद हमी &nbsp;·&nbsp; <span>तुमचे काम, आमची जबाबदारी</span> &nbsp;·&nbsp; ✅ सर्व प्रोव्हायडर सत्यापित',
     tagline_short:'तुमचे काम, आमची जबाबदारी',
     hero_badge:'🇮🇳 भारतातील सर्वोत्तम स्थानिक प्रतिभा',
@@ -1230,4 +1333,4 @@ window.addEventListener('scroll',()=>{
 });
 </script>
 </body>
-                                                                                                      </html>
+            </html>
