@@ -1077,7 +1077,7 @@ footer{background:var(--primary);color:rgba(255,255,255,0.6);padding:60px 5% 32p
 <!-- CCTV SERVICE PAGE -->
 <div class="service-page-overlay" id="cctvPage">
   <div class="service-page-header">
-    <button class="service-page-back" onclick="closeCCTVPage()" data-i18n="back_btn">← Back</button>
+    <button class="service-page-back" onclick="closeServicePage('cctvPage')" data-i18n="back_btn">← Back</button>
     <div class="service-page-title" data-i18n="cctv_page_title">📹 CCTV Installation Services</div>
   </div>
   <div class="service-page-body">
@@ -1872,14 +1872,7 @@ function handleCSNotify(){
 }
 
 function searchCCTV(){
-  document.getElementById('cctvPage').classList.add('open');
-  document.getElementById('cctvPage').scrollTop = 0;
-  document.body.style.overflow = 'hidden';
-}
-
-function closeCCTVPage(){
-  document.getElementById('cctvPage').classList.remove('open');
-  document.body.style.overflow = '';
+  openServicePage('cctvPage');
 }
 
 function quickSearch(service){
@@ -1905,4 +1898,4 @@ window.addEventListener('scroll',()=>{
 });
 </script>
 </body>
-    </html>
+          </html>
