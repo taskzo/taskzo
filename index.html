@@ -1703,12 +1703,26 @@ function openServicePage(pageId){
   document.getElementById(pageId).classList.add('open');
   document.getElementById(pageId).scrollTop = 0;
   document.body.style.overflow = 'hidden';
+  // Push state so browser back button works
+  history.pushState({page: pageId}, '', '');
 }
 
 function closeServicePage(pageId){
   document.getElementById(pageId).classList.remove('open');
   document.body.style.overflow = '';
 }
+
+// Handle browser back button
+window.addEventListener('popstate', function(e){
+  // Close any open service page
+  const openPages = document.querySelectorAll('.service-page-overlay.open, .cs-page-overlay.open');
+  if(openPages.length > 0){
+    openPages.forEach(page => {
+      page.classList.remove('open');
+    });
+    document.body.style.overflow = '';
+  }
+});
 
 function openComingSoon(icon, name){
   document.getElementById('csPageIcon').textContent = icon;
@@ -1763,4 +1777,4 @@ window.addEventListener('scroll',()=>{
 });
 </script>
 </body>
-                                                                           </html>
+                                                                                                                                                                                                                                                                      </html>
