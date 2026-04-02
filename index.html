@@ -555,6 +555,17 @@ footer{background:var(--primary);color:rgba(255,255,255,0.6);padding:60px 5% 32p
   .metrics-inner{grid-template-columns:repeat(2,1fr)}
   .verify-steps{grid-template-columns:1fr}
 }
+
+/* ── CITY ROUTING POPUP ── */
+.city-route-overlay{display:none;position:fixed;inset:0;background:rgba(17,24,39,0.7);z-index:600;align-items:center;justify-content:center;backdrop-filter:blur(6px)}
+.city-route-overlay.open{display:flex}
+.city-route-box{background:white;border-radius:20px;padding:2rem;width:100%;max-width:380px;margin:1rem;text-align:center;box-shadow:0 24px 64px rgba(0,0,0,0.2);animation:modalIn 0.3s ease}
+.city-route-box h3{font-size:1.1rem;font-weight:800;color:var(--primary);margin-bottom:0.5rem}
+.city-route-box p{font-size:0.85rem;color:var(--slate);margin-bottom:1.25rem}
+.city-route-input{width:100%;border:1.5px solid var(--border);border-radius:10px;padding:0.85rem 1rem;font-size:0.92rem;font-family:'Plus Jakarta Sans',sans-serif;color:var(--primary);outline:none;margin-bottom:1rem;transition:border-color 0.2s}
+.city-route-input:focus{border-color:var(--accent)}
+.city-route-btn{width:100%;background:var(--accent);color:white;border:none;border-radius:12px;padding:0.9rem;font-size:0.95rem;font-weight:800;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:all 0.2s}
+.city-route-btn:hover{background:#c1121f}
 </style>
 </head>
 <body>
@@ -845,8 +856,41 @@ footer{background:var(--primary);color:rgba(255,255,255,0.6);padding:60px 5% 32p
       </div>
     </div>
 
+    <!-- Akshay Chaudhary - Plumber Gujarat -->
+    <div class="providers-grid reveal" style="margin-bottom:2rem;">
+      <div class="pcard">
+        <div class="pcard-top">
+          <div class="pcard-avatar" style="background:#F0FFF4;">🔧</div>
+          <div>
+            <div class="pcard-name">Akshay Chaudhary</div>
+            <div class="pcard-role">Plumber · Gujarat</div>
+          </div>
+        </div>
+        <div class="pcard-tags">
+          <span class="tag">Pipe Repair</span>
+          <span class="tag">Tap Fitting</span>
+          <span class="tag">Drainage</span>
+          <span class="tag">New Fitting</span>
+        </div>
+        <div style="margin-bottom:1rem;">
+          <div style="font-size:0.78rem;font-weight:700;color:var(--slate);margin-bottom:0.4rem;">📍 Service Areas:</div>
+          <div style="display:flex;flex-wrap:wrap;gap:0.35rem;">
+            <span class="tag">Vadodara</span>
+            <span class="tag">Gujarat State</span>
+          </div>
+        </div>
+        <div class="pcard-footer">
+          <div>
+            <div class="pcard-verified">✔ Verified Provider</div>
+            <div style="font-size:0.78rem;color:var(--green);font-weight:600;margin-top:3px;">🟢 Available · 1–3 yrs exp</div>
+          </div>
+          <button onclick="openCityRoutePopup('Plumber')" style="background:var(--accent);color:white;border:none;border-radius:8px;padding:0.45rem 1rem;font-size:0.82rem;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;">Book Now →</button>
+        </div>
+      </div>
+    </div>
+
     <!-- More providers coming -->
-    <div style="background:white;border:1.5px solid var(--border);border-radius:24px;padding:2.5rem 2rem;text-align:center;box-shadow:0 4px 20px rgba(0,0,0,0.05);">
+    <div style="background:white;border:1.5px solid var(--border);border-radius:24px;padding:2.5rem 2rem;text-align:center;box-sizing:border-box;box-shadow:0 4px 20px rgba(0,0,0,0.05);">
       <div style="font-size:2.5rem;margin-bottom:1rem;">🚀</div>
       <h3 style="font-family:'Plus Jakarta Sans',sans-serif;font-size:1.1rem;font-weight:800;color:var(--primary);margin-bottom:0.75rem;" data-i18n="no_providers_title">Be First in Your City!</h3>
       <p style="color:var(--slate);font-size:0.9rem;max-width:460px;margin:0 auto 1.5rem;line-height:1.75;" data-i18n="no_providers_desc">We are onboarding verified providers city by city. Enter your city below and we'll notify you as soon as experts are available near you!</p>
@@ -1044,7 +1088,7 @@ footer{background:var(--primary);color:rgba(255,255,255,0.6);padding:60px 5% 32p
         <span class="contact-icon">📧</span>
         <h4 data-i18n="contact_email_title">Email Us</h4>
         <p data-i18n="contact_email_desc">Send us your query and we'll respond within 24 hours.</p>
-        <a href="mailto:hello@taskzo.in" data-i18n="contact_email_btn">Send Email →</a>
+        <a href="/cdn-cgi/l/email-protection#bfd7dad3d3d0ffcbdeccd4c5d091d6d1" data-i18n="contact_email_btn">Send Email →</a>
       </div>
       <div class="contact-card">
         <span class="contact-icon">🤝</span>
@@ -1131,10 +1175,10 @@ footer{background:var(--primary);color:rgba(255,255,255,0.6);padding:60px 5% 32p
     </div>
     <h3 style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.1rem;color:var(--primary);margin-bottom:1rem;" data-i18n="services_avail">🛠️ Services Available</h3>
     <div class="service-packages">
-      <div class="pkg-card"><span class="pkg-icon">🔌</span><h4 data-i18n="elec_s1">Home Wiring</h4><p data-i18n="elec_s1d">Complete home electrical wiring, new connections, rewiring old homes.</p><a href="https://wa.me/917744031063?text=Hello%20Taskzo!%20I%20need%20Home%20Wiring%20service." target="_blank" class="btn-book-pkg" data-i18n="book_now">Book Now →</a></div>
-      <div class="pkg-card"><span class="pkg-icon">💡</span><h4 data-i18n="elec_s2">Fan & Light Fitting</h4><p data-i18n="elec_s2d">Fan installation, light fitting, switchboard repair and replacement.</p><a href="https://wa.me/917744031063?text=Hello%20Taskzo!%20I%20need%20Fan%20and%20Light%20Fitting%20service." target="_blank" class="btn-book-pkg" data-i18n="book_now">Book Now →</a></div>
-      <div class="pkg-card"><span class="pkg-icon">⚙️</span><h4 data-i18n="elec_s3">MCB / Fuse Fixing</h4><p data-i18n="elec_s3d">MCB tripping, fuse blown, short circuit issues fixed quickly.</p><a href="https://wa.me/917744031063?text=Hello%20Taskzo!%20I%20need%20MCB%20Fuse%20Fixing%20service." target="_blank" class="btn-book-pkg" data-i18n="book_now">Book Now →</a></div>
-      <div class="pkg-card"><span class="pkg-icon">🏗️</span><h4 data-i18n="elec_s4">New Construction</h4><p data-i18n="elec_s4d">Complete electrical work for new houses, shops and offices.</p><a href="https://wa.me/917744031063?text=Hello%20Taskzo!%20I%20need%20Electrical%20work%20for%20new%20construction." target="_blank" class="btn-book-pkg" data-i18n="book_now">Book Now →</a></div>
+      <div class="pkg-card"><span class="pkg-icon">🔌</span><h4 data-i18n="elec_s1">Home Wiring</h4><p data-i18n="elec_s1d">Complete home electrical wiring, new connections, rewiring old homes.</p><a onclick="openCityRoutePopup('Electrician - Home Wiring')" class="btn-book-pkg" data-i18n="book_now">Book Now →</a></div>
+      <div class="pkg-card"><span class="pkg-icon">💡</span><h4 data-i18n="elec_s2">Fan & Light Fitting</h4><p data-i18n="elec_s2d">Fan installation, light fitting, switchboard repair and replacement.</p><a onclick="openCityRoutePopup('Electrician - Fan &amp; Light')" class="btn-book-pkg" data-i18n="book_now">Book Now →</a></div>
+      <div class="pkg-card"><span class="pkg-icon">⚙️</span><h4 data-i18n="elec_s3">MCB / Fuse Fixing</h4><p data-i18n="elec_s3d">MCB tripping, fuse blown, short circuit issues fixed quickly.</p><a onclick="openCityRoutePopup('Electrician - MCB Fuse')" class="btn-book-pkg" data-i18n="book_now">Book Now →</a></div>
+      <div class="pkg-card"><span class="pkg-icon">🏗️</span><h4 data-i18n="elec_s4">New Construction</h4><p data-i18n="elec_s4d">Complete electrical work for new houses, shops and offices.</p><a onclick="openCityRoutePopup('Electrician - New Construction')" class="btn-book-pkg" data-i18n="book_now">Book Now →</a></div>
     </div>
     <div style="background:var(--primary);border-radius:16px;padding:2rem;text-align:center;">
       <h3 style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;color:white;margin-bottom:0.5rem;" data-i18n="elec_cta_title">Need an Electrician?</h3>
@@ -1160,10 +1204,10 @@ footer{background:var(--primary);color:rgba(255,255,255,0.6);padding:60px 5% 32p
     </div>
     <h3 style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.1rem;color:var(--primary);margin-bottom:1rem;" data-i18n="services_avail">🛠️ Services Available</h3>
     <div class="service-packages">
-      <div class="pkg-card"><span class="pkg-icon">🚿</span><h4 data-i18n="plumb_s1">Pipe Leak Repair</h4><p data-i18n="plumb_s1d">Emergency pipe leak fixing, burst pipe repair, water leakage solutions.</p><a href="https://wa.me/917744031063?text=Hello%20Taskzo!%20I%20need%20Pipe%20Leak%20Repair." target="_blank" class="btn-book-pkg" data-i18n="book_now">Book Now →</a></div>
-      <div class="pkg-card"><span class="pkg-icon">🚰</span><h4 data-i18n="plumb_s2">Tap & Valve Repair</h4><p data-i18n="plumb_s2d">Tap replacement, valve fixing, mixer fitting, bathroom accessories.</p><a href="https://wa.me/917744031063?text=Hello%20Taskzo!%20I%20need%20Tap%20and%20Valve%20Repair." target="_blank" class="btn-book-pkg" data-i18n="book_now">Book Now →</a></div>
-      <div class="pkg-card"><span class="pkg-icon">🪠</span><h4 data-i18n="plumb_s3">Drainage & Blockage</h4><p data-i18n="plumb_s3d">Blocked drain cleaning, bathroom drain issues, kitchen sink blockage.</p><a href="https://wa.me/917744031063?text=Hello%20Taskzo!%20I%20need%20Drainage%20Cleaning%20service." target="_blank" class="btn-book-pkg" data-i18n="book_now">Book Now →</a></div>
-      <div class="pkg-card"><span class="pkg-icon">🏠</span><h4 data-i18n="plumb_s4">New Fitting Work</h4><p data-i18n="plumb_s4d">Complete plumbing for new homes, bathroom fitting, kitchen plumbing.</p><a href="https://wa.me/917744031063?text=Hello%20Taskzo!%20I%20need%20New%20Plumbing%20Fitting%20work." target="_blank" class="btn-book-pkg" data-i18n="book_now">Book Now →</a></div>
+      <div class="pkg-card"><span class="pkg-icon">🚿</span><h4 data-i18n="plumb_s1">Pipe Leak Repair</h4><p data-i18n="plumb_s1d">Emergency pipe leak fixing, burst pipe repair, water leakage solutions.</p><a onclick="openCityRoutePopup('Plumber - Pipe Leak Repair')" class="btn-book-pkg" data-i18n="book_now">Book Now →</a></div>
+      <div class="pkg-card"><span class="pkg-icon">🚰</span><h4 data-i18n="plumb_s2">Tap & Valve Repair</h4><p data-i18n="plumb_s2d">Tap replacement, valve fixing, mixer fitting, bathroom accessories.</p><a onclick="openCityRoutePopup('Plumber - Tap &amp; Valve Repair')" class="btn-book-pkg" data-i18n="book_now">Book Now →</a></div>
+      <div class="pkg-card"><span class="pkg-icon">🪠</span><h4 data-i18n="plumb_s3">Drainage & Blockage</h4><p data-i18n="plumb_s3d">Blocked drain cleaning, bathroom drain issues, kitchen sink blockage.</p><a onclick="openCityRoutePopup('Plumber - Drainage')" class="btn-book-pkg" data-i18n="book_now">Book Now →</a></div>
+      <div class="pkg-card"><span class="pkg-icon">🏠</span><h4 data-i18n="plumb_s4">New Fitting Work</h4><p data-i18n="plumb_s4d">Complete plumbing for new homes, bathroom fitting, kitchen plumbing.</p><a onclick="openCityRoutePopup('Plumber - New Fitting')" class="btn-book-pkg" data-i18n="book_now">Book Now →</a></div>
     </div>
     <div style="background:var(--primary);border-radius:16px;padding:2rem;text-align:center;">
       <h3 style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;color:white;margin-bottom:0.5rem;" data-i18n="plumb_cta_title">Need a Plumber?</h3>
@@ -1189,10 +1233,10 @@ footer{background:var(--primary);color:rgba(255,255,255,0.6);padding:60px 5% 32p
     </div>
     <h3 style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.1rem;color:var(--primary);margin-bottom:1rem;" data-i18n="services_avail">🛠️ Services Available</h3>
     <div class="service-packages">
-      <div class="pkg-card"><span class="pkg-icon">🧹</span><h4 data-i18n="ac_s1">AC Servicing</h4><p data-i18n="ac_s1d">Deep cleaning, filter wash, coil cleaning — improves cooling and efficiency.</p><a href="https://wa.me/917744031063?text=Hello%20Taskzo!%20I%20need%20AC%20Servicing." target="_blank" class="btn-book-pkg" data-i18n="book_now">Book Now →</a></div>
-      <div class="pkg-card"><span class="pkg-icon">🌡️</span><h4 data-i18n="ac_s2">Gas Refill</h4><p data-i18n="ac_s2d">AC not cooling properly? Gas recharge / refilling done by expert technician.</p><a href="https://wa.me/917744031063?text=Hello%20Taskzo!%20I%20need%20AC%20Gas%20Refill." target="_blank" class="btn-book-pkg" data-i18n="book_now">Book Now →</a></div>
-      <div class="pkg-card"><span class="pkg-icon">🔩</span><h4 data-i18n="ac_s3">AC Repair</h4><p data-i18n="ac_s3d">Compressor issues, PCB repair, water leaking, noise problems — all fixed.</p><a href="https://wa.me/917744031063?text=Hello%20Taskzo!%20I%20need%20AC%20Repair." target="_blank" class="btn-book-pkg" data-i18n="book_now">Book Now →</a></div>
-      <div class="pkg-card"><span class="pkg-icon">📦</span><h4 data-i18n="ac_s4">AC Installation</h4><p data-i18n="ac_s4d">New AC installation, uninstallation, shifting from one room to another.</p><a href="https://wa.me/917744031063?text=Hello%20Taskzo!%20I%20need%20AC%20Installation." target="_blank" class="btn-book-pkg" data-i18n="book_now">Book Now →</a></div>
+      <div class="pkg-card"><span class="pkg-icon">🧹</span><h4 data-i18n="ac_s1">AC Servicing</h4><p data-i18n="ac_s1d">Deep cleaning, filter wash, coil cleaning — improves cooling and efficiency.</p><a onclick="openCityRoutePopup('AC Servicing')" class="btn-book-pkg" data-i18n="book_now">Book Now →</a></div>
+      <div class="pkg-card"><span class="pkg-icon">🌡️</span><h4 data-i18n="ac_s2">Gas Refill</h4><p data-i18n="ac_s2d">AC not cooling properly? Gas recharge / refilling done by expert technician.</p><a onclick="openCityRoutePopup('AC Gas Refill')" class="btn-book-pkg" data-i18n="book_now">Book Now →</a></div>
+      <div class="pkg-card"><span class="pkg-icon">🔩</span><h4 data-i18n="ac_s3">AC Repair</h4><p data-i18n="ac_s3d">Compressor issues, PCB repair, water leaking, noise problems — all fixed.</p><a onclick="openCityRoutePopup('AC Repair')" class="btn-book-pkg" data-i18n="book_now">Book Now →</a></div>
+      <div class="pkg-card"><span class="pkg-icon">📦</span><h4 data-i18n="ac_s4">AC Installation</h4><p data-i18n="ac_s4d">New AC installation, uninstallation, shifting from one room to another.</p><a onclick="openCityRoutePopup('AC Installation')" class="btn-book-pkg" data-i18n="book_now">Book Now →</a></div>
     </div>
     <div style="background:var(--primary);border-radius:16px;padding:2rem;text-align:center;">
       <h3 style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;color:white;margin-bottom:0.5rem;" data-i18n="ac_cta_title">Need AC Repair?</h3>
@@ -1311,25 +1355,25 @@ footer{background:var(--primary);color:rgba(255,255,255,0.6);padding:60px 5% 32p
         <span class="pkg-icon">🏠</span>
         <h4 data-i18n="cctv_s1">Home Basic</h4>
         <p data-i18n="cctv_s1d">2 cameras — perfect for main door &amp; back entry. Ideal for small homes.</p>
-        <a href="https://wa.me/917744031063?text=Hello%20Taskzo!%20I%20want%20to%20book%20Home%20Basic%20CCTV%20package%20(2%20cameras)." target="_blank" class="btn-book-pkg" data-i18n="book_now">Book Now →</a>
+        <a onclick="openCityRoutePopup('CCTV - Home Basic')" class="btn-book-pkg" data-i18n="book_now">Book Now →</a>
       </div>
       <div class="pkg-card">
         <span class="pkg-icon">🏪</span>
         <h4 data-i18n="cctv_s2">Shop / Office</h4>
         <p data-i18n="cctv_s2d">4 cameras — full coverage for your shop or small office. Most popular!</p>
-        <a href="https://wa.me/917744031063?text=Hello%20Taskzo!%20I%20want%20to%20book%20Shop%20CCTV%20package%20(4%20cameras)." target="_blank" class="btn-book-pkg" data-i18n="book_now">Book Now →</a>
+        <a onclick="openCityRoutePopup('CCTV - Shop/Office')" class="btn-book-pkg" data-i18n="book_now">Book Now →</a>
       </div>
       <div class="pkg-card">
         <span class="pkg-icon">🏢</span>
         <h4 data-i18n="cctv_s3">Full Coverage</h4>
         <p data-i18n="cctv_s3d">8 cameras — complete security for large homes, offices or warehouses.</p>
-        <a href="https://wa.me/917744031063?text=Hello%20Taskzo!%20I%20want%20to%20book%20Full%20Coverage%20CCTV%20package%20(8%20cameras)." target="_blank" class="btn-book-pkg" data-i18n="book_now">Book Now →</a>
+        <a onclick="openCityRoutePopup('CCTV - Full Coverage')" class="btn-book-pkg" data-i18n="book_now">Book Now →</a>
       </div>
       <div class="pkg-card">
         <span class="pkg-icon">🛠️</span>
         <h4 data-i18n="cctv_s4">AMC &amp; Repair</h4>
         <p data-i18n="cctv_s4d">Annual maintenance, camera repair, wire issues — we fix everything.</p>
-        <a href="https://wa.me/917744031063?text=Hello%20Taskzo!%20I%20need%20CCTV%20repair%20or%20maintenance%20service." target="_blank" class="btn-book-pkg" data-i18n="get_quote">Get Quote →</a>
+        <a onclick="openCityRoutePopup('CCTV - AMC &amp; Repair')" class="btn-book-pkg" data-i18n="get_quote">Get Quote →</a>
       </div>
     </div>
 
@@ -1419,6 +1463,18 @@ footer{background:var(--primary);color:rgba(255,255,255,0.6);padding:60px 5% 32p
 </div>
 
 <!-- WHATSAPP -->
+<!-- CITY ROUTING POPUP -->
+<div class="city-route-overlay" id="cityRoutePopup">
+  <div class="city-route-box">
+    <div style="font-size:2rem;margin-bottom:0.5rem;">📍</div>
+    <h3>Your City?</h3>
+    <p>Enter your city so we can connect you with the right provider.</p>
+    <input type="text" class="city-route-input" id="cityRouteInput" placeholder="e.g. Vadodara, Pune, Mumbai...">
+    <button class="city-route-btn" onclick="submitCityRoute()">Book Now →</button>
+    <button onclick="closeCityRoutePopup()" style="background:none;border:none;color:var(--muted);font-size:0.82rem;cursor:pointer;margin-top:0.75rem;font-family:'Plus Jakarta Sans',sans-serif;">Cancel</button>
+  </div>
+</div>
+
 <div id="waContainer">
   <div id="waNumbers" style="display:none;flex-direction:column;gap:0.5rem;align-items:flex-end;">
     <a href="https://wa.me/917744031063?text=Hello%20Taskzo!%20I%20need%20help%20with%20a%20service." target="_blank" class="wa-number-link">💬 +91 77440 31063</a>
@@ -1427,7 +1483,7 @@ footer{background:var(--primary);color:rgba(255,255,255,0.6);padding:60px 5% 32p
   <button onclick="toggleWaNumbers()" class="wa-main-btn">💬 <span data-i18n="wa_btn">Chat on WhatsApp</span></button>
 </div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ── TRANSLATIONS ──
 const translations = {
   en:{
@@ -1996,6 +2052,54 @@ if(form){
 }
 
 // Search
+const gujaratCities = ['vadodara','baroda','surat','ahmedabad','rajkot','gandhinagar','anand','bharuch','nadiad','godhra','ankleshwar','halol','gujarat','gujrat'];
+
+let currentBookingService = '';
+
+function openCityRoutePopup(service){
+  currentBookingService = service || '';
+  document.getElementById('cityRouteInput').value = '';
+  document.getElementById('cityRoutePopup').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  setTimeout(()=>document.getElementById('cityRouteInput').focus(), 300);
+}
+
+function closeCityRoutePopup(){
+  document.getElementById('cityRoutePopup').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function submitCityRoute(){
+  const city = document.getElementById('cityRouteInput').value.trim();
+  if(!city){ document.getElementById('cityRouteInput').focus(); return; }
+  const cityLow = city.toLowerCase();
+  const isGujarat = gujaratCities.some(c => cityLow.includes(c));
+
+  // Send email notification to Devshrut
+  fetch('https://formspree.io/f/mqeyjrga',{
+    method:'POST',
+    headers:{'Content-Type':'application/json','Accept':'application/json'},
+    body:JSON.stringify({
+      email:'devshrut.desale@gmail.com',
+      subject:'🔔 New Booking - Taskzo' + (isGujarat ? ' (Gujarat)' : ''),
+      message:'City: '+city+'\nService: '+(currentBookingService||'General')+'\nRouted to: '+(isGujarat?'Akshay (Gujarat)':'Taskzo Main')+'\nTime: '+new Date().toLocaleString('en-IN')
+    })
+  }).catch(()=>{});
+
+  closeCityRoutePopup();
+  const msg = encodeURIComponent('Hello! I need '+(currentBookingService||'a service')+' in '+city+'. I found you on Taskzo.');
+  if(isGujarat){
+    window.open('https://wa.me/919890407327?text='+msg,'_blank');
+  } else {
+    window.open('https://wa.me/917744031063?text='+msg,'_blank');
+  }
+}
+
+// Close popup on outside click
+document.addEventListener('click', function(e){
+  if(e.target === document.getElementById('cityRoutePopup')) closeCityRoutePopup();
+});
+
 function handleSearch(){
   const service = (document.getElementById('serviceSelect').value || '').toLowerCase();
   const city = document.getElementById('cityInput').value.trim().toLowerCase();
@@ -2166,77 +2270,9 @@ const obs=new IntersectionObserver(entries=>{
 document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 
 // Nav shadow
-window.addEventListener('scroll',()=>{
+window.addEventListener('scroll',function(){
   document.getElementById('mainNav').style.boxShadow=window.scrollY>20?'0 4px 20px rgba(0,0,0,0.06)':'none';
 });
 </script>
-  <script>
-document.addEventListener("DOMContentLoaded", function(){
-
-  let form = document.getElementById("providerForm");
-
-  if(form){
-    form.addEventListener("submit", function(e){
-      e.preventDefault();
-
-      let name = document.getElementById("name").value;
-      let mobile = document.getElementById("mobile").value;
-      let city = document.getElementById("city").value;
-      let service = document.getElementById("service").value;
-      let experience = document.getElementById("experience").value;
-
-      // 👉 Provider UI me add
-      let container = document.querySelector(".providers-grid");
-      if(container){
-        container.innerHTML += `
-        <div class="pcard">
-          <div class="pcard-top">
-            <div class="pcard-avatar">🔧</div>
-            <div>
-              <div class="pcard-name">${name}</div>
-              <div class="pcard-role">${service} · ${city}</div>
-            </div>
-          </div>
-
-          <div class="pcard-tags">
-            <span class="tag">${experience}</span>
-            <span class="tag">${service}</span>
-          </div>
-
-          <div class="pcard-footer">
-            <div class="pcard-rate">📞 ${mobile}</div>
-            <div class="pcard-verified">✓ Verified</div>
-          </div>
-        </div>`;
-      }
-
-      // 👉 WhatsApp alert (Gujarat)
-      if(city.toLowerCase().includes("vadodara") || city.toLowerCase().includes("gujarat")){
-        let phone = "919890407327"; // ⚠️ apna number dal
-        let msg = `New Provider 🚀
-Name: ${name}
-Service: ${service}
-City: ${city}
-Mobile: ${mobile}`;
-
-        window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`);
-      }
-
-      // 👉 Email alert
-      fetch("https://formsubmit.co/ajax/devshrut.desale@gmail.com", {
-        method: "POST",
-        headers: { 
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify({name, mobile, city, service, experience})
-      });
-
-      alert("Submitted Successfully ✅");
-      form.reset();
-    });
-  }
-
-});
-  </script>
-</body
+</body>
+  </html>
